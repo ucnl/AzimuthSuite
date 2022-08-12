@@ -305,7 +305,7 @@ namespace AzimuthSuite.AzmCore
             // $PAZM0,[cmdID],result
             try
             {
-                ICs sntID = AZM.ICsByMessageID((string)parameters[0]);
+                ICs sntID = AZM.ICsByMessageID(parameters[0].ToString());
                 IC_RESULT_Enum resID = AZM.O2_IC_RESULT_Enum(parameters[1]);
 
                 StopTimer();
@@ -364,7 +364,8 @@ namespace AzimuthSuite.AzmCore
             // status,[addr],[rq_code],[rs_code],[msr_dB],[p_time],[s_range],[p_range],[r_dpt],[a],[e],[lprs],[ltmp],[lhdn],[lptc],[lrol]
 
             StopTimer();
-            StartTimer(3000);
+            if (IsActive)
+                StartTimer(3000);
 
             try
             {
@@ -503,29 +504,27 @@ namespace AzimuthSuite.AzmCore
             return TrySend(msg, ICs.IC_D2D_STRSTP);
         }
 
-
         public bool Query_RemoteStySet(double sty_PSU)
         {
             return Query_RSTS(0, sty_PSU);
         }
 
-        public bool Query_RemoteAddrSet(ushort addr)
+        public bool Query_RemoteAddrSet(REMOTE_ADDR_Enum addr)
         {
             return Query_RSTS(addr, double.NaN);
         }
 
-        public bool Query_RSTS(ushort addr, double sty_PSU)
+        public bool Query_RSTS(REMOTE_ADDR_Enum addr, double sty_PSU)
         {
             // $PAZM2,[addr],[sty_PSU]
 
             var msg = NMEAParser.BuildProprietarySentence(ManufacturerCodes.AZM, "2",
                 new object[] {
-                    addr > 0 ? (object)addr : null,
+                    addr == REMOTE_ADDR_Enum.REM_ADDR_INVALID ? null : (object)(int)addr,
                     !double.IsNaN(sty_PSU) ? (object)sty_PSU : null });
 
             return TrySend(msg, ICs.IC_D2D_RSTS);
         }
-
 
         #endregion
 

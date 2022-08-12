@@ -293,6 +293,14 @@ namespace AzimuthSuite.AzmCore
         public double Salinity_PSU { get; private set; }
 
 
+        public bool IsDeviceInfoValid { get => azmPort.IsDeviceInfoValid; }
+
+        public AZM_DEVICE_TYPE_Enum DeviceType { get; private set; }
+        public string DeviceSerialNumber { get; private set; }
+        public string DeviceVersionInfo { get; private set; }
+
+        public REMOTE_ADDR_Enum DeviceResponderAddress { get; private set; }
+
         double phi_deg;
         double x_offset_m;
         double y_offset_m;
@@ -312,7 +320,7 @@ namespace AzimuthSuite.AzmCore
 
         readonly string[] llSeparators = new string[] { ">>", " " };
 
-        bool polling_stated_received = false;
+        bool polling_started_received = false;
         DateTime prevRemAckTS = DateTime.Now;
 
         #endregion
@@ -323,6 +331,7 @@ namespace AzimuthSuite.AzmCore
         {
             #region Misc. parameters
 
+            DeviceType = AZM_DEVICE_TYPE_Enum.DT_INVALID;
             RemoteToOutport = REMOTE_ADDR_Enum.REM_ADDR_1;
 
             AddressMask = addrMask;
@@ -389,7 +398,26 @@ namespace AzimuthSuite.AzmCore
                         addrMask, salinity_PSU, maxDist_m)));
 
                     azmPort.Query_BaseStart(addrMask, salinity_PSU, maxDist_m);
+                    prevRemAckTS = DateTime.Now;
+                    polling_started_received = false;                    
+                }                
+
+                if (azmPort.IsDeviceInfoValid)
+                {
+                    DeviceType = azmPort.DeviceType;
+                    DeviceSerialNumber = azmPort.SerialNumber;
+                    DeviceVersionInfo = string.Format("{0} v{1}", azmPort.SystemInfo, azmPort.SystemVersion);
+                    DeviceResponderAddress = azmPort.RemoteAddress;
                 }
+                else
+                {
+                    DeviceType = AZM_DEVICE_TYPE_Enum.DT_INVALID;
+                    DeviceSerialNumber = string.Empty;
+                    DeviceVersionInfo = string.Empty;
+                    DeviceResponderAddress = REMOTE_ADDR_Enum.REM_ADDR_INVALID;
+                }
+
+                DeviceInfoValidChanged.Rise(this, e);
             };
             azmPort.ACKReceived += (o, e) =>
             {
@@ -399,6 +427,8 @@ namespace AzimuthSuite.AzmCore
                     LogEventHandler.Rise(o, new LogEventArgs(LogLineType.INFO,
                         string.Format("Querying to start polling (AddrMask={0}, Salinity={1:F01} PSU, MaxDist={2:F01} m)", addrMask, salinity_PSU, maxDist_m)));
                     azmPort.Query_BaseStart(addrMask, salinity_PSU, maxDist_m);
+                    prevRemAckTS = DateTime.Now;
+                    polling_started_received = false;
                 }
             };
             azmPort.IsActiveChanged += (o, e) => IsActiveChanged.Rise(o, e);
@@ -418,9 +448,11 @@ namespace AzimuthSuite.AzmCore
                     prevRemAckTS = DateTime.Now;
                 }
 
-                if (DateTime.Now.Subtract(prevRemAckTS).Seconds > 5)
+                if (azmPort.IsActive &&
+                    polling_started_received &&
+                    (DateTime.Now.Subtract(prevRemAckTS).Seconds > 5))
                 {
-                    polling_stated_received = false;
+                    polling_started_received = false;
                     LogEventHandler.Rise(this,
                         new LogEventArgs(LogLineType.ERROR, "Remote action timeout (Short-term power shutdown?) , restarting polling..."));
                     azmPort.Query_BaseStart(addrMask, salinity_PSU, maxDist_m);
@@ -439,8 +471,9 @@ namespace AzimuthSuite.AzmCore
                         double.IsNaN(e.SoundSpeed_mps) ? "Auto" : string.Format(CultureInfo.InvariantCulture, "{0:F01} m/s", e.SoundSpeed_mps),
                         e.MaxDist_m)));
 
-                polling_stated_received = true;
+                polling_started_received = true;
             };
+            azmPort.RSTSReceived += (o, e) => ResponderSettingsReceived(o, e);
 
             #endregion
         }
@@ -595,15 +628,23 @@ namespace AzimuthSuite.AzmCore
                 remotes[e.Address].MSR_dB.Value = e.MSR_dB;
 
             if (!double.IsNaN(e.PropTime_s))
-                remotes[e.Address].PTime_s.Value = e.PropTime_s;
-            
+                remotes[e.Address].PTime_s.Value = e.PropTime_s;                
+
             if (!double.IsNaN(e.SlantRange_m))
-                remotes[e.Address].SlantRange_m.Value = e.SlantRange_m;
+                remotes[e.Address].SlantRange_m.Value = e.SlantRange_m;                
 
             if (!double.IsNaN(e.SlantRangeProjection_m))
             {
                 remotes[e.Address].SlantRangeProjection_m.Value = e.SlantRangeProjection_m;
                 is_srp = true;
+            }
+            else
+            {
+                if (!double.IsNaN(e.SlantRange_m))
+                {
+                    remotes[e.Address].SlantRangeProjection_m.Value = e.SlantRange_m;
+                    is_srp = true;
+                }
             }
 
             if (!double.IsNaN(e.RemotesDepth_m))
@@ -611,7 +652,9 @@ namespace AzimuthSuite.AzmCore
 
             if (!double.IsNaN(e.HAngle_deg))
             {
-                remotes[e.Address].Azimuth_deg.Value = e.HAngle_deg;
+                /// DEBUG
+                //remotes[e.Address].Azimuth_deg.Value = e.HAngle_deg;
+                remotes[e.Address].Azimuth_deg.Value = Algorithms.Wrap360(360 - e.HAngle_deg);
                 is_a = true;
             }
 
@@ -624,34 +667,42 @@ namespace AzimuthSuite.AzmCore
                     longitude_deg.IsInitializedAndNotObsolete &&
                     heading.IsInitializedAndNotObsolete)
                 {
-                    double a_azm = 0;
-                    double a_rng = 0;
-                    PolarCS_ShiftRotate(heading.Value, phi_deg, e.HAngle_deg, e.SlantRangeProjection_m,
-                        x_offset_m, y_offset_m, out a_azm, out a_rng);
-
-                    remotes[e.Address].AAzimuth_deg.Value = a_azm;
-                    remotes[e.Address].ADistance_m.Value = a_rng;
-
-                    RelativeLocationUpdated.Rise(this,
-                        new RelativeLocationUpdatedEventArgs(AZM.Addr2Str(e.Address),
-                        a_azm, a_rng, false));
-
-                    if (remotes[e.Address].FilterState == null)
-                        remotes[e.Address].FilterState = new DHFilter(16, 0.5, 5);
+                    PolarCS_ShiftRotate(heading.Value, phi_deg,
+                        remotes[e.Address].Azimuth_deg.Value, 
+                        remotes[e.Address].SlantRangeProjection_m.Value,
+                        x_offset_m, y_offset_m, 
+                        out double a_azm, out double a_rng);                    
 
                     CalcAbsLocation(
-                        Algorithms.Deg2Rad(latitude_deg.Value), Algorithms.Deg2Rad(longitude_deg.Value),
+                        Algorithms.Deg2Rad(latitude_deg.Value), 
+                        Algorithms.Deg2Rad(longitude_deg.Value),
                         Algorithms.Deg2Rad(a_azm), a_rng,
-                        out double rlat_rad, out double rlon_rad, out double razm_deg);
+                        out double rlat_rad, 
+                        out double rlon_rad, 
+                        out double razm_rad);
 
                     DateTime ts = DateTime.Now;
+
+                    if (remotes[e.Address].FilterState == null)
+                        remotes[e.Address].FilterState = new DHFilter(4, 1, 10);
 
                     if (remotes[e.Address].FilterState.Process(rlat_rad, rlon_rad, 0, ts, 
                             out rlat_rad, out rlon_rad, out _, out ts))
                     {
+                        remotes[e.Address].AAzimuth_deg.Value = a_azm;
+                        remotes[e.Address].ReverseAzimuth_deg.Value = Algorithms.Wrap360(a_azm + 180);
+                        remotes[e.Address].ADistance_m.Value = a_rng;
+
                         double rlat_deg = Algorithms.Rad2Deg(rlat_rad);
                         double rlon_deg = Algorithms.Rad2Deg(rlon_rad);
                         double rdpt_m = remotes[e.Address].Depth_m.IsInitialized ? remotes[e.Address].Depth_m.Value : 0;
+                        
+                        RelativeLocationUpdated.Rise(this,
+                        new RelativeLocationUpdatedEventArgs(
+                            AZM.Addr2Str(e.Address),
+                            a_rng, 
+                            a_azm, 
+                            false));
 
                         AbsoluteLocationUpdated.Rise(this,
                             new AbsoluteLocationUpdatedEventArgs(
@@ -660,17 +711,25 @@ namespace AzimuthSuite.AzmCore
                                 rlon_deg,
                                 rdpt_m));
 
+                        remotes[e.Address].Latitude_deg.Value = rlat_deg;
+                        remotes[e.Address].Longitude_deg.Value = rlon_deg;
+
                         if (IsOutPortInitiaziled && 
                             ((e.Address == RemoteToOutport) ||
                              (e.Address == REMOTE_ADDR_Enum.REM_ADDR_INVALID)))
-                            TryWriteOutput(rlat_deg, rlon_deg, rdpt_m, razm_deg);
+                            TryWriteOutput(rlat_deg, rlon_deg, rdpt_m, a_azm);
                     }
                 }
                 else
                 {
+                    remotes[e.Address].ReverseAzimuth_deg.Value = Algorithms.Wrap360(remotes[e.Address].Azimuth_deg.Value + 180);
+
                     RelativeLocationUpdated.Rise(this,
-                        new RelativeLocationUpdatedEventArgs(AZM.Addr2Str(e.Address), 
-                        e.HAngle_deg, e.SlantRangeProjection_m, false));
+                        new RelativeLocationUpdatedEventArgs(
+                            AZM.Addr2Str(e.Address),
+                            remotes[e.Address].SlantRangeProjection_m.Value, 
+                            remotes[e.Address].Azimuth_deg.Value, 
+                            false));
                 }
             }            
         }
@@ -690,12 +749,21 @@ namespace AzimuthSuite.AzmCore
             double r_m, double xt, double yt,
             out double a_deg, out double r_a)
         {
-            double alpha = Algorithms.Deg2Rad(heading_deg);
-            double teta = Algorithms.Wrap2PI(Algorithms.Deg2Rad(450 - (bearing_deg - phi_deg)));
-            double xr = xt + r_m * Math.Cos(teta);
-            double yr = yt + r_m * Math.Sin(teta);
+            double teta = Algorithms.Wrap2PI(Algorithms.Deg2Rad(bearing_deg + phi_deg));
+
+            double xr = xt + r_m * Math.Sin(teta);
+            double yr = yt + r_m * Math.Cos(teta);
+
             r_a = Math.Sqrt(xr * xr + yr * yr);
-            a_deg = Algorithms.Rad2Deg(Algorithms.Wrap2PI(2.5 * Math.PI - (Math.Atan2(xr, yr) + alpha)));
+
+            double a_r = Math.Atan2(xr, yr);
+            if (a_r < 0)
+                a_r += 2 * Math.PI;
+            
+            a_r += Algorithms.Deg2Rad(heading_deg);
+            a_r = Algorithms.Wrap2PI(a_r);
+
+            a_deg = Algorithms.Rad2Deg(a_r);
         }
 
         private void ProcessStationLocalParameters(NDTAReceivedEventArgs e)
@@ -727,6 +795,17 @@ namespace AzimuthSuite.AzmCore
 
         #region Public
 
+        public bool QueryResponderAddrSet(REMOTE_ADDR_Enum newAddr)
+        {
+            return azmPort.Query_RemoteAddrSet(newAddr);
+        }
+
+        public bool QueryResponderAddrGet()
+        {
+            return azmPort.Query_RSTS(0, double.NaN);
+        }
+
+
         public void Demo()
         {
             remotes.Add(REMOTE_ADDR_Enum.REM_ADDR_1, new Remote(REMOTE_ADDR_Enum.REM_ADDR_1));
@@ -735,12 +814,16 @@ namespace AzimuthSuite.AzmCore
             remotes[REMOTE_ADDR_Enum.REM_ADDR_1].MSR_dB.Value = 37.7;
             remotes[REMOTE_ADDR_Enum.REM_ADDR_1].Depth_m.Value = 77.7;
 
-            heading.Value = 135;
+            heading.Value = 45;
             HeadingUpdated.Rise(this, null);
 
             RelativeLocationUpdated.Rise(this,
                 new RelativeLocationUpdatedEventArgs(AZM.Addr2Str(REMOTE_ADDR_Enum.REM_ADDR_1),
                 777, 45, false));
+
+            RelativeLocationUpdated.Rise(this,
+                new RelativeLocationUpdatedEventArgs(AZM.Addr2Str(REMOTE_ADDR_Enum.REM_ADDR_2),
+                777, 270, false));
 
             StateUpdateHandler.Rise(this, null);
 
@@ -813,21 +896,21 @@ namespace AzimuthSuite.AzmCore
             if (!azmPort.IsActive)
             {
                 azmPort.Start();
-                polling_stated_received = false;
+                polling_started_received = false;
             }
         }
 
         public void Stop()
-        {
+        {            
             if (azmPort.IsActive)
             {
                 azmPort.Query_BaseStop();
                 Thread.Sleep(300);
                 azmPort.Stop();
-            }
 
-            if (IsUseGNSS && gnssPort.IsActive)
-                gnssPort.Stop();
+                if (IsUseGNSS && gnssPort.IsActive)
+                    gnssPort.Stop();
+            }       
         }
 
         public string GetMiscInfoDescription()
@@ -973,6 +1056,9 @@ namespace AzimuthSuite.AzmCore
         public EventHandler<RelativeLocationUpdatedEventArgs> RelativeLocationUpdated;
 
         public EventHandler StateUpdateHandler;
+        public EventHandler DeviceInfoValidChanged;
+
+        public EventHandler<RSTSReceivedEventArgs> ResponderSettingsReceived;
 
         #endregion
     }

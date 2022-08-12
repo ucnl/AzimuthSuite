@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -199,6 +199,19 @@ namespace AzimuthSuite.AzmCore
         #endregion
 
         #region Methods
+
+        public static IEnumerable<REMOTE_ADDR_Enum> GetAddrsByMask(ushort mask)
+        {
+            List<REMOTE_ADDR_Enum> result = new List<REMOTE_ADDR_Enum>();
+
+            for (ushort i = 0; i < mask; i++)
+            {
+                if ((mask & (1 << i)) != 0)
+                    result.Add((REMOTE_ADDR_Enum)i);
+            }
+
+            return result;
+        }
 
         public static string Addr2Str(REMOTE_ADDR_Enum addr)
         {
