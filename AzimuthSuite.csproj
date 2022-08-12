@@ -51,6 +51,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms" />
@@ -84,6 +85,18 @@
     <Compile Include="AzmCore\AZMBase.cs" />
     <Compile Include="AzmCore\AZMPort.cs" />
     <Compile Include="AzmCore\DHFilter.cs" />
+    <Compile Include="Dialogs\DeviceInfoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DeviceInfoView.Designer.cs">
+      <DependentUpon>DeviceInfoView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ResponderSettingsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ResponderSettingsEditor.Designer.cs">
+      <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +114,12 @@
       <DependentUpon>SettingsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="UISettingsContainer.cs" />
+    <EmbeddedResource Include="Dialogs\DeviceInfoView.resx">
+      <DependentUpon>DeviceInfoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ResponderSettingsEditor.resx">
+      <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

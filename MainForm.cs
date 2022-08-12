@@ -1,4 +1,5 @@
-﻿using AzimuthSuite.AzmCore;
+﻿using AzimuthSuit.Dialogs;
+using AzimuthSuite.AzmCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,7 +7,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
-using System.IO.Ports;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -21,7 +21,6 @@ namespace AzimuthSuite
         #region Properties
 
         public static readonly string appicon = "🐙";
-
         bool isRestart = false;
 
         string logPath;
@@ -37,7 +36,6 @@ namespace AzimuthSuite
         readonly LogPlayer lPlayer;
         readonly TrackManager trackManager;
         readonly UIAutomation uiAutomation;
-
         readonly AZMBase azmBase;
 
         string outPortName
@@ -103,7 +101,7 @@ namespace AzimuthSuite
                 rPlot.LeftUpperTextVisible = value;
                 rPlot.Invalidate();
             }
-        }        
+        }
 
 
         bool remDistanceAndAzimuthVisible
@@ -138,7 +136,7 @@ namespace AzimuthSuite
                 ///
             }
         }
-        
+
         bool remElevationVisible
         {
             get => isTreeElevationVisibleBtn.Checked;
@@ -149,7 +147,7 @@ namespace AzimuthSuite
                 ///
             }
         }
-        
+
         bool remMiscInfoVisible
         {
             get => isTreeMiscInfoVisibleBtn.Checked;
@@ -203,6 +201,13 @@ namespace AzimuthSuite
 
         #endregion
 
+        #region Misc stuff
+
+        ToolTip tTip;
+        IWin32Window tTipWin;
+
+        #endregion
+
         #endregion
 
         #region Constructor
@@ -213,12 +218,15 @@ namespace AzimuthSuite
 
             #region Early init
 
-            string vString = string.Format("{0} {1} v{2} {3}", 
-                appicon, 
-                Application.ProductName, 
+            string vString = string.Format("{0} {1} v{2} {3}",
+                appicon,
+                Application.ProductName,
                 Assembly.GetExecutingAssembly().GetName().Version.ToString(),
-                Utilities.GetReferenceNote());
+                MDates.GetReferenceNote());
             this.Text = vString;
+
+            moonPhaseLbl.Text = AstroAndTimeUtils.MoonPhaseIcon(DateTime.Now);
+            moonPhaseLbl.ToolTipText = AstroAndTimeUtils.MoonPhaseDescription(DateTime.Now);
 
             #endregion
 
@@ -231,7 +239,7 @@ namespace AzimuthSuite
             logFileName = StrUtils.GetTimeDirTreeFileName(startTime, Application.ExecutablePath, "LOG", "log", true);
             snapshotsPath = StrUtils.GetTimeDirTree(startTime, Application.ExecutablePath, "SNAPSHOTS", false);
             visualStylesPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "VSCS");
-            
+
             #endregion
 
             #region logger
@@ -249,19 +257,22 @@ namespace AzimuthSuite
 
             AddVisualStyle(new VisualStyleContainer());
 
-            var visualStylesNames = Directory.GetFiles(visualStylesPath, "*.vs");
-            SimpleSettingsProviderXML<VisualStyleContainer> vsloader = new SimpleSettingsProviderXML<VisualStyleContainer>();
-
-            for (int i = 0; (i < visualStylesNames.Length) && (i < 32); i++)
+            if (Directory.Exists(visualStylesPath))
             {
-                try
+                var visualStylesNames = Directory.GetFiles(visualStylesPath, "*.vs");
+                SimpleSettingsProviderXML<VisualStyleContainer> vsloader = new SimpleSettingsProviderXML<VisualStyleContainer>();
+
+                for (int i = 0; (i < visualStylesNames.Length) && (i < 32); i++)
                 {
-                    vsloader.Load(visualStylesNames[i]);
-                    AddVisualStyle(vsloader.Data);                    
-                }
-                catch (Exception ex)
-                {
-                    ProcessException(ex, false);
+                    try
+                    {
+                        vsloader.Load(visualStylesNames[i]);
+                        AddVisualStyle(vsloader.Data);
+                    }
+                    catch (Exception ex)
+                    {
+                        ProcessException(ex, false);
+                    }
                 }
             }
 
@@ -301,7 +312,7 @@ namespace AzimuthSuite
 
             uiAutomation.InitBoolProperty<MainForm>(this, nameof(limboVisible));
             uiAutomation.InitBoolProperty<MainForm>(this, nameof(historyVisible));
-            uiAutomation.InitBoolProperty<MainForm>(this, nameof(notesVisible));            
+            uiAutomation.InitBoolProperty<MainForm>(this, nameof(notesVisible));
             uiAutomation.InitBoolProperty<MainForm>(this, nameof(miscInfoVisible));
             uiAutomation.InitBoolProperty<MainForm>(this, nameof(remDistanceAndAzimuthVisible));
             uiAutomation.InitBoolProperty<MainForm>(this, nameof(remDepthVisible));
@@ -391,17 +402,17 @@ namespace AzimuthSuite
             if (visualStyles.ContainsKey(usProvider.Data.VisualStyle))
                 ApplyVisualStyle(usProvider.Data.VisualStyle);
             else
-                ApplyVisualStyle(VisualStyleContainer.DefaultName);            
+                ApplyVisualStyle(VisualStyleContainer.DefaultName);
 
             #endregion
 
             #region azmBase
 
-            azmBase = new AZMBase(sProvider.Data.AddressMask, 
-                sProvider.Data.Salinity_PSU, 
-                sProvider.Data.MaxDist_m, 
-                sProvider.Data.HeadingAdjust_deg, 
-                sProvider.Data.TransverseOffset_m, 
+            azmBase = new AZMBase(sProvider.Data.AddressMask,
+                sProvider.Data.Salinity_PSU,
+                sProvider.Data.MaxDist_m,
+                sProvider.Data.HeadingAdjust_deg,
+                sProvider.Data.TransverseOffset_m,
                 sProvider.Data.LongitudalOffset_m);
 
             azmBase.LogEventHandler += (o, e) => logger.Write(string.Format("{0}: {1}", e.EventType, e.LogString));
@@ -410,7 +421,7 @@ namespace AzimuthSuite
             azmBase.RelativeLocationUpdated += (o, e) =>
                 InvokeUpdateRelativeLocation(e.ID, e.PRange_m, e.Azimuth_deg);
             azmBase.AZMPortDetectedChanged += (o, e) =>
-                InvokeUpdatePortStatusLbl(mainStatusStrip, azmPortStatusLbl, azmBase.IsActive, azmBase.AZMPortDetected, azmBase.AZMPortStatus);                
+                InvokeUpdatePortStatusLbl(mainStatusStrip, azmPortStatusLbl, azmBase.IsActive, azmBase.AZMPortDetected, azmBase.AZMPortStatus);
             azmBase.IsActiveChanged += (o, e) =>
             {
                 UIHelpers.InvokeSetCheckedState(mainToolStrip, linkBtn, azmBase.IsActive);
@@ -425,15 +436,29 @@ namespace AzimuthSuite
             azmBase.GNSSPortDetectedChanged += (o, e) =>
             {
                 InvokeUpdatePortStatusLbl(mainStatusStrip, auxPortStatusLbl, azmBase.IsActive, azmBase.GNSSPortDetected, azmBase.GNSSPortStatus);
-                SwitchOutputPortUIEnabledState(azmBase.GNSSPortDetected);
+                InvokeSwitchOutputPortUIEnabledState(azmBase.GNSSPortDetected);
 
                 if (azmBase.GNSSPortDetected &&
                     sProvider.Data.IsUseOutputport &&
                     !azmBase.IsOutPortInitiaziled)
                 {
-                    outPortsCbxUpdateBtn_Click(null, null);
-                    UIHelpers.TrySetCbxItem(outputPortCbx, usProvider.Data.OutPortName);
-                    outputPortBtn_Click(null, null);
+                    // TODO: refactor
+
+                    if (InvokeRequired)
+                    {
+                        Invoke((MethodInvoker)delegate
+                        {
+                            outPortsCbxUpdateBtn_Click(null, null);
+                            UIHelpers.TrySetCbxItem(outputPortCbx, usProvider.Data.OutPortName);
+                            outputPortBtn_Click(null, null);
+                        });
+                    }
+                    else
+                    {
+                        outPortsCbxUpdateBtn_Click(null, null);
+                        UIHelpers.TrySetCbxItem(outputPortCbx, usProvider.Data.OutPortName);
+                        outputPortBtn_Click(null, null);
+                    }
                 }
             };
             azmBase.StateUpdateHandler += (o, e) =>
@@ -442,11 +467,16 @@ namespace AzimuthSuite
                 InvokeSyncRemotesTree(azmBase.GetRemotesDescription(itemsToShow));
             };
             azmBase.HeadingUpdated += (o, e) => InvokeSetHeading(azmBase.Heading);
+            azmBase.DeviceInfoValidChanged += (o, e) =>
+            {
+                UIHelpers.InvokeSetEnabledState(mainToolStrip, utilsDeviceBtn, azmBase.IsDeviceInfoValid);
+                UIHelpers.InvokeSetEnabledState(mainToolStrip, utilsDeviceResponderSettingsBtn, azmBase.IsDeviceInfoValid && (azmBase.DeviceType == AZM_DEVICE_TYPE_Enum.DT_REMOTE));
+            };
 
             if (sProvider.Data.UseAUXGNSSCompas)
             {
                 azmBase.AuxGNSSInit(sProvider.Data.AUXGNSSCompasBaudrate);
-                auxPortStatusLbl.Visible = true;                                
+                auxPortStatusLbl.Visible = true;
             }
             else
             {
@@ -454,11 +484,25 @@ namespace AzimuthSuite
             }
 
             remoteAddrToOutportCbx.Items.Clear();
-            remoteAddrToOutportCbx.Items.AddRange(Enum.GetNames(typeof(REMOTE_ADDR_Enum)));
+
+            var usedAddresses = AZM.GetAddrsByMask(sProvider.Data.AddressMask);
+            foreach (var uAddr in usedAddresses)
+                remoteAddrToOutportCbx.Items.Add(uAddr.ToString());
+
             RemoteAddrToOutput = sProvider.Data.RemoteAddressToOutput;
 
             SwitchOutputPortUIEnabledState(false);
             SwitchOutputPortUIVisibleState(sProvider.Data.IsUseOutputport);
+
+            #endregion
+
+            #region Misc stuff
+
+            tTip = new ToolTip();
+            tTipWin = this;
+            tTip.IsBalloon = true;
+            tTip.ToolTipIcon = ToolTipIcon.Info;
+            tTip.ToolTipTitle = "Hotkeys tip";
 
             #endregion
 
@@ -472,6 +516,14 @@ namespace AzimuthSuite
         #endregion
 
         #region Methods
+
+        private void InvokeSwitchOutputPortUIEnabledState(bool enabled)
+        {
+            if (mainToolStrip.InvokeRequired)
+                mainToolStrip.Invoke((MethodInvoker)delegate { SwitchOutputPortUIEnabledState(enabled); });
+            else
+                SwitchOutputPortUIEnabledState(enabled);
+        }
 
         private void SwitchOutputPortUIEnabledState(bool enabled)
         {
@@ -553,9 +605,9 @@ namespace AzimuthSuite
             if (active)
             {
                 foreColor = Color.Yellow;
-                if (!detected)                
-                    backColor = Color.Red;                
-                else                
+                if (!detected)
+                    backColor = Color.Red;
+                else
                     backColor = Color.Green;
             }
 
@@ -582,7 +634,8 @@ namespace AzimuthSuite
         private void InvokeSetPlotLeftUpperText(string text)
         {
             if (rPlot.InvokeRequired)
-                rPlot.Invoke((MethodInvoker)delegate {
+                rPlot.Invoke((MethodInvoker)delegate
+                {
                     rPlot.LeftUpperText = text;
                     rPlot.Invalidate();
                 });
@@ -628,7 +681,7 @@ namespace AzimuthSuite
 
             remotesTree.Invalidate();
         }
-        
+
         private void InvokeSyncRemotesTree(Dictionary<string, Dictionary<string, string>> remotes)
         {
             if (remotesTree.InvokeRequired)
@@ -668,7 +721,7 @@ namespace AzimuthSuite
                     ApplyVisualStyle(visualStyles[vsName]);
                 };
 
-                paletteBtn.DropDownItems.Add(newItem);                
+                paletteBtn.DropDownItems.Add(newItem);
             }
         }
 
@@ -735,7 +788,7 @@ namespace AzimuthSuite
             logger.Write(ex);
 
             if (isMsgBox)
-                MessageBox.Show(ex.ToString(), string.Format("{0} {1} - Error", appicon, Application.ProductName), MessageBoxButtons.OK, MessageBoxIcon.Error);  
+                MessageBox.Show(ex.ToString(), string.Format("{0} {1} - Error", appicon, Application.ProductName), MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private string SaveFullScreenshot()
@@ -874,6 +927,8 @@ namespace AzimuthSuite
             }
         }
 
+        #region LOG
+
         private void logViewCurrentBtn_Click(object sender, EventArgs e)
         {
             try
@@ -929,7 +984,7 @@ namespace AzimuthSuite
             using (SaveFileDialog sDialog = new SaveFileDialog())
             {
                 sDialog.Title = string.Format("{0} Select a name of acrhive...", appicon);
-                sDialog.Filter = "Zip-archives (*.zip)|*.zip";                
+                sDialog.Filter = "Zip-archives (*.zip)|*.zip";
                 sDialog.DefaultExt = "zip";
                 sDialog.FileName = string.Format("LOG_Archive_{0}", StrUtils.GetYMDString());
 
@@ -952,7 +1007,7 @@ namespace AzimuthSuite
         {
             if (MessageBox.Show("Delete all log entries? (This action cannot be undone!)",
                                 string.Format("{0} {1} - Warning!", appicon, Application.ProductName),
-                                
+
                                 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
             {
 
@@ -968,7 +1023,7 @@ namespace AzimuthSuite
         private void logDoThemAllBtn_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Move all log entries to an archive? (This action cannot be undone!)",
-                               string.Format("{0} {1} - Warning!", appicon, Application.ProductName), 
+                               string.Format("{0} {1} - Warning!", appicon, Application.ProductName),
                                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
             {
                 RemoveEmptyEntries(logPath, logFileName, 2048);
@@ -977,7 +1032,7 @@ namespace AzimuthSuite
                 using (SaveFileDialog sDialog = new SaveFileDialog())
                 {
                     sDialog.Title = string.Format("{0} Select a name of acrhive...", appicon);
-                    sDialog.Filter = "Zip-archives (*.zip)|*.zip";                    
+                    sDialog.Filter = "Zip-archives (*.zip)|*.zip";
                     sDialog.DefaultExt = "zip";
                     sDialog.FileName = string.Format("LOG_Archive_{0}", StrUtils.GetYMDString());
 
@@ -1009,6 +1064,10 @@ namespace AzimuthSuite
                 }
             }
         }
+
+        #endregion
+
+        #region UTILS
 
         private void utilsTracksExportBtn_Click(object sender, EventArgs e)
         {
@@ -1051,6 +1110,68 @@ namespace AzimuthSuite
                 trackManager.Clear();
         }
 
+        private void utilsDeviceViewInfoBtn_Click(object sender, EventArgs e)
+        {
+            using (DeviceInfoView dDialog = new DeviceInfoView())
+            {
+                dDialog.Text = string.Format("{0} Device information", appicon);
+                dDialog.TextBoxText = string.Format("Device: {0}\r\nSystem: {1}\r\n   S/N: {2}\r\n",
+                    azmBase.DeviceType,
+                    azmBase.DeviceVersionInfo,
+                    azmBase.DeviceSerialNumber);
+
+                dDialog.ShowDialog();
+            }
+        }
+
+        private void utilsDeviceResponderSettingsBtn_Click(object sender, EventArgs e)
+        {
+            using (ResponderSettingsEditor rsEditor = new ResponderSettingsEditor())
+            {
+                rsEditor.Text = string.Format("{0} Responder settings", appicon);
+                rsEditor.RemoteAddress = azmBase.DeviceResponderAddress;
+
+                void tHandler(object st, RSTSReceivedEventArgs et)
+                {
+                    if (rsEditor.InvokeRequired)
+                        rsEditor.Invoke((MethodInvoker)delegate
+                        {
+                            rsEditor.RemoteAddress = et.Addr;
+                        });
+                    else
+                        rsEditor.RemoteAddress = et.Addr;
+                };
+
+                azmBase.ResponderSettingsReceived += tHandler;
+
+                rsEditor.ApplyRequestReceived += (o, er) =>
+                {
+                    if (!azmBase.QueryResponderAddrSet(rsEditor.RemoteAddress))
+                        MessageBox.Show(
+                            "Request was not sent, try to repeat later.",
+                            string.Format("{0} Error", appicon),
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                };
+                rsEditor.QueryRequestReceived += (o, eq) =>
+                {
+                    if (!azmBase.QueryResponderAddrGet())
+                        MessageBox.Show(
+                            "Request was not sent, try to repeat later.",
+                            string.Format("{0} Error", appicon),
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                };
+
+                rsEditor.ShowDialog();
+                azmBase.ResponderSettingsReceived -= tHandler;
+            }
+        }
+
+        #endregion
+
+        #region Outport
+
         private void outputPortCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
             outputPortBtn.Enabled = !string.IsNullOrEmpty(outPortName);
@@ -1063,7 +1184,7 @@ namespace AzimuthSuite
             outputPortCbx.Items.AddRange(portsNames.ToArray());
             UIHelpers.TrySetCbxItem(outputPortCbx, usProvider.Data.OutPortName);
             if ((outputPortCbx.SelectedIndex < 0) && (outputPortCbx.Items.Count > 0))
-                outputPortCbx.SelectedIndex = 0;                
+                outputPortCbx.SelectedIndex = 0;
         }
 
         private void outputPortBtn_Click(object sender, EventArgs e)
@@ -1093,6 +1214,8 @@ namespace AzimuthSuite
 
             logger.Write(string.Format("{0}={1}", nameof(azmBase.IsOutPortInitiaziled), azmBase.IsOutPortInitiaziled));
         }
+
+        #endregion
 
         private void infoBtn_Click(object sender, EventArgs e)
         {
@@ -1154,38 +1277,100 @@ namespace AzimuthSuite
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = !isRestart &&
-                (MessageBox.Show("Close application?",
-                string.Format("{0} {1} - Question", appicon, Application.ProductName),
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question) != System.Windows.Forms.DialogResult.Yes);
+            if (trackManager.Changed)
+            {
+                DialogResult dResult = DialogResult.Yes;
+                while (trackManager.Changed && (dResult == DialogResult.Yes))
+                {
+                    dResult = MessageBox.Show("Tracks are not saved. Do you want to save it before exit?",
+                    string.Format("{0} Question", appicon),
+                    isRestart ? MessageBoxButtons.YesNo : MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question);
+
+                    if (dResult == DialogResult.Yes)
+                        utilsTracksExportBtn_Click(utilsTracksExportBtn, EventArgs.Empty);
+                }
+
+                if (dResult == DialogResult.Cancel)
+                    e.Cancel = true;
+            }
+            else
+            {
+                e.Cancel = !isRestart &&
+                    (MessageBox.Show("Close application?",
+                    string.Format("{0} {1} - Question", appicon, Application.ProductName),
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) != DialogResult.Yes);
+            }
         }
 
-        private void MainForm_KeyPress(object sender, KeyPressEventArgs e)
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (ModifierKeys == Keys.Control)
+            if (e.Control)
             {
-                if ((e.KeyChar & (char)Keys.S) != 0)
+                if (e.KeyCode == Keys.P)
                 {
                     printScreenBtn_Click(printScreenBtn, null);
-                    e.Handled = true;
+                    e.SuppressKeyPress = true;
                 }
-                else if ((e.KeyChar & (char)Keys.L) != 0)
+                else if (e.KeyCode == Keys.R)
+                {
+                    if (utilsDeviceResponderSettingsBtn.Enabled)
+                        utilsDeviceResponderSettingsBtn_Click(utilsDeviceResponderSettingsBtn, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.KeyCode == Keys.S)
+                {
+                    if (utilsTrackBtn.Enabled)
+                        utilsTracksExportBtn_Click(utilsTracksExportBtn, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.KeyCode == Keys.L)
                 {
                     if (linkBtn.Enabled)
                         linkBtn_Click(linkBtn, null);
-                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.KeyCode == Keys.H)
+                {
+                    logViewCurrentBtn_Click(logViewCurrentBtn, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.KeyCode == Keys.Up)
+                {
+                    treeExpandBtn_Click(treeExpandBtn, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.KeyCode == Keys.Down)
+                {
+                    treeCollapseBtn_Click(treeExpandBtn, EventArgs.Empty);
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.KeyCode == Keys.I)
+                {                        
+                        tTip.Show(
+                            "Ctrl + P           Save screenshot\r\n" +
+                            "Ctrl + S           Save tracks\r\n" +
+                            "Ctrl + L           Link ON / OFF\r\n" +
+                            "Ctrl + H          View current log\r\n" +
+                            "Ctrl + Down  Collapse remotes\r\n" +
+                            "Ctrl + Up        Expand remotes\r\n" +
+                            "Ctrl + R           Resonder settings editor\r\n" +
+                            "Ctrl + I            Show this tooltip",
+                            tTipWin,
+                            new Point(mainSplit.Left, mainSplit.Top),
+                            8000);
+
+                    e.SuppressKeyPress = true;
                 }
             }
 
-            if (!e.Handled)
+            if (!e.SuppressKeyPress)
             {
                 if (!notesTxb.Focused)
                     notesTxb.Focus();
             }
-            
         }
-
 
         #endregion
 
@@ -1233,7 +1418,7 @@ namespace AzimuthSuite
         {
             remDistanceAndAzimuthVisible = !remDistanceAndAzimuthVisible;
             SyncRemotesTree(azmBase.GetRemotesDescription(itemsToShow));
-            logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(remDistanceAndAzimuthVisible)));            
+            logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(remDistanceAndAzimuthVisible)));
         }
 
         private void isTreeDepthVisibleBtn_Click(object sender, EventArgs e)
@@ -1275,6 +1460,6 @@ namespace AzimuthSuite
 
         #endregion
 
-        #endregion        
+        #endregion
     }
 }

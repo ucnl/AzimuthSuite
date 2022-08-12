@@ -34,6 +34,7 @@
             this.spacingLbl1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.auxPortStatusLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.logLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.moonPhaseLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainToolStrip = new System.Windows.Forms.ToolStrip();
             this.linkBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -52,12 +53,17 @@
             this.utilsBtn = new System.Windows.Forms.ToolStripDropDownButton();
             this.utilsTrackBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.utilsTracksExportBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.utilsDeviceBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.utilsDeviceViewInfoBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.utilsDeviceResponderSettingsBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.infoBtn = new System.Windows.Forms.ToolStripButton();
-            this.outputPortCbx = new System.Windows.Forms.ToolStripComboBox();
             this.outPortsCbxUpdateBtn = new System.Windows.Forms.ToolStripButton();
-            this.outputPortBtn = new System.Windows.Forms.ToolStripButton();
+            this.outputPortCbx = new System.Windows.Forms.ToolStripComboBox();
             this.remoteAddrToOutportCbx = new System.Windows.Forms.ToolStripComboBox();
+            this.outputPortBtn = new System.Windows.Forms.ToolStripButton();
             this.outportBtnsSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.mainSplit = new System.Windows.Forms.SplitContainer();
             this.rPlot = new UCNLUI.Controls.RadialPlot();
@@ -107,9 +113,11 @@
             this.azmPortStatusLbl,
             this.spacingLbl1,
             this.auxPortStatusLbl,
-            this.logLbl});
+            this.logLbl,
+            this.moonPhaseLbl});
             this.mainStatusStrip.Location = new System.Drawing.Point(3, 684);
             this.mainStatusStrip.Name = "mainStatusStrip";
+            this.mainStatusStrip.ShowItemToolTips = true;
             this.mainStatusStrip.Size = new System.Drawing.Size(1000, 34);
             this.mainStatusStrip.TabIndex = 0;
             this.mainStatusStrip.Text = "statusStrip1";
@@ -139,8 +147,14 @@
             // logLbl
             // 
             this.logLbl.Name = "logLbl";
-            this.logLbl.Size = new System.Drawing.Size(766, 28);
+            this.logLbl.Size = new System.Drawing.Size(727, 28);
             this.logLbl.Spring = true;
+            // 
+            // moonPhaseLbl
+            // 
+            this.moonPhaseLbl.Name = "moonPhaseLbl";
+            this.moonPhaseLbl.Size = new System.Drawing.Size(39, 28);
+            this.moonPhaseLbl.Text = "🌙";
             // 
             // mainToolStrip
             // 
@@ -182,7 +196,7 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 43);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
             // 
             // settingsBtn
             // 
@@ -191,7 +205,7 @@
             this.settingsBtn.Image = ((System.Drawing.Image)(resources.GetObject("settingsBtn.Image")));
             this.settingsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.settingsBtn.Name = "settingsBtn";
-            this.settingsBtn.Size = new System.Drawing.Size(162, 40);
+            this.settingsBtn.Size = new System.Drawing.Size(162, 36);
             this.settingsBtn.Text = "⚙ SETTINGS";
             this.settingsBtn.ToolTipText = "Settings editor";
             this.settingsBtn.Click += new System.EventHandler(this.settingsBtn_Click);
@@ -199,7 +213,7 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 43);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
             // 
             // logBtn
             // 
@@ -217,7 +231,7 @@
             this.logBtn.Image = ((System.Drawing.Image)(resources.GetObject("logBtn.Image")));
             this.logBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.logBtn.Name = "logBtn";
-            this.logBtn.Size = new System.Drawing.Size(107, 40);
+            this.logBtn.Size = new System.Drawing.Size(107, 36);
             this.logBtn.Text = "🕮 LOG";
             this.logBtn.ToolTipText = "Log utilities";
             // 
@@ -225,7 +239,8 @@
             // 
             this.logViewCurrentBtn.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.logViewCurrentBtn.Name = "logViewCurrentBtn";
-            this.logViewCurrentBtn.Size = new System.Drawing.Size(374, 36);
+            this.logViewCurrentBtn.ShortcutKeyDisplayString = "Ctrl + H";
+            this.logViewCurrentBtn.Size = new System.Drawing.Size(362, 36);
             this.logViewCurrentBtn.Text = "👀 View current";
             this.logViewCurrentBtn.Click += new System.EventHandler(this.logViewCurrentBtn_Click);
             // 
@@ -233,20 +248,20 @@
             // 
             this.logPlaybackBtn.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.logPlaybackBtn.Name = "logPlaybackBtn";
-            this.logPlaybackBtn.Size = new System.Drawing.Size(374, 36);
+            this.logPlaybackBtn.Size = new System.Drawing.Size(362, 36);
             this.logPlaybackBtn.Text = "▶ Playback...";
             this.logPlaybackBtn.Click += new System.EventHandler(this.logPlaybackBtn_Click);
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(371, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(359, 6);
             // 
             // logClearEmptyEntriesBtn
             // 
             this.logClearEmptyEntriesBtn.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.logClearEmptyEntriesBtn.Name = "logClearEmptyEntriesBtn";
-            this.logClearEmptyEntriesBtn.Size = new System.Drawing.Size(374, 36);
+            this.logClearEmptyEntriesBtn.Size = new System.Drawing.Size(362, 36);
             this.logClearEmptyEntriesBtn.Text = "🧹 Clear empty entries";
             this.logClearEmptyEntriesBtn.Click += new System.EventHandler(this.logDeleteAllEntriesBtn_Click);
             // 
@@ -254,20 +269,20 @@
             // 
             this.logArchiveAllEntriesBtn.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.logArchiveAllEntriesBtn.Name = "logArchiveAllEntriesBtn";
-            this.logArchiveAllEntriesBtn.Size = new System.Drawing.Size(374, 36);
+            this.logArchiveAllEntriesBtn.Size = new System.Drawing.Size(362, 36);
             this.logArchiveAllEntriesBtn.Text = "🗜 Archive all entries";
             this.logArchiveAllEntriesBtn.Click += new System.EventHandler(this.logArchiveAllEntriesBtn_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(371, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(359, 6);
             // 
             // logDeleteAllEntriesBtn
             // 
             this.logDeleteAllEntriesBtn.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.logDeleteAllEntriesBtn.Name = "logDeleteAllEntriesBtn";
-            this.logDeleteAllEntriesBtn.Size = new System.Drawing.Size(374, 36);
+            this.logDeleteAllEntriesBtn.Size = new System.Drawing.Size(362, 36);
             this.logDeleteAllEntriesBtn.Text = "🗑 Delete all entries";
             this.logDeleteAllEntriesBtn.Click += new System.EventHandler(this.logDeleteAllEntriesBtn_Click);
             // 
@@ -275,25 +290,27 @@
             // 
             this.logDoThemAllBtn.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.logDoThemAllBtn.Name = "logDoThemAllBtn";
-            this.logDoThemAllBtn.Size = new System.Drawing.Size(374, 36);
-            this.logDoThemAllBtn.Text = "🧹 + 🗜 + 🗑 Do them all";
+            this.logDoThemAllBtn.Size = new System.Drawing.Size(362, 36);
+            this.logDoThemAllBtn.Text = "🧹+🗜+🗑 Do them all";
             this.logDoThemAllBtn.Click += new System.EventHandler(this.logDoThemAllBtn_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 43);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 39);
             // 
             // utilsBtn
             // 
             this.utilsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.utilsBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.utilsTrackBtn});
+            this.utilsTrackBtn,
+            this.toolStripSeparator8,
+            this.utilsDeviceBtn});
             this.utilsBtn.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.utilsBtn.Image = ((System.Drawing.Image)(resources.GetObject("utilsBtn.Image")));
             this.utilsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.utilsBtn.Name = "utilsBtn";
-            this.utilsBtn.Size = new System.Drawing.Size(129, 40);
+            this.utilsBtn.Size = new System.Drawing.Size(129, 36);
             this.utilsBtn.Text = "🛠 UTILS";
             this.utilsBtn.ToolTipText = "Utilities";
             // 
@@ -304,20 +321,61 @@
             this.utilsTrackBtn.Enabled = false;
             this.utilsTrackBtn.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.utilsTrackBtn.Name = "utilsTrackBtn";
-            this.utilsTrackBtn.Size = new System.Drawing.Size(220, 36);
+            this.utilsTrackBtn.Size = new System.Drawing.Size(224, 36);
             this.utilsTrackBtn.Text = "🗺 TRACKS";
             // 
             // utilsTracksExportBtn
             // 
             this.utilsTracksExportBtn.Name = "utilsTracksExportBtn";
-            this.utilsTracksExportBtn.Size = new System.Drawing.Size(219, 36);
+            this.utilsTracksExportBtn.ShortcutKeyDisplayString = "Ctrl + S";
+            this.utilsTracksExportBtn.Size = new System.Drawing.Size(309, 36);
             this.utilsTracksExportBtn.Text = "💾 Export...";
             this.utilsTracksExportBtn.Click += new System.EventHandler(this.utilsTracksExportBtn_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(221, 6);
+            // 
+            // utilsDeviceBtn
+            // 
+            this.utilsDeviceBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.utilsDeviceViewInfoBtn,
+            this.toolStripSeparator10,
+            this.utilsDeviceResponderSettingsBtn});
+            this.utilsDeviceBtn.Enabled = false;
+            this.utilsDeviceBtn.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.utilsDeviceBtn.Name = "utilsDeviceBtn";
+            this.utilsDeviceBtn.Size = new System.Drawing.Size(224, 36);
+            this.utilsDeviceBtn.Text = "🤖 DEVICE";
+            // 
+            // utilsDeviceViewInfoBtn
+            // 
+            this.utilsDeviceViewInfoBtn.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.utilsDeviceViewInfoBtn.Name = "utilsDeviceViewInfoBtn";
+            this.utilsDeviceViewInfoBtn.Size = new System.Drawing.Size(405, 36);
+            this.utilsDeviceViewInfoBtn.Text = "View info...";
+            this.utilsDeviceViewInfoBtn.Click += new System.EventHandler(this.utilsDeviceViewInfoBtn_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(402, 6);
+            // 
+            // utilsDeviceResponderSettingsBtn
+            // 
+            this.utilsDeviceResponderSettingsBtn.Enabled = false;
+            this.utilsDeviceResponderSettingsBtn.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.utilsDeviceResponderSettingsBtn.Name = "utilsDeviceResponderSettingsBtn";
+            this.utilsDeviceResponderSettingsBtn.ShortcutKeyDisplayString = "Ctrl + R";
+            this.utilsDeviceResponderSettingsBtn.Size = new System.Drawing.Size(405, 36);
+            this.utilsDeviceResponderSettingsBtn.Text = "Responder settings...";
+            this.utilsDeviceResponderSettingsBtn.Click += new System.EventHandler(this.utilsDeviceResponderSettingsBtn_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 43);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 39);
             // 
             // infoBtn
             // 
@@ -327,18 +385,10 @@
             this.infoBtn.Image = ((System.Drawing.Image)(resources.GetObject("infoBtn.Image")));
             this.infoBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.infoBtn.Name = "infoBtn";
-            this.infoBtn.Size = new System.Drawing.Size(107, 40);
+            this.infoBtn.Size = new System.Drawing.Size(107, 36);
             this.infoBtn.Text = "ℹ INFO";
             this.infoBtn.ToolTipText = "Infromation about this application & system";
             this.infoBtn.Click += new System.EventHandler(this.infoBtn_Click);
-            // 
-            // outputPortCbx
-            // 
-            this.outputPortCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.outputPortCbx.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.outputPortCbx.Name = "outputPortCbx";
-            this.outputPortCbx.Size = new System.Drawing.Size(121, 43);
-            this.outputPortCbx.SelectedIndexChanged += new System.EventHandler(this.outputPortCbx_SelectedIndexChanged);
             // 
             // outPortsCbxUpdateBtn
             // 
@@ -347,10 +397,27 @@
             this.outPortsCbxUpdateBtn.Image = ((System.Drawing.Image)(resources.GetObject("outPortsCbxUpdateBtn.Image")));
             this.outPortsCbxUpdateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.outPortsCbxUpdateBtn.Name = "outPortsCbxUpdateBtn";
-            this.outPortsCbxUpdateBtn.Size = new System.Drawing.Size(51, 40);
+            this.outPortsCbxUpdateBtn.Size = new System.Drawing.Size(51, 36);
             this.outPortsCbxUpdateBtn.Text = "🔄";
             this.outPortsCbxUpdateBtn.ToolTipText = "Refresh list of available ports";
             this.outPortsCbxUpdateBtn.Click += new System.EventHandler(this.outPortsCbxUpdateBtn_Click);
+            // 
+            // outputPortCbx
+            // 
+            this.outputPortCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.outputPortCbx.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.outputPortCbx.Name = "outputPortCbx";
+            this.outputPortCbx.Size = new System.Drawing.Size(121, 39);
+            this.outputPortCbx.SelectedIndexChanged += new System.EventHandler(this.outputPortCbx_SelectedIndexChanged);
+            // 
+            // remoteAddrToOutportCbx
+            // 
+            this.remoteAddrToOutportCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.remoteAddrToOutportCbx.DropDownWidth = 200;
+            this.remoteAddrToOutportCbx.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.remoteAddrToOutportCbx.Name = "remoteAddrToOutportCbx";
+            this.remoteAddrToOutportCbx.Size = new System.Drawing.Size(150, 39);
+            this.remoteAddrToOutportCbx.ToolTipText = "Address of the remote to use with output port";
             // 
             // outputPortBtn
             // 
@@ -364,15 +431,6 @@
             this.outputPortBtn.Text = "📣";
             this.outputPortBtn.ToolTipText = "Enable/Disable output port";
             this.outputPortBtn.Click += new System.EventHandler(this.outputPortBtn_Click);
-            // 
-            // remoteAddrToOutportCbx
-            // 
-            this.remoteAddrToOutportCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.remoteAddrToOutportCbx.DropDownWidth = 200;
-            this.remoteAddrToOutportCbx.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.remoteAddrToOutportCbx.Name = "remoteAddrToOutportCbx";
-            this.remoteAddrToOutportCbx.Size = new System.Drawing.Size(150, 39);
-            this.remoteAddrToOutportCbx.ToolTipText = "Address of the remote to use with output port";
             // 
             // outportBtnsSeparator
             // 
@@ -496,7 +554,7 @@
             this.printScreenBtn.Name = "printScreenBtn";
             this.printScreenBtn.Size = new System.Drawing.Size(168, 32);
             this.printScreenBtn.Text = "⎙ SCREENSHOT";
-            this.printScreenBtn.ToolTipText = "Ctrl + S to save a screenshot";
+            this.printScreenBtn.ToolTipText = "Ctrl + P to save a screenshot";
             this.printScreenBtn.Click += new System.EventHandler(this.printScreenBtn_Click);
             // 
             // plotToolStrip
@@ -529,6 +587,7 @@
             this.limboVisibleBtn.Name = "limboVisibleBtn";
             this.limboVisibleBtn.Size = new System.Drawing.Size(36, 32);
             this.limboVisibleBtn.Text = "⛯";
+            this.limboVisibleBtn.ToolTipText = "Limbo visibility on/off";
             this.limboVisibleBtn.Click += new System.EventHandler(this.limboVisibleBtn_Click);
             // 
             // toolStripSeparator5
@@ -547,6 +606,7 @@
             this.historyVisibleBtn.Name = "historyVisibleBtn";
             this.historyVisibleBtn.Size = new System.Drawing.Size(43, 32);
             this.historyVisibleBtn.Text = "📜";
+            this.historyVisibleBtn.ToolTipText = "History visibility on/off";
             this.historyVisibleBtn.Click += new System.EventHandler(this.historyVisibleBtn_Click);
             // 
             // toolStripSeparator6
@@ -565,6 +625,7 @@
             this.notesVisibleBtn.Name = "notesVisibleBtn";
             this.notesVisibleBtn.Size = new System.Drawing.Size(42, 32);
             this.notesVisibleBtn.Text = "📑";
+            this.notesVisibleBtn.ToolTipText = "Notes visible on/off";
             this.notesVisibleBtn.Click += new System.EventHandler(this.notesVisibleBtn_Click);
             // 
             // toolStripSeparator7
@@ -583,6 +644,7 @@
             this.miscInfoVisibleBtn.Name = "miscInfoVisibleBtn";
             this.miscInfoVisibleBtn.Size = new System.Drawing.Size(41, 32);
             this.miscInfoVisibleBtn.Text = "👽";
+            this.miscInfoVisibleBtn.ToolTipText = "Misc info on/off";
             this.miscInfoVisibleBtn.Click += new System.EventHandler(this.miscInfoVisibleBtn_Click);
             // 
             // paletteBtn
@@ -718,7 +780,7 @@
             this.treeExpandBtn.Name = "treeExpandBtn";
             this.treeExpandBtn.Size = new System.Drawing.Size(33, 32);
             this.treeExpandBtn.Text = "▲";
-            this.treeExpandBtn.ToolTipText = "Expand all";
+            this.treeExpandBtn.ToolTipText = "Expand all (Ctrl + Up)";
             this.treeExpandBtn.Click += new System.EventHandler(this.treeExpandBtn_Click);
             // 
             // treeCollapseBtn
@@ -729,7 +791,7 @@
             this.treeCollapseBtn.Name = "treeCollapseBtn";
             this.treeCollapseBtn.Size = new System.Drawing.Size(33, 32);
             this.treeCollapseBtn.Text = "▼";
-            this.treeCollapseBtn.ToolTipText = "Collapse all";
+            this.treeCollapseBtn.ToolTipText = "Collapse all (Ctrl + Down)";
             this.treeCollapseBtn.Click += new System.EventHandler(this.treeCollapseBtn_Click);
             // 
             // toolStripLabel1
@@ -758,7 +820,7 @@
             this.Text = "🐙 Azimuth";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainForm_KeyPress);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.mainStatusStrip.ResumeLayout(false);
             this.mainStatusStrip.PerformLayout();
             this.mainToolStrip.ResumeLayout(false);
@@ -842,6 +904,12 @@
         private System.Windows.Forms.ToolStripSeparator outportBtnsSeparator;
         private System.Windows.Forms.ToolStripButton outPortsCbxUpdateBtn;
         private System.Windows.Forms.ToolStripComboBox remoteAddrToOutportCbx;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem utilsDeviceBtn;
+        private System.Windows.Forms.ToolStripMenuItem utilsDeviceViewInfoBtn;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem utilsDeviceResponderSettingsBtn;
+        private System.Windows.Forms.ToolStripStatusLabel moonPhaseLbl;
     }
 }
 
