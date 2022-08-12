@@ -31,7 +31,7 @@ namespace AzimuthSuite
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    if ((value & (ushort)(1 << i)) == 1)
+                    if ((value & (ushort)(1 << i)) != 0)
                         remotesList.SetItemCheckState(i, CheckState.Checked);
                 }
             }
