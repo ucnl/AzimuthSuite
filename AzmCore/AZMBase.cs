@@ -652,9 +652,7 @@ namespace AzimuthSuite.AzmCore
 
             if (!double.IsNaN(e.HAngle_deg))
             {
-                /// DEBUG
-                //remotes[e.Address].Azimuth_deg.Value = e.HAngle_deg;
-                remotes[e.Address].Azimuth_deg.Value = Algorithms.Wrap360(360 - e.HAngle_deg);
+                remotes[e.Address].Azimuth_deg.Value = e.HAngle_deg;
                 is_a = true;
             }
 
