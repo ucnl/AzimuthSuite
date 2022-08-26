@@ -8,7 +8,6 @@ using UCNLDrivers;
 using UCNLNav;
 using UCNLNMEA;
 using UCNLPhysics;
-using UCNLUI;
 
 namespace AzimuthSuite.AzmCore
 {
