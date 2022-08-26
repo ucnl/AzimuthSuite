@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResponderSettingsEditor));
             this.closeBtn = new System.Windows.Forms.Button();
             this.auxGNSSGroup = new System.Windows.Forms.GroupBox();
             this.remoteAddressCbx = new System.Windows.Forms.ComboBox();
@@ -38,74 +39,51 @@
             // 
             // closeBtn
             // 
-            this.closeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.closeBtn, "closeBtn");
             this.closeBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.closeBtn.Location = new System.Drawing.Point(358, 154);
             this.closeBtn.Name = "closeBtn";
-            this.closeBtn.Size = new System.Drawing.Size(124, 43);
-            this.closeBtn.TabIndex = 5;
-            this.closeBtn.Text = "CLOSE";
             this.closeBtn.UseVisualStyleBackColor = true;
             // 
             // auxGNSSGroup
             // 
+            resources.ApplyResources(this.auxGNSSGroup, "auxGNSSGroup");
             this.auxGNSSGroup.Controls.Add(this.remoteAddressCbx);
-            this.auxGNSSGroup.Location = new System.Drawing.Point(12, 20);
             this.auxGNSSGroup.Name = "auxGNSSGroup";
-            this.auxGNSSGroup.Size = new System.Drawing.Size(244, 84);
-            this.auxGNSSGroup.TabIndex = 9;
             this.auxGNSSGroup.TabStop = false;
-            this.auxGNSSGroup.Text = "Responder address";
             // 
             // remoteAddressCbx
             // 
-            this.remoteAddressCbx.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.remoteAddressCbx, "remoteAddressCbx");
             this.remoteAddressCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.remoteAddressCbx.FormattingEnabled = true;
-            this.remoteAddressCbx.Location = new System.Drawing.Point(6, 42);
             this.remoteAddressCbx.Name = "remoteAddressCbx";
-            this.remoteAddressCbx.Size = new System.Drawing.Size(232, 36);
-            this.remoteAddressCbx.TabIndex = 0;
             // 
             // applyBtn
             // 
-            this.applyBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.applyBtn.Location = new System.Drawing.Point(358, 61);
+            resources.ApplyResources(this.applyBtn, "applyBtn");
             this.applyBtn.Name = "applyBtn";
-            this.applyBtn.Size = new System.Drawing.Size(124, 43);
-            this.applyBtn.TabIndex = 10;
-            this.applyBtn.Text = "📥 APPLY ";
             this.applyBtn.UseVisualStyleBackColor = true;
             this.applyBtn.Click += new System.EventHandler(this.applyBtn_Click);
             // 
             // queryBtn
             // 
-            this.queryBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.queryBtn.Location = new System.Drawing.Point(358, 12);
+            resources.ApplyResources(this.queryBtn, "queryBtn");
             this.queryBtn.Name = "queryBtn";
-            this.queryBtn.Size = new System.Drawing.Size(124, 43);
-            this.queryBtn.TabIndex = 11;
-            this.queryBtn.Text = "📤 QUERY";
             this.queryBtn.UseVisualStyleBackColor = true;
             this.queryBtn.Click += new System.EventHandler(this.queryBtn_Click);
             // 
             // ResponderSettingsEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(494, 209);
             this.Controls.Add(this.queryBtn);
             this.Controls.Add(this.applyBtn);
             this.Controls.Add(this.auxGNSSGroup);
             this.Controls.Add(this.closeBtn);
-            this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ResponderSettingsEditor";
-            this.Text = "ResponderSettings";
             this.auxGNSSGroup.ResumeLayout(false);
             this.ResumeLayout(false);
 

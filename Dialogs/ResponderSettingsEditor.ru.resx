@@ -119,158 +119,33 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="closeBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 154</value>
-  </data>
-  <data name="remoteAddressCbx.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 42</value>
-  </data>
-  <data name="&gt;&gt;auxGNSSGroup.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="auxGNSSGroup.Text" xml:space="preserve">
-    <value>Responder address</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="applyBtn.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="queryBtn.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
+    <value>299, 154</value>
   </data>
   <data name="closeBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 43</value>
-  </data>
-  <data name="&gt;&gt;applyBtn.Name" xml:space="preserve">
-    <value>applyBtn</value>
-  </data>
-  <data name="queryBtn.Text" xml:space="preserve">
-    <value>📤 QUERY</value>
-  </data>
-  <data name="&gt;&gt;applyBtn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;closeBtn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;remoteAddressCbx.Name" xml:space="preserve">
-    <value>remoteAddressCbx</value>
-  </data>
-  <data name="auxGNSSGroup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>244, 84</value>
-  </data>
-  <data name="applyBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 61</value>
-  </data>
-  <data name="&gt;&gt;queryBtn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;remoteAddressCbx.Parent" xml:space="preserve">
-    <value>auxGNSSGroup</value>
-  </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="&gt;&gt;remoteAddressCbx.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>ResponderSettings</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ResponderSettingsEditor</value>
-  </data>
-  <data name="&gt;&gt;queryBtn.Name" xml:space="preserve">
-    <value>queryBtn</value>
-  </data>
-  <data name="queryBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="closeBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="&gt;&gt;queryBtn.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="remoteAddressCbx.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
-  </data>
-  <data name="queryBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 12</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>11, 28</value>
-  </data>
-  <data name="queryBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 43</value>
-  </data>
-  <data name="applyBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="&gt;&gt;applyBtn.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;auxGNSSGroup.Name" xml:space="preserve">
-    <value>auxGNSSGroup</value>
-  </data>
-  <data name="&gt;&gt;auxGNSSGroup.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;closeBtn.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;applyBtn.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;closeBtn.Name" xml:space="preserve">
-    <value>closeBtn</value>
-  </data>
-  <data name="remoteAddressCbx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 36</value>
-  </data>
-  <data name="closeBtn.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>183, 43</value>
   </data>
   <data name="closeBtn.Text" xml:space="preserve">
-    <value>CLOSE</value>
+    <value>ВЫХОД</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>494, 209</value>
+  <data name="auxGNSSGroup.Text" xml:space="preserve">
+    <value>Адрес маяка</value>
   </data>
-  <data name="&gt;&gt;auxGNSSGroup.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="auxGNSSGroup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 20</value>
-  </data>
-  <data name="&gt;&gt;closeBtn.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="applyBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>299, 61</value>
   </data>
   <data name="applyBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 43</value>
-  </data>
-  <data name="&gt;&gt;queryBtn.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;remoteAddressCbx.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="auxGNSSGroup.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="remoteAddressCbx.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>183, 43</value>
   </data>
   <data name="applyBtn.Text" xml:space="preserve">
-    <value>📥 APPLY </value>
+    <value>📥 СОХРАНИТЬ</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="queryBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>299, 12</value>
+  </data>
+  <data name="queryBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 43</value>
+  </data>
+  <data name="queryBtn.Text" xml:space="preserve">
+    <value>📤 ЗАПРОСИТЬ</value>
+  </data>
 </root>
