@@ -9,6 +9,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 using UCNLDrivers;
 using UCNLUI;
@@ -205,6 +206,7 @@ namespace AzimuthSuite
 
         ToolTip tTip;
         IWin32Window tTipWin;
+        int mpIdx = 0;
 
         #endregion
 
@@ -283,6 +285,7 @@ namespace AzimuthSuite
             sProvider = new SimpleSettingsProviderXML<SettingsContainer>();
             sProvider.isSwallowExceptions = false;
 
+            logger.Write(string.Format("Current culture: {0}", Thread.CurrentThread.CurrentUICulture.Name));
             logger.Write(string.Format("Loading settings from {0}", settingsFileName));
 
             try
@@ -359,16 +362,28 @@ namespace AzimuthSuite
                     {
                         settingsBtn.Enabled = true;
                         linkBtn.Enabled = true;
-                        logPlaybackBtn.Text = "▶ Playback...";
-                        MessageBox.Show(string.Format("Log file \"{0}\" playback is finished", lPlayer.LogFileName), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        logPlaybackBtn.Text = string.Format("▶ {0}", LocalisedStrings.MainForm_Playback);
+                        MessageBox.Show(string.Format("{0} \"{1}\" {2}",
+                            LocalisedStrings.MainForm_LogFile,
+                            lPlayer.LogFileName,
+                            LocalisedStrings.MainForm_PlaybackIsFinished),
+                            LocalisedStrings.MainForm_Information, 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Information);
                     });
                 }
                 else
                 {
                     settingsBtn.Enabled = true;
                     linkBtn.Enabled = true;
-                    logPlaybackBtn.Text = "▶ Playback...";
-                    MessageBox.Show(string.Format("Log file \"{0}\" playback is finished", lPlayer.LogFileName), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logPlaybackBtn.Text = string.Format("▶ {0}", LocalisedStrings.MainForm_Playback);
+                    MessageBox.Show(string.Format("{0} \"{1}\" {2}",
+                        LocalisedStrings.MainForm_LogFile,
+                        lPlayer.LogFileName,
+                        LocalisedStrings.MainForm_PlaybackIsFinished),
+                        LocalisedStrings.MainForm_Information,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
             };
 
@@ -500,10 +515,9 @@ namespace AzimuthSuite
 
             tTip = new ToolTip();
             tTipWin = this;
-            tTip.IsBalloon = true;
             tTip.ToolTipIcon = ToolTipIcon.Info;
-            tTip.ToolTipTitle = "Hotkeys tip";
-
+            tTip.ToolTipTitle = LocalisedStrings.MainForm_HotKeysTip;
+            
             #endregion
 
             #region Debug
@@ -788,7 +802,13 @@ namespace AzimuthSuite
             logger.Write(ex);
 
             if (isMsgBox)
-                MessageBox.Show(ex.ToString(), string.Format("{0} {1} - Error", appicon, Application.ProductName), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.ToString(), 
+                    string.Format("{0} {1} - {2}", 
+                    appicon, 
+                    Application.ProductName,
+                    LocalisedStrings.MainForm_Error),
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
         }
 
         private string SaveFullScreenshot()
@@ -805,7 +825,7 @@ namespace AzimuthSuite
                 var path = Path.Combine(snapshotsPath, fName);
                 target.Save(path, ImageFormat.Png);
 
-                return string.Format("Screenshot saved: {0}", fName);
+                return string.Format("{0}: {1}", LocalisedStrings.MainForm_ScreenshotSaved, fName);
             }
             catch (Exception ex)
             {
@@ -898,7 +918,8 @@ namespace AzimuthSuite
 
             using (SettingsEditor sEditor = new SettingsEditor())
             {
-                sEditor.Text = string.Format("{0} {1} - Settings", appicon, Application.ProductName);
+                sEditor.Text = string.Format("{0} {1} - {2}", 
+                    appicon, Application.ProductName, LocalisedStrings.MainForm_Settings);
                 sEditor.Value = sProvider.Data;
 
                 if (sEditor.ShowDialog() == DialogResult.OK)
@@ -918,8 +939,9 @@ namespace AzimuthSuite
             }
 
             if (isSaved &&
-                MessageBox.Show("Settings has been updated. Restart application to apply new settings?",
-                string.Format("{0} {1} - Question", appicon, Application.ProductName),
+                MessageBox.Show(LocalisedStrings.MainForm_RestartPrompt,
+                string.Format("{0} {1} - {2}", 
+                appicon, Application.ProductName, LocalisedStrings.MainForm_Question),
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
             {
                 isRestart = true;
@@ -945,15 +967,18 @@ namespace AzimuthSuite
         {
             if (lPlayer.IsRunning)
             {
-                if (MessageBox.Show("Log playback is currently active, do you want to abort it?",
-                    string.Format("{0} {1} - Question", appicon, Application.ProductName), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show(LocalisedStrings.MainForm_LogPlaybackAbortPrompt,
+                    string.Format("{0} {1} - {2}", 
+                    appicon, Application.ProductName, LocalisedStrings.MainForm_Question), 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     lPlayer.RequestToStop();
             }
             else
             {
                 using (OpenFileDialog oDialog = new OpenFileDialog())
                 {
-                    oDialog.Title = string.Format("{0} Select a log file to playback...", appicon);
+                    oDialog.Title = string.Format("{0} {1}", 
+                        appicon, LocalisedStrings.MainForm_LogPlaybackSelectDialogTitle);
                     oDialog.DefaultExt = "log";
                     oDialog.Filter = "Log files (*.log)|*.log";
 
@@ -961,7 +986,7 @@ namespace AzimuthSuite
                     {
                         lPlayer.Playback(oDialog.FileName);
 
-                        logPlaybackBtn.Text = "⏹ Stop playback";
+                        logPlaybackBtn.Text = string.Format("⏹ {0}", LocalisedStrings.MainForm_LogPlaybackStopBtnText);
                         settingsBtn.Enabled = false;
                         linkBtn.Enabled = false;
                     }
@@ -971,19 +996,32 @@ namespace AzimuthSuite
 
         private void logCLearEmptyEntriesBtn_Click(object sender, EventArgs e)
         {
-            var fNum = RemoveEmptyEntries(logPath, logger.FileName, 2048);
+            if (MessageBox.Show(LocalisedStrings.MainForm_LogDeleteEmptyEntriesPrompt,
+                string.Format("{0} {1} - {2}", 
+                appicon, 
+                Application.ProductName, 
+                LocalisedStrings.MainForm_Question),
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                var fNum = RemoveEmptyEntries(logPath, logger.FileName, 2048);
 
-            MessageBox.Show(string.Format("{0} File(s) was/were deleted.", fNum),
-                string.Format("{0} {1} - Information", appicon, Application.ProductName),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+                MessageBox.Show(string.Format("{0} {1}", fNum, LocalisedStrings.MainForm_FilesWereDeleted),
+                    string.Format("{0} {1} - {2}", 
+                    appicon, 
+                    Application.ProductName, 
+                    LocalisedStrings.MainForm_Information),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
         }
 
         private void logArchiveAllEntriesBtn_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog sDialog = new SaveFileDialog())
             {
-                sDialog.Title = string.Format("{0} Select a name of acrhive...", appicon);
+                sDialog.Title = string.Format("{0} {1}", 
+                    appicon, LocalisedStrings.MainForm_LogArchiveDialogTitle);
                 sDialog.Filter = "Zip-archives (*.zip)|*.zip";
                 sDialog.DefaultExt = "zip";
                 sDialog.FileName = string.Format("LOG_Archive_{0}", StrUtils.GetYMDString());
@@ -993,7 +1031,8 @@ namespace AzimuthSuite
                     try
                     {
                         ZipFile.CreateFromDirectory(logPath, sDialog.FileName);
-                        logLbl.Text = string.Format("Log directory compressed to {0}", Path.GetFileName(sDialog.FileName));
+                        logLbl.Text = string.Format("{0} {1}",
+                           LocalisedStrings.MainForm_LogArchiveResult, Path.GetFileName(sDialog.FileName));
                     }
                     catch (Exception ex)
                     {
@@ -1005,16 +1044,19 @@ namespace AzimuthSuite
 
         private void logDeleteAllEntriesBtn_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Delete all log entries? (This action cannot be undone!)",
-                                string.Format("{0} {1} - Warning!", appicon, Application.ProductName),
+            if (MessageBox.Show(LocalisedStrings.MainForm_LogDeleteAllEntriesPrompt,
+                                string.Format("{0} {1} - {2}", 
+                                appicon, Application.ProductName, LocalisedStrings.MainForm_Warning),
 
                                 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
             {
 
                 var dirNum = ClearAllEntries(logPath);
 
-                MessageBox.Show(string.Format("{0} Entries was/were deleted.", dirNum),
-                    string.Format("{0} {1} - Information", appicon, Application.ProductName),
+                MessageBox.Show(string.Format("{0} {1}", 
+                    dirNum, LocalisedStrings.MainForm_EntriesWereDeleted),
+                    string.Format("{0} {1} - {2}",
+                    appicon, Application.ProductName, LocalisedStrings.MainForm_Information),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
@@ -1022,8 +1064,9 @@ namespace AzimuthSuite
 
         private void logDoThemAllBtn_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Move all log entries to an archive? (This action cannot be undone!)",
-                               string.Format("{0} {1} - Warning!", appicon, Application.ProductName),
+            if (MessageBox.Show(LocalisedStrings.MainForm_MoveLogsToArchivePrompt,
+                               string.Format("{0} {1} - {2}",
+                               appicon, Application.ProductName, LocalisedStrings.MainForm_Warning),
                                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
             {
                 RemoveEmptyEntries(logPath, logFileName, 2048);
@@ -1031,7 +1074,8 @@ namespace AzimuthSuite
                 bool archived = false;
                 using (SaveFileDialog sDialog = new SaveFileDialog())
                 {
-                    sDialog.Title = string.Format("{0} Select a name of acrhive...", appicon);
+                    sDialog.Title = string.Format("{0} {1}", 
+                        appicon, LocalisedStrings.MainForm_MoveLogsToArchivePrompt);
                     sDialog.Filter = "Zip-archives (*.zip)|*.zip";
                     sDialog.DefaultExt = "zip";
                     sDialog.FileName = string.Format("LOG_Archive_{0}", StrUtils.GetYMDString());
@@ -1041,7 +1085,8 @@ namespace AzimuthSuite
                         try
                         {
                             ZipFile.CreateFromDirectory(logPath, sDialog.FileName);
-                            logLbl.Text = string.Format("Log directory compressed to {0}", Path.GetFileName(sDialog.FileName));
+                            logLbl.Text = string.Format("{0} {1}",
+                               LocalisedStrings.MainForm_LogMoveToArchiveResult, Path.GetFileName(sDialog.FileName));
                             archived = true;
                         }
                         catch (Exception ex)
@@ -1053,8 +1098,9 @@ namespace AzimuthSuite
 
                 if (!archived)
                 {
-                    MessageBox.Show("There were some problems during archive creation, log entries will not be deleted",
-                        string.Format("{0} {1} - Error", appicon, Application.ProductName),
+                    MessageBox.Show(LocalisedStrings.MainForm_LogMoveToArchiveProblemsResult,
+                        string.Format("{0} {1} - {2}",
+                        appicon, Application.ProductName, LocalisedStrings.MainForm_Error),
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
@@ -1074,7 +1120,8 @@ namespace AzimuthSuite
             bool saved = false;
             using (SaveFileDialog sDialog = new SaveFileDialog())
             {
-                sDialog.Title = string.Format("{0} Export tracks to...", appicon);
+                sDialog.Title = string.Format("{0} {1}", 
+                    appicon, LocalisedStrings.MainForm_TracksExportDialogTitle);
                 sDialog.Filter = "KML (*.kml)|*.kml|CSV (*.csv)|*.csv";
                 sDialog.FileName = StrUtils.GetHMSString();
 
@@ -1103,8 +1150,8 @@ namespace AzimuthSuite
             }
 
             if (saved &&
-                (MessageBox.Show("Tracks are saved, clear all tracks data?",
-                string.Format("{0} {1} - Question", appicon, Application.ProductName),
+                (MessageBox.Show(LocalisedStrings.MainForm_ClearTracksPrompt,
+                string.Format("{0} {1} - {2}", appicon, Application.ProductName, LocalisedStrings.MainForm_Question),
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.Yes))
                 trackManager.Clear();
@@ -1114,7 +1161,7 @@ namespace AzimuthSuite
         {
             using (DeviceInfoView dDialog = new DeviceInfoView())
             {
-                dDialog.Text = string.Format("{0} Device information", appicon);
+                dDialog.Text = string.Format("{0} {1}", appicon, LocalisedStrings.MainForm_DeviceInformation);
                 dDialog.TextBoxText = string.Format("Device: {0}\r\nSystem: {1}\r\n   S/N: {2}\r\n",
                     azmBase.DeviceType,
                     azmBase.DeviceVersionInfo,
@@ -1128,7 +1175,8 @@ namespace AzimuthSuite
         {
             using (ResponderSettingsEditor rsEditor = new ResponderSettingsEditor())
             {
-                rsEditor.Text = string.Format("{0} Responder settings", appicon);
+                rsEditor.Text = string.Format("{0} {1}", 
+                    appicon, LocalisedStrings.MainForm_ResponderSettingsDialogTitle);
                 rsEditor.RemoteAddress = azmBase.DeviceResponderAddress;
 
                 void tHandler(object st, RSTSReceivedEventArgs et)
@@ -1157,8 +1205,8 @@ namespace AzimuthSuite
                 {
                     if (!azmBase.QueryResponderAddrGet())
                         MessageBox.Show(
-                            "Request was not sent, try to repeat later.",
-                            string.Format("{0} Error", appicon),
+                            LocalisedStrings.MainForm_ResponderRequestFailed,
+                            string.Format("{0} {1} - {2}", appicon, Application.ProductName, LocalisedStrings.MainForm_Error),
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
                 };
@@ -1199,8 +1247,12 @@ namespace AzimuthSuite
                 {
                     azmBase.RemoteToOutport = RemoteAddrToOutput;
                     azmBase.InitOutputPort(outPortName, sProvider.Data.OutPortBaudrate);
-                    logger.Write(string.Format("Initializing outPort on {0}, {1}, Remote Address: {2}",
-                        outPortName, sProvider.Data.OutPortBaudrate, RemoteAddrToOutput));
+                    logger.Write(string.Format("{0} {1}, {2}, {3}: {4}",
+                        LocalisedStrings.MainForm_InitializingOutPortOn,
+                        outPortName, 
+                        sProvider.Data.OutPortBaudrate,
+                        LocalisedStrings.MainForm_RestartPrompt,
+                        RemoteAddrToOutput));
                 }
                 catch (Exception ex)
                 {
@@ -1282,8 +1334,8 @@ namespace AzimuthSuite
                 DialogResult dResult = DialogResult.Yes;
                 while (trackManager.Changed && (dResult == DialogResult.Yes))
                 {
-                    dResult = MessageBox.Show("Tracks are not saved. Do you want to save it before exit?",
-                    string.Format("{0} Question", appicon),
+                    dResult = MessageBox.Show(LocalisedStrings.MainForm_TracksSavePrompt,
+                    string.Format("{0} {1} - {2}", appicon, Application.ProductName, LocalisedStrings.MainForm_Question),
                     isRestart ? MessageBoxButtons.YesNo : MessageBoxButtons.YesNoCancel,
                     MessageBoxIcon.Question);
 
@@ -1297,8 +1349,8 @@ namespace AzimuthSuite
             else
             {
                 e.Cancel = !isRestart &&
-                    (MessageBox.Show("Close application?",
-                    string.Format("{0} {1} - Question", appicon, Application.ProductName),
+                    (MessageBox.Show(LocalisedStrings.MainForm_ApplicationClosePrompt,
+                    string.Format("{0} {1} - {2}", appicon, Application.ProductName, LocalisedStrings.MainForm_Question),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) != DialogResult.Yes);
             }
@@ -1347,19 +1399,13 @@ namespace AzimuthSuite
                     e.SuppressKeyPress = true;
                 }
                 else if (e.KeyCode == Keys.I)
-                {                        
-                        tTip.Show(
-                            "Ctrl + P           Save screenshot\r\n" +
-                            "Ctrl + S           Save tracks\r\n" +
-                            "Ctrl + L           Link ON / OFF\r\n" +
-                            "Ctrl + H          View current log\r\n" +
-                            "Ctrl + Down  Collapse remotes\r\n" +
-                            "Ctrl + Up        Expand remotes\r\n" +
-                            "Ctrl + R           Resonder settings editor\r\n" +
-                            "Ctrl + I            Show this tooltip",
-                            tTipWin,
-                            new Point(mainSplit.Left, mainSplit.Top),
-                            8000);
+                {
+                    // "Ctrl + P  Save screenshot\r\nCtrl + S  Save tracks\r\nCtrl + L  Link ON / OFF\r\nCtrl + H  View current log\r\nCtrl + 🠗  Collapse remotes\r\nCtrl + 🠕  Expand remotes\r\nCtrl + R  Resonder settings editor\r\nCtrl + I  Show this tooltip"
+                    // "Ctrl + P  Сохранить снимок экрана\r\nCtrl + S  Сохранить треки\r\nCtrl + L  Соединение ВКЛ. / ВЫКЛ.\r\nCtrl + H  Открыть текущий файл журнала\r\nCtrl + 🠗  Свернуть список\r\nCtrl + 🠕  Развернуть список\r\nCtrl + R  Настройки маяка-ответчика\r\nCtrl + I  Открыть эту подсказку"
+                    tTip.Show(LocalisedStrings.MainForm_HotkeysToolTipText.Replace("|", "\r\n"),
+                        tTipWin,
+                        new Point(mainSplit.Left, mainSplit.Top),
+                        8000);
 
                     e.SuppressKeyPress = true;
                 }
@@ -1457,6 +1503,34 @@ namespace AzimuthSuite
         }
 
         #endregion
+
+        #region mainStatusStrip
+        private void moonPhaseLbl_Click(object sender, EventArgs e)
+        {
+            mpIdx = 0;
+            uiTimer.Start();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region uiTimer
+
+        private void uiTimer_Tick(object sender, EventArgs e)
+        {
+            if (mpIdx < AstroAndTimeUtils.MoonPhaseNumber)
+            {
+                moonPhaseLbl.Text = AstroAndTimeUtils.GetMoonPhaseByIdx(mpIdx);
+                mpIdx++;
+            }
+            else
+            {
+                uiTimer.Stop();
+                moonPhaseLbl.Text = AstroAndTimeUtils.MoonPhaseIcon(DateTime.Now);
+                moonPhaseLbl.ToolTipText = AstroAndTimeUtils.MoonPhaseDescription(DateTime.Now);
+            }
+        }
 
         #endregion
 

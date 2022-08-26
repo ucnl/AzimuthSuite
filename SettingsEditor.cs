@@ -204,7 +204,7 @@ namespace AzimuthSuite
         {
             using (SalinityDialog sDialog = new SalinityDialog())
             {
-                sDialog.Text = "Water salinity";
+                sDialog.Text = LocalisedStrings.SettingsEditor_WaterSalinityDialogTitle;
                 if (sDialog.ShowDialog() == DialogResult.OK)
                 {
                     salinity_PSU = sDialog.Salinity;
