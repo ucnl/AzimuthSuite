@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainForm_ApplicationClosePrompt" xml:space="preserve">
+    <value>关闭应用程序？</value>
+  </data>
+  <data name="MainForm_ClearTracksPrompt" xml:space="preserve">
+    <value>曲目已保存，清除所有曲目数据？</value>
+  </data>
+  <data name="MainForm_DeviceInformation" xml:space="preserve">
+    <value>设备信息</value>
+  </data>
+  <data name="MainForm_EntriesWereDeleted" xml:space="preserve">
+    <value>条目被/被删除。</value>
+  </data>
+  <data name="MainForm_Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="MainForm_FilesWereDeleted" xml:space="preserve">
+    <value>文件被被删除</value>
+  </data>
+  <data name="MainForm_HotKeysTip" xml:space="preserve">
+    <value>热键提示</value>
+  </data>
+  <data name="MainForm_HotkeysToolTipText" xml:space="preserve">
+    <value>Ctrl + P  Save screenshot|Ctrl + S  Save tracks|Ctrl + L  Link ON / OFF|Ctrl + H  View current log|Ctrl + 🠗  Collapse remotes|Ctrl + 🠕  Expand remotes|Ctrl + R  Resonder settings editor|Ctrl + I  Show this tooltip</value>
+  </data>
+  <data name="MainForm_Information" xml:space="preserve">
+    <value>信息</value>
+  </data>
+  <data name="MainForm_InitializingOutPortOn" xml:space="preserve">
+    <value>初始化输出端口</value>
+  </data>
+  <data name="MainForm_LogArchiveDialogTitle" xml:space="preserve">
+    <value>选择档案名称...</value>
+  </data>
+  <data name="MainForm_LogArchiveResult" xml:space="preserve">
+    <value>日志目录压缩到</value>
+  </data>
+  <data name="MainForm_LogDeleteAllEntriesPrompt" xml:space="preserve">
+    <value>删除所有日志条目？（此操作无法撤消！）</value>
+  </data>
+  <data name="MainForm_LogDeleteEmptyEntriesPrompt" xml:space="preserve">
+    <value>删除所有小于 2 kB 的日志文件？ （此操作无法撤消！）</value>
+  </data>
+  <data name="MainForm_LogFile" xml:space="preserve">
+    <value>日志文件</value>
+  </data>
+  <data name="MainForm_LogMoveToArchiveProblemsResult" xml:space="preserve">
+    <value>归档创建过程中出现一些问题，日志条目不会被删除</value>
+  </data>
+  <data name="MainForm_LogMoveToArchiveResult" xml:space="preserve">
+    <value>日志目录压缩到</value>
+  </data>
+  <data name="MainForm_LogPlaybackAbortPrompt" xml:space="preserve">
+    <value>日志播放当前处于活动状态，您要中止吗？</value>
+  </data>
+  <data name="MainForm_LogPlaybackSelectDialogTitle" xml:space="preserve">
+    <value>选择要回放的日志文件...</value>
+  </data>
+  <data name="MainForm_LogPlaybackStopBtnText" xml:space="preserve">
+    <value>停止播放</value>
+  </data>
+  <data name="MainForm_MoveLogsToArchivePrompt" xml:space="preserve">
+    <value>将所有日志条目移至存档？ （此操作无法撤消！）</value>
+  </data>
+  <data name="MainForm_Playback" xml:space="preserve">
+    <value>回放...</value>
+  </data>
+  <data name="MainForm_PlaybackIsFinished" xml:space="preserve">
+    <value>播放结束</value>
+  </data>
+  <data name="MainForm_Question" xml:space="preserve">
+    <value>问题</value>
+  </data>
+  <data name="MainForm_RemoteAddress" xml:space="preserve">
+    <value>远程地址</value>
+  </data>
+  <data name="MainForm_ResponderRequestFailed" xml:space="preserve">
+    <value>请求未发送，请稍后重试。</value>
+  </data>
+  <data name="MainForm_ResponderSettingsDialogTitle" xml:space="preserve">
+    <value>响应程序设置</value>
+  </data>
+  <data name="MainForm_RestartPrompt" xml:space="preserve">
+    <value>设置已更新。 重新启动应用程序以应用新设置？</value>
+  </data>
+  <data name="MainForm_ScreenshotSaved" xml:space="preserve">
+    <value>屏幕截图已保存</value>
+  </data>
+  <data name="MainForm_Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="MainForm_TracksExportDialogTitle" xml:space="preserve">
+    <value>将曲目导出到...</value>
+  </data>
+  <data name="MainForm_TracksSavePrompt" xml:space="preserve">
+    <value>不保存曲目。 退出前要保存吗？</value>
+  </data>
+  <data name="MainForm_Warning" xml:space="preserve">
+    <value>警告！</value>
+  </data>
+  <data name="SettingsEditor_WaterSalinityDialogTitle" xml:space="preserve">
+    <value>水盐度</value>
+  </data>
+</root>

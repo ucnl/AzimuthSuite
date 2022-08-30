@@ -124,12 +124,6 @@
   <data name="&gt;&gt;remotesPanel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;isUseOutputPortChb.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="remotesList.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 30</value>
   </data>
@@ -291,8 +285,8 @@
   <data name="groupBox3.Text" xml:space="preserve">
     <value>Maximal range, m</value>
   </data>
-  <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;auxGNSSBaudrateCbx.Name" xml:space="preserve">
+    <value>auxGNSSBaudrateCbx</value>
   </data>
   <data name="remoteAddressToOutputCbx.Size" type="System.Drawing.Size, System.Drawing">
     <value>232, 36</value>
@@ -335,6 +329,9 @@
   </data>
   <data name="remotesPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 26</value>
+  </data>
+  <data name="remotesCheckAllBtn.Text" xml:space="preserve">
+    <value>🗹</value>
   </data>
   <data name="&gt;&gt;yOffsetEdit.Name" xml:space="preserve">
     <value>yOffsetEdit</value>
@@ -420,9 +417,6 @@
   <data name="&gt;&gt;toolStripLabel1.Name" xml:space="preserve">
     <value>toolStripLabel1</value>
   </data>
-  <data name="styDialogBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>52, 34</value>
-  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>11, 28</value>
   </data>
@@ -461,6 +455,9 @@
   </data>
   <data name="outputPortGroup.Text" xml:space="preserve">
     <value>Output port Baudrate</value>
+  </data>
+  <data name="&gt;&gt;remotesListToolStrip.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="yOffsetEdit.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 44</value>
@@ -513,8 +510,8 @@
   <data name="&gt;&gt;styDialogBtn.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="antennaAdjustAngleEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>225, 34</value>
+  <data name="styDialogBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 34</value>
   </data>
   <data name="&gt;&gt;remoteAddressToOutputCbx.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -569,9 +566,6 @@
   </data>
   <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
     <value>6</value>
-  </data>
-  <data name="outputPortGroup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>495, 84</value>
   </data>
   <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
     <value>531, 56</value>
@@ -669,6 +663,9 @@
   <data name="&gt;&gt;outputPortGroup.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;xOffsetEdit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;setDaultsBtn.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
@@ -693,8 +690,8 @@
   <data name="&gt;&gt;setDaultsBtn.Name" xml:space="preserve">
     <value>setDaultsBtn</value>
   </data>
-  <data name="&gt;&gt;maxRangeEdit.Name" xml:space="preserve">
-    <value>maxRangeEdit</value>
+  <data name="&gt;&gt;isUseOutputPortChb.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;auxGNSSGroup.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -702,8 +699,8 @@
   <data name="&gt;&gt;styEdit.Name" xml:space="preserve">
     <value>styEdit</value>
   </data>
-  <data name="&gt;&gt;remotesListToolStrip.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;maxRangeEdit.Parent" xml:space="preserve">
+    <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;auxGNSSGroup.Parent" xml:space="preserve">
     <value>$this</value>
@@ -714,8 +711,8 @@
   <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
     <value>237, 84</value>
   </data>
-  <data name="&gt;&gt;auxGNSSBaudrateCbx.Name" xml:space="preserve">
-    <value>auxGNSSBaudrateCbx</value>
+  <data name="outputPortGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>495, 84</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 27</value>
@@ -741,8 +738,8 @@
   <data name="isUseAUXGNSSChb.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;xOffsetEdit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;maxRangeEdit.Name" xml:space="preserve">
+    <value>maxRangeEdit</value>
   </data>
   <data name="&gt;&gt;remoteAddressToOutputCbx.Name" xml:space="preserve">
     <value>remoteAddressToOutputCbx</value>
@@ -795,11 +792,14 @@
   <data name="isUseAUXGNSSChb.Text" xml:space="preserve">
     <value>Use AUX GNSS</value>
   </data>
+  <data name="antennaAdjustAngleEdit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>225, 34</value>
+  </data>
   <data name="remotesUncheckAllBtn.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
-  <data name="&gt;&gt;maxRangeEdit.Parent" xml:space="preserve">
-    <value>groupBox3</value>
+  <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="xOffsetEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>225, 34</value>
@@ -813,8 +813,8 @@
   <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="remotesCheckAllBtn.Text" xml:space="preserve">
-    <value>🗹</value>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="remotesList.IntegralHeight" type="System.Boolean, mscorlib">
     <value>False</value>

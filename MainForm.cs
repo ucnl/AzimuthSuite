@@ -1,5 +1,5 @@
-﻿using AzimuthSuit.Dialogs;
-using AzimuthSuite.AzmCore;
+﻿using AzimuthSuite.AzmCore;
+using AzimuthSuite.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -216,6 +216,9 @@ namespace AzimuthSuite
 
         public MainForm()
         {
+            //Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("zh-ZH");
+            //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-ZH");
+
             InitializeComponent();
 
             #region Early init

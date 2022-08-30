@@ -97,6 +97,16 @@
     <Compile Include="Dialogs\ResponderSettingsEditor.Designer.cs">
       <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="LocalisedStrings.ko.Designer.cs">
+      <DependentUpon>LocalisedStrings.ko.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="LocalisedStrings.zh.Designer.cs">
+      <DependentUpon>LocalisedStrings.zh.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="LocalisedStrings.tr-TR.Designer.cs">
       <DependentUpon>LocalisedStrings.tr-TR.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -132,11 +142,25 @@
     <EmbeddedResource Include="Dialogs\DeviceInfoView.resx">
       <DependentUpon>DeviceInfoView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ResponderSettingsEditor.ko.resx">
+      <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ResponderSettingsEditor.resx">
       <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ResponderSettingsEditor.ru.resx">
       <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ResponderSettingsEditor.zh.resx">
+      <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalisedStrings.ko.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalisedStrings.ko.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalisedStrings.zh.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalisedStrings.zh.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalisedStrings.tr-TR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -153,6 +177,9 @@
     <EmbeddedResource Include="MainForm.en.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.ko.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -160,6 +187,9 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.tr.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.zh.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -175,6 +205,9 @@
     <EmbeddedResource Include="SettingsEditor.en.resx">
       <DependentUpon>SettingsEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SettingsEditor.ko.resx">
+      <DependentUpon>SettingsEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingsEditor.resx">
       <DependentUpon>SettingsEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -182,6 +215,9 @@
       <DependentUpon>SettingsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsEditor.tr.resx">
+      <DependentUpon>SettingsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsEditor.zh.resx">
       <DependentUpon>SettingsEditor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
