@@ -151,6 +151,9 @@
     <EmbeddedResource Include="Dialogs\ResponderSettingsEditor.ru.resx">
       <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ResponderSettingsEditor.tr.resx">
+      <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ResponderSettingsEditor.zh.resx">
       <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
     </EmbeddedResource>
