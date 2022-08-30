@@ -5,7 +5,7 @@ using UCNLDrivers;
 using UCNLUI;
 using UCNLUI.Dialogs;
 
-namespace AzimuthSuit.Dialogs
+namespace AzimuthSuite.Dialogs
 {
     public partial class ResponderSettingsEditor : Form
     {

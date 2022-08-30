@@ -1,4 +1,4 @@
-﻿namespace AzimuthSuit.Dialogs
+﻿namespace AzimuthSuite.Dialogs
 {
     partial class DeviceInfoView
     {

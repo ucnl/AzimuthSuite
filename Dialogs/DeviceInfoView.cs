@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace AzimuthSuit.Dialogs
+namespace AzimuthSuite.Dialogs
 {
     public partial class DeviceInfoView : Form
     {
