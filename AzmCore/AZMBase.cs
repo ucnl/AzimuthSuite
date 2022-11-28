@@ -228,8 +228,7 @@ namespace AzimuthSuite.AzmCore
         #region Properties
 
         bool disposed = false;
-
-        AZMPort azmPort;
+        readonly AZMPort azmPort;
         uGNSSSerialPort gnssPort;
         NMEASerialPort outPort;
 
@@ -375,9 +374,11 @@ namespace AzimuthSuite.AzmCore
 
             #region azmPort
 
-            azmPort = new AZMPort(BaudRate.baudRate9600);
-            azmPort.IsTryAlways = true;
-            azmPort.IsLogIncoming = true;
+            azmPort = new AZMPort(BaudRate.baudRate9600)
+            {
+                IsTryAlways = true,
+                IsLogIncoming = true
+            };
 
             azmPort.DetectedChanged += (o, e) =>
             {
@@ -681,7 +682,7 @@ namespace AzimuthSuite.AzmCore
                     DateTime ts = DateTime.Now;
 
                     if (remotes[e.Address].FilterState == null)
-                        remotes[e.Address].FilterState = new DHFilter(4, 1, 10);
+                        remotes[e.Address].FilterState = new DHFilter(8, 1, 10);
 
                     if (remotes[e.Address].FilterState.Process(rlat_rad, rlon_rad, 0, ts, 
                             out rlat_rad, out rlon_rad, out _, out ts))
@@ -799,7 +800,7 @@ namespace AzimuthSuite.AzmCore
 
         public bool QueryResponderAddrGet()
         {
-            return azmPort.Query_RSTS(0, double.NaN);
+            return azmPort.Query_RSTS(REMOTE_ADDR_Enum.REM_ADDR_INVALID, double.NaN);
         }
 
 
@@ -853,9 +854,11 @@ namespace AzimuthSuite.AzmCore
             {
                 IsUseGNSS = true;
 
-                gnssPort = new uGNSSSerialPort(baudrate);
-                gnssPort.IsLogIncoming = true;
-                gnssPort.IsTryAlways = true;
+                gnssPort = new uGNSSSerialPort(baudrate)
+                {
+                    IsLogIncoming = true,
+                    IsTryAlways = true
+                };
 
                 gnssPort.DetectedChanged += (o, e) => GNSSPortDetectedChanged.Rise(o, e);
                 gnssPort.IsActiveChanged += (o, e) => IsGNSSActiveChanged.Rise(o, e);
