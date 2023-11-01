@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO.Ports;
 using System.Text;
-using System.Threading;
 using UCNLDrivers;
 using UCNLNav;
 using UCNLNMEA;
@@ -321,6 +320,14 @@ namespace AzimuthSuite.AzmCore
         bool polling_started_received = false;
         DateTime prevRemAckTS = DateTime.Now;
 
+        public double LatitudeOverride { get; private set; }
+        public double LongitudeOverride { get; private set; }
+        public double HeadingOverride { get; private set; }
+
+        PrecisionTimer pTimer;
+
+        public bool LocationOverrideEnabled { get => pTimer.IsRunning; }
+
         #endregion
 
         #region Constructor
@@ -476,11 +483,101 @@ namespace AzimuthSuite.AzmCore
             azmPort.RSTSReceived += (o, e) => ResponderSettingsReceived(o, e);
 
             #endregion
+
+            #region timer
+
+            pTimer = new PrecisionTimer();
+            pTimer.Period = 1000;
+            pTimer.Mode = Mode.Periodic;
+
+            pTimer.Tick += (o, e) =>
+            {
+                latitude_deg.Value = LatitudeOverride;
+                longitude_deg.Value = LongitudeOverride;
+                heading.Value = HeadingOverride;
+            };
+
+            pTimer.Started += (o, e) => LocationOverrideEnabledChanged.Rise(this, new EventArgs());
+            pTimer.Stopped += (o, e) => LocationOverrideEnabledChanged.Rise(this, new EventArgs());
+
+            #endregion
         }
 
         #endregion
 
         #region Methods
+
+        public string NavDataSerialize()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            // @AZM,1,.....
+
+            sb.Append("@AZM,1,");
+
+            sb.AppendFormat("{0},{1},",
+                AZMPortStatus, GNSSPortStatus);
+
+            if (stationDepth_m.IsInitialized &&
+                waterTemperature_C.IsInitialized &&
+                stationPitch_deg.IsInitialized &&
+                stationRoll_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture,
+                    "{0:F02},{1:F01},{2:F01},{3:F01},{4:F01},",
+                    stationDepth_m.Value,
+                    waterTemperature_C.Value,
+                    stationPitch_deg.Value,
+                    stationRoll_deg.Value,
+                    stationDepth_m.Age.TotalSeconds);
+            else
+                sb.Append(",,,,,");
+
+            if (latitude_deg.IsInitialized &&
+                longitude_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture,
+                    "{0:F06},{1:F06},{2:F01},",
+                    latitude_deg.Value,
+                    longitude_deg.Value,
+                    latitude_deg.Age.TotalSeconds);
+            else
+                sb.Append(",,,");
+
+            if (course_deg.IsInitialized && speed.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture,
+                    "{0:F01},{1:F01},{2:F01},",
+                    course_deg.Value,
+                    speed.Value,
+                    course_deg.Age.TotalSeconds);
+            else
+                sb.Append(",,,");
+
+            if (heading.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture,
+                    "{0:F01},{1:F01}",
+                    heading.Value,
+                    heading.Age.TotalSeconds);
+            else
+                sb.Append(",");
+
+            return sb.ToString();
+        }
+
+        public void LocationOverrideEnable(double lat_deg, double lon_deg, double heading_deg)
+        {
+            if (pTimer.IsRunning)
+                pTimer.Stop();
+            
+            LatitudeOverride = lat_deg;
+            LongitudeOverride = lon_deg;
+            HeadingOverride = heading_deg;
+
+            pTimer.Start();
+        }
+
+        public void LocationOverrideDisable()
+        {
+            pTimer.Stop();
+        }
 
         #region Private        
 
@@ -824,7 +921,6 @@ namespace AzimuthSuite.AzmCore
                 777, 270, false));
 
             StateUpdateHandler.Rise(this, null);
-
         }
         
         public void Emulate(string eString)
@@ -905,7 +1001,6 @@ namespace AzimuthSuite.AzmCore
             if (azmPort.IsActive)
             {
                 azmPort.Query_BaseStop();
-                Thread.Sleep(300);
                 azmPort.Stop();
 
                 if (IsUseGNSS && gnssPort.IsActive)
@@ -1059,6 +1154,8 @@ namespace AzimuthSuite.AzmCore
         public EventHandler DeviceInfoValidChanged;
 
         public EventHandler<RSTSReceivedEventArgs> ResponderSettingsReceived;
+
+        public EventHandler LocationOverrideEnabledChanged;
 
         #endregion
     }

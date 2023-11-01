@@ -59,7 +59,7 @@ namespace AzimuthSuite.AzmCore
         int pSideIdx = 0;
         int sSideIdx { get { return pSideIdx == 0 ? 1 : 0; } }
 
-        double maxSpeedMps = 0.5;
+        double maxSpeedMps = 1;
         public double MaxSpeedMps
         {
             get { return maxSpeedMps; }
@@ -97,9 +97,11 @@ namespace AzimuthSuite.AzmCore
             this.fifoSize = fifoSize;
             MaxSpeedMps = maxSpeedMps;
             DstThreshold_m = dstTrhesholdm;
-            sides = new List<List<DPoint3DTm>>();
-            sides.Add(new List<DPoint3DTm>());
-            sides.Add(new List<DPoint3DTm>());
+            sides = new List<List<DPoint3DTm>>
+            {
+                new List<DPoint3DTm>(),
+                new List<DPoint3DTm>()
+            };
         }
 
         #endregion
