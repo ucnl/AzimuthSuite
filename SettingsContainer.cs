@@ -23,6 +23,12 @@ namespace AzimuthSuite
         public ushort AddressMask;
         public double MaxDist_m;
 
+        public string CustomLabel;
+
+        public string CultureOverride;
+
+        public bool SpecControlsEnabled;
+
         #endregion
 
         #region Constructor
@@ -49,6 +55,11 @@ namespace AzimuthSuite
 
             AddressMask = 1;
             MaxDist_m = 1000;
+
+            CustomLabel = string.Empty;
+            CultureOverride = string.Empty;
+
+            SpecControlsEnabled = false;
         }
 
         #endregion

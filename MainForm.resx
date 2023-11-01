@@ -245,7 +245,7 @@
 </value>
   </data>
   <data name="&gt;&gt;rPlot.Type" xml:space="preserve">
-    <value>UCNLUI.Controls.RadialPlot, UCNLUI, Version=1.0.8253.40844, Culture=neutral, PublicKeyToken=null</value>
+    <value>UCNLUI.Controls.RadialPlot, UCNLUI, Version=1.0.8451.28844, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="utilsDeviceBtn.Text" xml:space="preserve">
     <value>🤖 DEVICE</value>
@@ -411,8 +411,8 @@
   <data name="utilsBtn.ToolTipText" xml:space="preserve">
     <value>Utilities</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1006, 721</value>
+  <data name="&gt;&gt;utilsLocationOverrideBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;rPlot.Name" xml:space="preserve">
     <value>rPlot</value>
@@ -459,8 +459,8 @@
   <data name="&gt;&gt;logDoThemAllBtn.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;utilsBtn.Name" xml:space="preserve">
-    <value>utilsBtn</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1006, 721</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 39</value>
@@ -663,6 +663,9 @@
   <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 35</value>
   </data>
+  <data name="utilsLocationOverrideBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>317, 36</value>
+  </data>
   <data name="notesTxb.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt, style=Bold</value>
   </data>
@@ -696,8 +699,11 @@
   <data name="&gt;&gt;toolStripSeparator11.Name" xml:space="preserve">
     <value>toolStripSeparator11</value>
   </data>
+  <data name="utilsLocationOverrideBtn.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 13.8pt</value>
+  </data>
   <data name="utilsTrackBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 36</value>
+    <value>317, 36</value>
   </data>
   <data name="outputPortBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>51, 35</value>
@@ -803,6 +809,9 @@
   </data>
   <data name="&gt;&gt;logDoThemAllBtn.Name" xml:space="preserve">
     <value>logDoThemAllBtn</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator13.Name" xml:space="preserve">
+    <value>toolStripSeparator13</value>
   </data>
   <data name="isTreeDepthVisibleBtn.ToolTipText" xml:space="preserve">
     <value>Remote's depth visibility switch</value>
@@ -943,7 +952,7 @@
     <value>Magenta</value>
   </data>
   <data name="utilsDeviceBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 36</value>
+    <value>317, 36</value>
   </data>
   <data name="utilsDeviceViewInfoBtn.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 13.8pt</value>
@@ -1062,6 +1071,9 @@
   <data name="&gt;&gt;historyVisibleBtn.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="toolStripSeparator13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>314, 6</value>
+  </data>
   <data name="isTreeElevationVisibleBtn.ToolTipText" xml:space="preserve">
     <value>Elevation visibility switch</value>
   </data>
@@ -1150,10 +1162,10 @@
     <value>View info...</value>
   </data>
   <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 6</value>
+    <value>314, 6</value>
   </data>
-  <data name="outPortsCbxUpdateBtn.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 13.8pt, style=Bold</value>
+  <data name="utilsLocationOverrideBtn.Text" xml:space="preserve">
+    <value>⚓ Location override</value>
   </data>
   <data name="isDistanceAndAzimuthVisibleBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 32</value>
@@ -1274,6 +1286,9 @@
   </data>
   <data name="utilsDeviceBtn.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 13.8pt</value>
+  </data>
+  <data name="&gt;&gt;utilsBtn.Name" xml:space="preserve">
+    <value>utilsBtn</value>
   </data>
   <data name="remotesTree.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 35</value>
@@ -1398,6 +1413,9 @@
   <data name="&gt;&gt;remotesBottonStrip.Parent" xml:space="preserve">
     <value>mainSplit.Panel2</value>
   </data>
+  <data name="outPortsCbxUpdateBtn.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 13.8pt, style=Bold</value>
+  </data>
   <data name="&gt;&gt;plotToolStrip.Name" xml:space="preserve">
     <value>plotToolStrip</value>
   </data>
@@ -1439,6 +1457,9 @@
   </data>
   <data name="utilsTrackBtn.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 13.8pt</value>
+  </data>
+  <data name="mainSplit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1000, 642</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1482,8 +1503,8 @@
   <data name="plotToolStrip.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="mainSplit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1000, 642</value>
+  <data name="&gt;&gt;toolStripSeparator13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="plotToolStrip.Size" type="System.Drawing.Size, System.Drawing">
     <value>635, 35</value>
@@ -1514,6 +1535,9 @@
   </data>
   <data name="remotesBottonStrip.Size" type="System.Drawing.Size, System.Drawing">
     <value>361, 35</value>
+  </data>
+  <data name="&gt;&gt;utilsLocationOverrideBtn.Name" xml:space="preserve">
+    <value>utilsLocationOverrideBtn</value>
   </data>
   <data name="outputPortBtn.Text" xml:space="preserve">
     <value>📣</value>

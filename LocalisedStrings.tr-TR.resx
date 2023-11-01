@@ -147,6 +147,9 @@
   <data name="MainForm_InitializingOutPortOn" xml:space="preserve">
     <value>başlatılıyor outPort</value>
   </data>
+  <data name="MainForm_LocationOverrideDialogTitle" xml:space="preserve">
+    <value>Override location</value>
+  </data>
   <data name="MainForm_LogArchiveDialogTitle" xml:space="preserve">
     <value>Bir arşiv adı seçin...</value>
   </data>

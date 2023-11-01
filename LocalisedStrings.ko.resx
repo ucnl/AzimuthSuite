@@ -147,6 +147,9 @@
   <data name="MainForm_InitializingOutPortOn" xml:space="preserve">
     <value>출력 포트 초기화 중</value>
   </data>
+  <data name="MainForm_LocationOverrideDialogTitle" xml:space="preserve">
+    <value>재정의 위치</value>
+  </data>
   <data name="MainForm_LogArchiveDialogTitle" xml:space="preserve">
     <value>아카이브 이름을 선택하십시오...</value>
   </data>

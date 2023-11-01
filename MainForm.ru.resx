@@ -430,9 +430,6 @@
   <data name="auxPortStatusLbl.ToolTipText" xml:space="preserve">
     <value>Статус соединения с внешним GNSS-компасом</value>
   </data>
-  <data name="logLbl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>688, 28</value>
-  </data>
   <data name="mainToolStrip.Size" type="System.Drawing.Size, System.Drawing">
     <value>1000, 43</value>
   </data>
@@ -584,7 +581,7 @@
     <value>Утилиты</value>
   </data>
   <data name="utilsTrackBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>282, 36</value>
+    <value>433, 36</value>
   </data>
   <data name="utilsTrackBtn.Text" xml:space="preserve">
     <value>🗺 ТРЕКИ</value>
@@ -596,10 +593,10 @@
     <value>💾 Экспорт...</value>
   </data>
   <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>279, 6</value>
+    <value>430, 6</value>
   </data>
   <data name="utilsDeviceBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>282, 36</value>
+    <value>433, 36</value>
   </data>
   <data name="utilsDeviceBtn.Text" xml:space="preserve">
     <value>🤖 УСТРОЙСТВО</value>
@@ -609,6 +606,15 @@
   </data>
   <data name="utilsDeviceResponderSettingsBtn.Text" xml:space="preserve">
     <value>Настройки маяка...</value>
+  </data>
+  <data name="toolStripSeparator13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>430, 6</value>
+  </data>
+  <data name="utilsLocationOverrideBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>433, 36</value>
+  </data>
+  <data name="utilsLocationOverrideBtn.Text" xml:space="preserve">
+    <value>⚓ Задать положение вручную</value>
   </data>
   <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 43</value>

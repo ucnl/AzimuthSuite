@@ -151,6 +151,15 @@ namespace AzimuthSuite {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Override location.
+        /// </summary>
+        internal static string MainForm_LocationOverrideDialogTitle {
+            get {
+                return ResourceManager.GetString("MainForm_LocationOverrideDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Select a name of acrhive....
         /// </summary>
         internal static string MainForm_LogArchiveDialogTitle {

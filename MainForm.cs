@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
@@ -216,22 +218,13 @@ namespace AzimuthSuite
 
         public MainForm()
         {
-            //Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("zh-ZH");
-            //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-ZH");
-
-            InitializeComponent();
-
-            #region Early init
+            #region App title init
 
             string vString = string.Format("{0} {1} v{2} {3}",
                 appicon,
                 Application.ProductName,
                 Assembly.GetExecutingAssembly().GetName().Version.ToString(),
-                MDates.GetReferenceNote());
-            this.Text = vString;
-
-            moonPhaseLbl.Text = AstroAndTimeUtils.MoonPhaseIcon(DateTime.Now);
-            moonPhaseLbl.ToolTipText = AstroAndTimeUtils.MoonPhaseDescription(DateTime.Now);
+                MDates.GetReferenceNote());            
 
             #endregion
 
@@ -255,6 +248,48 @@ namespace AzimuthSuite
             logger.TextAddedEvent += (o, e) => InvokeAppendHistoryLine(e.Text);
 
             #endregion
+
+            #region settings
+
+            sProvider = new SimpleSettingsProviderXML<SettingsContainer>
+            {
+                isSwallowExceptions = false
+            };
+
+            logger.Write(string.Format("Current culture: {0}", Thread.CurrentThread.CurrentUICulture.Name));
+            logger.Write(string.Format("Loading settings from {0}", settingsFileName));
+
+            try
+            {
+                sProvider.Load(settingsFileName);
+            }
+            catch (Exception ex)
+            {
+                ProcessException(ex, true);
+            }
+
+            logger.Write("Current application settings:");
+            logger.Write(sProvider.Data.ToString());
+
+            if (!string.IsNullOrEmpty(sProvider.Data.CultureOverride))
+            {
+                try
+                {
+                    logger.Write(string.Format("Trying using specified culture {0}", sProvider.Data.CultureOverride));
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo(sProvider.Data.CultureOverride);
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(sProvider.Data.CultureOverride);                    
+                }
+                catch (Exception ex)
+                {
+                    logger.Write(ex);
+                }
+            }
+
+            #endregion                        
+
+            InitializeComponent();
+
+            this.Text = string.Format("{0} {1}", vString, sProvider.Data.CustomLabel);
 
             #region visual styles
 
@@ -283,27 +318,14 @@ namespace AzimuthSuite
 
             #endregion
 
-            #region settings
+            #region Misc. init            
 
-            sProvider = new SimpleSettingsProviderXML<SettingsContainer>();
-            sProvider.isSwallowExceptions = false;
+            moonPhaseLbl.Text = AstroAndTimeUtils.MoonPhaseIcon(DateTime.Now);
+            moonPhaseLbl.ToolTipText = AstroAndTimeUtils.MoonPhaseDescription(DateTime.Now);
 
-            logger.Write(string.Format("Current culture: {0}", Thread.CurrentThread.CurrentUICulture.Name));
-            logger.Write(string.Format("Loading settings from {0}", settingsFileName));
+            utilsLocationOverrideBtn.Visible = sProvider.Data.SpecControlsEnabled;
 
-            try
-            {
-                sProvider.Load(settingsFileName);
-            }
-            catch (Exception ex)
-            {
-                ProcessException(ex, true);
-            }
-
-            logger.Write("Current application settings:");
-            logger.Write(sProvider.Data.ToString());
-
-            #endregion            
+            #endregion
 
             #region trackManager
 
@@ -394,8 +416,10 @@ namespace AzimuthSuite
 
             #region UI settings
 
-            usProvider = new SimpleSettingsProviderXML<UISettingsContainer>();
-            usProvider.isSwallowExceptions = true;
+            usProvider = new SimpleSettingsProviderXML<UISettingsContainer>
+            {
+                isSwallowExceptions = true
+            };
             usProvider.Load(uiSettingsFileName);
 
             limboVisible = usProvider.Data.LimboVisible;
@@ -512,6 +536,25 @@ namespace AzimuthSuite
             SwitchOutputPortUIEnabledState(false);
             SwitchOutputPortUIVisibleState(sProvider.Data.IsUseOutputport);
 
+            azmBase.LocationOverrideEnabledChanged += (o, e) =>
+            {
+                UIHelpers.InvokeSetCheckedState(mainToolStrip, utilsLocationOverrideBtn, azmBase.LocationOverrideEnabled);
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendFormat("azmBase.LocationOverrideEnabled = {0}", azmBase.LocationOverrideEnabled);
+
+                if (azmBase.LocationOverrideEnabled)
+                {
+                    sb.AppendFormat(CultureInfo.InvariantCulture, 
+                        " (Lat={0:F06}°, Lon={1:F06}, Hdn={2:F01}°)",
+                        azmBase.LatitudeOverride,
+                        azmBase.LongitudeOverride,
+                        azmBase.HeadingOverride);
+                }
+
+                InvokeAppendHistoryLine(sb.ToString());
+            };
+
             #endregion
 
             #region Misc stuff
@@ -520,12 +563,6 @@ namespace AzimuthSuite
             tTipWin = this;
             tTip.ToolTipIcon = ToolTipIcon.Info;
             tTip.ToolTipTitle = LocalisedStrings.MainForm_HotKeysTip;
-            
-            #endregion
-
-            #region Debug
-
-            //azmBase.Demo();
 
             #endregion
         }
@@ -601,6 +638,9 @@ namespace AzimuthSuite
 
         private void InvokeAppendHistoryLine(string line)
         {
+            if (rPlot == null)
+                return;
+
             if (rPlot.InvokeRequired)
                 rPlot.Invoke((MethodInvoker)delegate
                 {
@@ -1219,6 +1259,29 @@ namespace AzimuthSuite
             }
         }
 
+        private void utilsLocationOverrideBtn_Click(object sender, EventArgs e)
+        {
+            if (azmBase.LocationOverrideEnabled)
+            {
+                azmBase.LocationOverrideDisable();
+            }
+            else
+            {
+                using (LocationOverrideDialog lDialog = new LocationOverrideDialog())
+                {
+                    lDialog.Text = LocalisedStrings.MainForm_LocationOverrideDialogTitle;
+                    lDialog.Latitude_deg = azmBase.LatitudeOverride;
+                    lDialog.Longitude_deg = azmBase.LongitudeOverride;
+                    lDialog.Heading_deg = azmBase.HeadingOverride;
+
+                    if (lDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        azmBase.LocationOverrideEnable(lDialog.Latitude_deg, lDialog.Longitude_deg, lDialog.Heading_deg);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Outport
@@ -1537,6 +1600,6 @@ namespace AzimuthSuite
 
         #endregion
 
-        #endregion
+        #endregion        
     }
 }

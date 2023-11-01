@@ -91,6 +91,12 @@
     <Compile Include="Dialogs\DeviceInfoView.Designer.cs">
       <DependentUpon>DeviceInfoView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\LocationOverrideDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\LocationOverrideDialog.Designer.cs">
+      <DependentUpon>LocationOverrideDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ResponderSettingsEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,12 @@
     <Compile Include="UISettingsContainer.cs" />
     <EmbeddedResource Include="Dialogs\DeviceInfoView.resx">
       <DependentUpon>DeviceInfoView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\LocationOverrideDialog.resx">
+      <DependentUpon>LocationOverrideDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\LocationOverrideDialog.ru.resx">
+      <DependentUpon>LocationOverrideDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ResponderSettingsEditor.ko.resx">
       <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>

@@ -87,6 +87,8 @@
             this.utilsDeviceViewInfoBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.utilsDeviceResponderSettingsBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.utilsLocationOverrideBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.infoBtn = new System.Windows.Forms.ToolStripButton();
             this.outPortsCbxUpdateBtn = new System.Windows.Forms.ToolStripButton();
@@ -531,7 +533,9 @@
             this.utilsBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.utilsTrackBtn,
             this.toolStripSeparator8,
-            this.utilsDeviceBtn});
+            this.utilsDeviceBtn,
+            this.toolStripSeparator13,
+            this.utilsLocationOverrideBtn});
             this.utilsBtn.Name = "utilsBtn";
             // 
             // utilsTrackBtn
@@ -577,6 +581,17 @@
             resources.ApplyResources(this.utilsDeviceResponderSettingsBtn, "utilsDeviceResponderSettingsBtn");
             this.utilsDeviceResponderSettingsBtn.Name = "utilsDeviceResponderSettingsBtn";
             this.utilsDeviceResponderSettingsBtn.Click += new System.EventHandler(this.utilsDeviceResponderSettingsBtn_Click);
+            // 
+            // toolStripSeparator13
+            // 
+            resources.ApplyResources(this.toolStripSeparator13, "toolStripSeparator13");
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            // 
+            // utilsLocationOverrideBtn
+            // 
+            resources.ApplyResources(this.utilsLocationOverrideBtn, "utilsLocationOverrideBtn");
+            this.utilsLocationOverrideBtn.Name = "utilsLocationOverrideBtn";
+            this.utilsLocationOverrideBtn.Click += new System.EventHandler(this.utilsLocationOverrideBtn_Click);
             // 
             // toolStripSeparator4
             // 
@@ -732,6 +747,8 @@
         private System.Windows.Forms.ToolStripMenuItem utilsDeviceResponderSettingsBtn;
         private System.Windows.Forms.ToolStripStatusLabel moonPhaseLbl;
         private System.Windows.Forms.Timer uiTimer;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripMenuItem utilsLocationOverrideBtn;
     }
 }
 

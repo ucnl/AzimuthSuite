@@ -147,6 +147,9 @@
   <data name="MainForm_InitializingOutPortOn" xml:space="preserve">
     <value>Initializing outPort on</value>
   </data>
+  <data name="MainForm_LocationOverrideDialogTitle" xml:space="preserve">
+    <value>Override location</value>
+  </data>
   <data name="MainForm_LogArchiveDialogTitle" xml:space="preserve">
     <value>Select a name of acrhive...</value>
   </data>

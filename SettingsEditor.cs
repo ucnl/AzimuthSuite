@@ -101,19 +101,20 @@ namespace AzimuthSuite
         {
             get
             {
-                SettingsContainer result = new SettingsContainer();
-
-                result.AddressMask = addrMask;
-                result.UseAUXGNSSCompas = isUseAUXGNSS;
-                result.AUXGNSSCompasBaudrate = AUXGNSSBaudrate;
-                result.Salinity_PSU = salinity_PSU;
-                result.MaxDist_m = maxRange_m;
-                result.TransverseOffset_m = xOffset_m;
-                result.LongitudalOffset_m = yOffset_m;
-                result.HeadingAdjust_deg = angleAdjust_deg;
-                result.IsUseOutputport = isUseOutputPort;
-                result.OutPortBaudrate = OutputPortBaudrate;
-                result.RemoteAddressToOutput = RemoteAddrToOutput;
+                SettingsContainer result = new SettingsContainer
+                {
+                    AddressMask = addrMask,
+                    UseAUXGNSSCompas = isUseAUXGNSS,
+                    AUXGNSSCompasBaudrate = AUXGNSSBaudrate,
+                    Salinity_PSU = salinity_PSU,
+                    MaxDist_m = maxRange_m,
+                    TransverseOffset_m = xOffset_m,
+                    LongitudalOffset_m = yOffset_m,
+                    HeadingAdjust_deg = angleAdjust_deg,
+                    IsUseOutputport = isUseOutputPort,
+                    OutPortBaudrate = OutputPortBaudrate,
+                    RemoteAddressToOutput = RemoteAddrToOutput
+                };
 
                 return result;                    
             }
