@@ -118,136 +118,211 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="closeBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="okBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="closeBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 154</value>
+  <data name="okBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="closeBtn.Size" type="System.Drawing.Size, System.Drawing">
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="okBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>168, 212</value>
+  </data>
+  <data name="okBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 43</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="closeBtn.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="closeBtn.Text" xml:space="preserve">
-    <value>CLOSE</value>
-  </data>
-  <data name="&gt;&gt;closeBtn.Name" xml:space="preserve">
-    <value>closeBtn</value>
-  </data>
-  <data name="&gt;&gt;closeBtn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;closeBtn.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;closeBtn.ZOrder" xml:space="preserve">
+  <data name="okBtn.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="remoteAddressCbx.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
+  <data name="okBtn.Text" xml:space="preserve">
+    <value>OK</value>
   </data>
-  <data name="remoteAddressCbx.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 42</value>
+  <data name="&gt;&gt;okBtn.Name" xml:space="preserve">
+    <value>okBtn</value>
   </data>
-  <data name="remoteAddressCbx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 36</value>
+  <data name="&gt;&gt;okBtn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="remoteAddressCbx.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;remoteAddressCbx.Name" xml:space="preserve">
-    <value>remoteAddressCbx</value>
-  </data>
-  <data name="&gt;&gt;remoteAddressCbx.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;remoteAddressCbx.Parent" xml:space="preserve">
-    <value>auxGNSSGroup</value>
-  </data>
-  <data name="&gt;&gt;remoteAddressCbx.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="auxGNSSGroup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 20</value>
-  </data>
-  <data name="auxGNSSGroup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>244, 84</value>
-  </data>
-  <data name="auxGNSSGroup.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="auxGNSSGroup.Text" xml:space="preserve">
-    <value>Responder address</value>
-  </data>
-  <data name="&gt;&gt;auxGNSSGroup.Name" xml:space="preserve">
-    <value>auxGNSSGroup</value>
-  </data>
-  <data name="&gt;&gt;auxGNSSGroup.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;auxGNSSGroup.Parent" xml:space="preserve">
+  <data name="&gt;&gt;okBtn.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;auxGNSSGroup.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;okBtn.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="cancelBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="cancelBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cancelBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>320, 212</value>
+  </data>
+  <data name="cancelBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 43</value>
+  </data>
+  <data name="cancelBtn.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="applyBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="cancelBtn.Text" xml:space="preserve">
+    <value>CANCEL</value>
   </data>
-  <data name="applyBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 61</value>
+  <data name="&gt;&gt;cancelBtn.Name" xml:space="preserve">
+    <value>cancelBtn</value>
   </data>
-  <data name="applyBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 43</value>
-  </data>
-  <data name="applyBtn.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="applyBtn.Text" xml:space="preserve">
-    <value>📥 APPLY </value>
-  </data>
-  <data name="&gt;&gt;applyBtn.Name" xml:space="preserve">
-    <value>applyBtn</value>
-  </data>
-  <data name="&gt;&gt;applyBtn.Type" xml:space="preserve">
+  <data name="&gt;&gt;cancelBtn.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;applyBtn.Parent" xml:space="preserve">
+  <data name="&gt;&gt;cancelBtn.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;applyBtn.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;cancelBtn.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
-  <data name="queryBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="queryBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 12</value>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 34</value>
   </data>
-  <data name="queryBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 43</value>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 28</value>
   </data>
-  <data name="queryBtn.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
-  <data name="queryBtn.Text" xml:space="preserve">
-    <value>📤 QUERY</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Latitude, °</value>
   </data>
-  <data name="&gt;&gt;queryBtn.Name" xml:space="preserve">
-    <value>queryBtn</value>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
   </data>
-  <data name="&gt;&gt;queryBtn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;queryBtn.Parent" xml:space="preserve">
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;queryBtn.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="latDegEdit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>162, 28</value>
+  </data>
+  <data name="latDegEdit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 34</value>
+  </data>
+  <data name="latDegEdit.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;latDegEdit.Name" xml:space="preserve">
+    <value>latDegEdit</value>
+  </data>
+  <data name="&gt;&gt;latDegEdit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;latDegEdit.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;latDegEdit.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="lonDegEdit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>162, 68</value>
+  </data>
+  <data name="lonDegEdit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 34</value>
+  </data>
+  <data name="lonDegEdit.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;lonDegEdit.Name" xml:space="preserve">
+    <value>lonDegEdit</value>
+  </data>
+  <data name="&gt;&gt;lonDegEdit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lonDegEdit.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lonDegEdit.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 74</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 28</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Longitude, °</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="headingEdit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>162, 108</value>
+  </data>
+  <data name="headingEdit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 34</value>
+  </data>
+  <data name="headingEdit.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;headingEdit.Name" xml:space="preserve">
+    <value>headingEdit</value>
+  </data>
+  <data name="&gt;&gt;headingEdit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;headingEdit.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;headingEdit.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 114</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 28</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Heading, °</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -256,7 +331,7 @@
     <value>11, 28</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>494, 209</value>
+    <value>456, 267</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
@@ -268,10 +343,10 @@
     <value>CenterParent</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>ResponderSettings</value>
+    <value>LocationOverrideDialog</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ResponderSettingsEditor</value>
+    <value>LocationOverrideDialog</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

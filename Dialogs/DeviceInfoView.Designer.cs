@@ -83,6 +83,7 @@
             this.MinimizeBox = false;
             this.Name = "DeviceInfoView";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DeviceInfoView";
             this.ResumeLayout(false);
 

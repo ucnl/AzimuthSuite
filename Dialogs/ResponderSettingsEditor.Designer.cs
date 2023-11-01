@@ -46,8 +46,8 @@
             // 
             // auxGNSSGroup
             // 
-            resources.ApplyResources(this.auxGNSSGroup, "auxGNSSGroup");
             this.auxGNSSGroup.Controls.Add(this.remoteAddressCbx);
+            resources.ApplyResources(this.auxGNSSGroup, "auxGNSSGroup");
             this.auxGNSSGroup.Name = "auxGNSSGroup";
             this.auxGNSSGroup.TabStop = false;
             // 
