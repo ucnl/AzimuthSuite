@@ -199,7 +199,7 @@
     <value>Top, Right</value>
   </data>
   <data name="applyBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 61</value>
+    <value>358, 62</value>
   </data>
   <data name="applyBtn.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 43</value>

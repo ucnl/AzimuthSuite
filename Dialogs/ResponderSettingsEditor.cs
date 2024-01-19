@@ -62,6 +62,6 @@ namespace AzimuthSuite.Dialogs
         public EventHandler ApplyRequestReceived;
         public EventHandler QueryRequestReceived;
 
-        #endregion        
+        #endregion
     }
 }
