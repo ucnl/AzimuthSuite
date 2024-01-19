@@ -14,6 +14,8 @@ namespace AzimuthSuite.AzmCore
         IC_H2D_DPTOVR,
         IC_D2H_RUCMD,
         IC_D2H_RBCAST,
+        IC_H2D_CREQ,
+        IC_D2D_CSET,
         IC_H2D_DINFO_GET,
         IC_D2H_DINFO,
         IC_ANY,
@@ -167,6 +169,8 @@ namespace AzimuthSuite.AzmCore
             { "4", ICs.IC_H2D_DPTOVR },
             { "5", ICs.IC_D2H_RUCMD },
             { "6", ICs.IC_D2H_RBCAST },
+            { "7", ICs.IC_H2D_CREQ },
+            { "8", ICs.IC_D2D_CSET },
             { "?", ICs.IC_H2D_DINFO_GET },
 
             { "!", ICs.IC_D2H_DINFO },
@@ -221,6 +225,11 @@ namespace AzimuthSuite.AzmCore
         public static bool IsErrorCode(int rc_resp_code)
         {
             return rc_resp_code >= (int)CDS_RESP_CODES_Enum.CDS_ERR_RES_0;
+        }
+
+        public static bool IsUserDataReqCode(CDS_REQ_CODES_Enum rc_req_code)
+        {
+            return ((int)rc_req_code >= (int)CDS_REQ_CODES_Enum.CDS_REQ_USER_CMD_27) && ((int)rc_req_code <= (int)CDS_REQ_CODES_Enum.CDS_REQ_USER_CMD_0);
         }
 
         public static ICs ICsByMessageID(string msgID)

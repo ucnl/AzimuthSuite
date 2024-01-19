@@ -1,7 +1,10 @@
-﻿using System;
+﻿using AzimuthSuite.Properties;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Globalization;
 using System.IO.Ports;
+using System.Net;
 using System.Text;
 using UCNLDrivers;
 using UCNLNav;
@@ -152,6 +155,29 @@ namespace AzimuthSuite.AzmCore
 
     #region Custom EventArgs
 
+    public class CREQResultReceivedEventArgs : EventArgs
+    {
+        #region Properties
+
+        public REMOTE_ADDR_Enum RemoteAddress { get; private set; }
+
+        public CDS_REQ_CODES_Enum ReqCode { get; private set; }
+        public int ResCode { get; private set; }
+
+        #endregion
+
+        #region Constructor
+
+        public CREQResultReceivedEventArgs(REMOTE_ADDR_Enum addr, CDS_REQ_CODES_Enum req_code, int res_code)
+        {
+            RemoteAddress = addr;
+            ReqCode = req_code;
+            ResCode = res_code;
+        }
+
+        #endregion
+    }
+
     public class RelativeLocationUpdatedEventArgs : EventArgs
     {
         #region Properties
@@ -230,6 +256,7 @@ namespace AzimuthSuite.AzmCore
         readonly AZMPort azmPort;
         uGNSSSerialPort gnssPort;
         NMEASerialPort outPort;
+        UDPTranslator udpTranslator;
 
         public bool IsActive
         {
@@ -256,6 +283,8 @@ namespace AzimuthSuite.AzmCore
         {
             get => (outPort != null) && (outPort.IsOpen);
         }
+
+        public bool IsUDPOutputInitialized { get; private set; }
 
         public string OutPortName
         {
@@ -481,6 +510,7 @@ namespace AzimuthSuite.AzmCore
                 polling_started_received = true;
             };
             azmPort.RSTSReceived += (o, e) => ResponderSettingsReceived(o, e);
+            azmPort.CSETReceived += (o, e) => CSETReceived(o, e);
 
             #endregion
 
@@ -581,7 +611,118 @@ namespace AzimuthSuite.AzmCore
 
         #region Private        
 
-        private void TryWriteOutput(double lat_deg, double lon_deg, double rdpt_m, double razm_deg)
+        private IEnumerable<string> GetOutputString(double lat_deg, double lon_deg, double rdpt_m, double razm_deg)
+        {
+            List<string> eStrings = new List<string>();
+            string latCardinal = lat_deg > 0 ? "N" : "S";
+            string lonCardinal = lon_deg > 0 ? "E" : "W";
+
+            #region RMC
+
+            eStrings.Add(
+                NMEAParser.BuildSentence(
+                    TalkerIdentifiers.GP,
+                    SentenceIdentifiers.RMC,
+                    new object[]
+                    {
+                        DateTime.Now,
+                        "Valid",
+                        lat_deg, latCardinal,
+                        lon_deg, lonCardinal,
+                        null,
+                        null, // track true
+                        DateTime.Now,
+                        null, // magnetic variation
+                        null, // magnetic variation direction
+                        "A",
+                    }));
+
+            #endregion
+
+            #region GGA
+
+            eStrings.Add(
+                NMEAParser.BuildSentence(
+                    TalkerIdentifiers.GP,
+                    SentenceIdentifiers.GGA,
+                    new object[]
+                    {
+                        DateTime.Now,
+                        lat_deg, latCardinal,
+                        lon_deg, lonCardinal,
+                        "GPS fix",
+                        4,
+                        null,
+                        (double.IsNaN(rdpt_m) ? null : (object)(-rdpt_m)),
+                        "M",
+                        null,
+                        "M",
+                        null,
+                        null
+                    }));
+
+            #endregion
+
+            #region HDT
+
+            eStrings.Add(
+                NMEAParser.BuildSentence(
+                    TalkerIdentifiers.GP,
+                    SentenceIdentifiers.HDT,
+                    new object[]
+                    {
+                        double.IsNaN(razm_deg) ? null : (object)razm_deg,
+                        "T"
+                    }));
+
+            #endregion
+
+            return eStrings;
+        }
+
+        private void TryWriteSerialOutput(IEnumerable<string> eStrings)
+        {
+            foreach (var item in eStrings)
+            {
+                try
+                {
+                    outPort.SendData(item);
+                    LogEventHandler.Rise(this,
+                        new LogEventArgs(LogLineType.INFO,
+                        string.Format("{0} ({1}) << {2}",
+                        outPort.PortName,
+                        "OUT", item)));
+                }
+                catch (Exception ex)
+                {
+                    LogEventHandler.Rise(this, new LogEventArgs(LogLineType.ERROR, ex));
+                }
+            }
+        }
+
+        private void TryWriteUDPOutput(IEnumerable<string> eStrings)
+        {
+            foreach (var item in eStrings)
+            {
+                try
+                {
+                    udpTranslator.Send(item);
+                    LogEventHandler.Rise(this,
+                        new LogEventArgs(LogLineType.INFO,
+                        string.Format("{0}:{1} ({2}) << {3}",
+                        udpTranslator.Address,
+                        udpTranslator.Port,
+                        "OUT", item)));
+                }
+                catch (Exception ex)
+                {
+                    LogEventHandler.Rise(this, new LogEventArgs(LogLineType.ERROR, ex));
+                }
+            }
+        }
+
+        [Obsolete]
+        private void _TryWriteOutput(double lat_deg, double lon_deg, double rdpt_m, double razm_deg)
         {
             List<string> eStrings = new List<string>();
             string latCardinal = lat_deg > 0 ? "N" : "S";
@@ -710,6 +851,11 @@ namespace AzimuthSuite.AzmCore
 
             remotes[e.Address].IsTimeout = false;
 
+            if (AZM.IsUserDataReqCode(e.RequestCode))
+            {
+                CREQReceived.Rise(this, new CREQResultReceivedEventArgs(e.Address, e.RequestCode, e.ResponseCode));
+            }
+
             if (AZM.IsErrorCode(e.ResponseCode))
             {
                 CDS_RESP_CODES_Enum rError = (CDS_RESP_CODES_Enum)Enum.ToObject(typeof(CDS_RESP_CODES_Enum), e.ResponseCode);
@@ -809,10 +955,20 @@ namespace AzimuthSuite.AzmCore
                         remotes[e.Address].Latitude_deg.Value = rlat_deg;
                         remotes[e.Address].Longitude_deg.Value = rlon_deg;
 
-                        if (IsOutPortInitiaziled && 
-                            ((e.Address == RemoteToOutport) ||
-                             (e.Address == REMOTE_ADDR_Enum.REM_ADDR_INVALID)))
-                            TryWriteOutput(rlat_deg, rlon_deg, rdpt_m, a_azm);
+                        if ((e.Address == RemoteToOutport) ||
+                            (e.Address == REMOTE_ADDR_Enum.REM_ADDR_INVALID))
+                        {
+                            if (IsOutPortInitiaziled || IsUDPOutputInitialized)
+                            {
+                                var eStrings = GetOutputString(rlat_deg, rlon_deg, rdpt_m, a_azm);
+
+                                if (IsOutPortInitiaziled)
+                                    TryWriteSerialOutput(eStrings);
+
+                                if (IsUDPOutputInitialized)
+                                    TryWriteUDPOutput(eStrings);
+                            }                                
+                        }
                     }
                 }
                 else
@@ -900,6 +1056,21 @@ namespace AzimuthSuite.AzmCore
             return azmPort.Query_RSTS(REMOTE_ADDR_Enum.REM_ADDR_INVALID, double.NaN);
         }
 
+
+        public bool QueryCREQ(REMOTE_ADDR_Enum addr, CDS_REQ_CODES_Enum dataID)
+        {
+            return azmPort.Query_CREQ(addr, dataID);
+        }
+
+        public bool QueryCSET_Read(CDS_REQ_CODES_Enum dataID)
+        {
+            return azmPort.Query_CSET_Read(dataID);
+        }
+
+        public bool QueryCSET_Write(CDS_REQ_CODES_Enum dataID, int dataValue)
+        {
+            return azmPort.Query_CSET_Write(dataID, dataValue);
+        }
 
         public void Demo()
         {
@@ -1065,6 +1236,18 @@ namespace AzimuthSuite.AzmCore
             outPort.Open();
         }
 
+        public void InitUDP(string address, int port)
+        {
+            udpTranslator = new UDPTranslator(port, IPAddress.Parse(address));
+            IsUDPOutputInitialized = true;
+        }
+
+        public void DeInitUDP()
+        {
+            IsUDPOutputInitialized = false;
+        }
+
+
         public void DeInitOutputPort()
         {
             if (IsOutPortInitiaziled)
@@ -1078,7 +1261,7 @@ namespace AzimuthSuite.AzmCore
                     LogEventHandler.Rise(this, new LogEventArgs(LogLineType.ERROR, ex));
                 }
             }
-        }
+        }        
 
         public List<string> GetAvailablePortNames()
         {
@@ -1154,6 +1337,8 @@ namespace AzimuthSuite.AzmCore
         public EventHandler DeviceInfoValidChanged;
 
         public EventHandler<RSTSReceivedEventArgs> ResponderSettingsReceived;
+        public EventHandler<CSETReceivedEventArgs> CSETReceived;
+        public EventHandler<CREQResultReceivedEventArgs> CREQReceived;
 
         public EventHandler LocationOverrideEnabledChanged;
 

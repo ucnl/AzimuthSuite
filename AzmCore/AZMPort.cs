@@ -181,6 +181,28 @@ namespace AzimuthSuite.AzmCore
         #endregion
     }
 
+    public class CSETReceivedEventArgs : EventArgs
+    {
+        // $PAZM8,dataID,dataVal,reserved
+        #region Properties
+
+        public CDS_REQ_CODES_Enum UserDataID { get; private set; }
+        public int UserDataValue { get; private set; }
+
+        #endregion
+
+        #region Constructor
+
+        public CSETReceivedEventArgs(CDS_REQ_CODES_Enum udid, int udval)
+        {
+            UserDataID = udid;
+            UserDataValue = udval;
+        }
+
+
+        #endregion
+    }
+
     #endregion
 
     public class AZMPort : uSerialPort
@@ -266,6 +288,13 @@ namespace AzimuthSuite.AzmCore
 
                 //IC_D2H_DINFO            '!' // $PAZM!,d_type,address,serialNumber,sys_info,sys_version,pts_type,dl_ch_id,ul_ch_id
                 NMEAParser.AddProprietarySentenceDescription(ManufacturerCodes.AZM, "!", "x,x,c--c,c--c,x,x,x,x");
+
+
+                //IC_H2D_CREQ             '7' // $PAZM7,[addr],user_data_id
+                NMEAParser.AddProprietarySentenceDescription(ManufacturerCodes.AZM, "7", "x,x");
+
+                //IC_H2D_CSET             '8' // $PAZM8,user_data_id,user_data_value,[reserved]
+                NMEAParser.AddProprietarySentenceDescription(ManufacturerCodes.AZM, "8", "x,x,x");
             }
         }
 
@@ -460,6 +489,27 @@ namespace AzimuthSuite.AzmCore
             }
         }
 
+
+        private void Parse_CSET(object[] parameters)
+        {
+            // $PAZM8,dataID,dataValue,reserved
+
+            StopTimer();
+            IsWaitingLocal = false;
+
+            try
+            {
+                CDS_REQ_CODES_Enum rcode = AZM.O2_CDS_REQ_CODES_Enum(parameters[0]);
+                int value = AZM.O2S32(parameters[1]);
+
+                CSETReceived.Rise(this, new CSETReceivedEventArgs(rcode, value));
+            }
+            catch (Exception ex)
+            {
+                LogEventHandler.Rise(this, new LogEventArgs(LogLineType.ERROR, ex));
+            }
+        }
+
         #endregion
 
         #endregion
@@ -526,6 +576,45 @@ namespace AzimuthSuite.AzmCore
             return TrySend(msg, ICs.IC_D2D_RSTS);
         }
 
+
+        public bool Query_CREQ(REMOTE_ADDR_Enum addr, CDS_REQ_CODES_Enum rcode)
+        {
+            var msg = NMEAParser.BuildProprietarySentence(ManufacturerCodes.AZM, "7",
+                new object[]
+                {
+                    addr == REMOTE_ADDR_Enum.REM_ADDR_INVALID ? null : (object)(int)addr,
+                    (int)rcode
+                });
+
+            return TrySend(msg, ICs.IC_H2D_CREQ);
+        }
+
+        public bool Query_CSET_Write(CDS_REQ_CODES_Enum did, int value)
+        {
+            var msg = NMEAParser.BuildProprietarySentence(ManufacturerCodes.AZM, "8",
+                new object[]
+                {
+                    (int)did,
+                    value,
+                    null
+                });
+
+            return TrySend(msg, ICs.IC_D2D_CSET);
+        }
+
+        public bool Query_CSET_Read(CDS_REQ_CODES_Enum did)
+        {
+            var msg = NMEAParser.BuildProprietarySentence(ManufacturerCodes.AZM, "8",
+               new object[]
+               {
+                    (int)did,
+                    null,
+                    null,
+               });
+
+            return TrySend(msg, ICs.IC_D2D_CSET);
+        }
+
         #endregion
 
         #endregion
@@ -571,6 +660,8 @@ namespace AzimuthSuite.AzmCore
                         Parse_RUCMD(pSentence.parameters);
                     else if (pSentence.SentenceIDString == "6")
                         Parse_RBCAST(pSentence.parameters);
+                    else if (pSentence.SentenceIDString == "8")
+                        Parse_CSET(pSentence.parameters);
                     else if (pSentence.SentenceIDString == "!")
                         Parse_DINFO(pSentence.parameters);
                 }
@@ -590,7 +681,8 @@ namespace AzimuthSuite.AzmCore
         public EventHandler<NDTAReceivedEventArgs> NDTAReceived;
         public EventHandler<RUCMDReceivedEventArgs> RUCMDReceived;
         public EventHandler<RBCASTReceivedEventArgs> RBCASTReceived;
-        
+        public EventHandler<CSETReceivedEventArgs> CSETReceived;
+
         public EventHandler DeviceInfoValidChanged;
 
         #endregion
