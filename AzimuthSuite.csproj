@@ -103,6 +103,12 @@
     <Compile Include="Dialogs\ResponderSettingsEditor.Designer.cs">
       <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\UserDataDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\UserDataDialog.Designer.cs">
+      <DependentUpon>UserDataDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="LocalisedStrings.ko.Designer.cs">
       <DependentUpon>LocalisedStrings.ko.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -168,6 +174,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ResponderSettingsEditor.zh.resx">
       <DependentUpon>ResponderSettingsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\UserDataDialog.resx">
+      <DependentUpon>UserDataDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\UserDataDialog.ru.resx">
+      <DependentUpon>UserDataDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LocalisedStrings.ko.resx">
       <Generator>ResXFileCodeGenerator</Generator>

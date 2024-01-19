@@ -53,9 +53,7 @@
             this.yOffsetEdit = new System.Windows.Forms.NumericUpDown();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.antennaAdjustAngleEdit = new System.Windows.Forms.NumericUpDown();
-            this.isUseOutputPortChb = new System.Windows.Forms.CheckBox();
-            this.outputPortGroup = new System.Windows.Forms.GroupBox();
-            this.remoteAddressToOutputCbx = new System.Windows.Forms.ComboBox();
+            this.serialOutputGroup = new System.Windows.Forms.GroupBox();
             this.outputPortBaudrateCbx = new System.Windows.Forms.ComboBox();
             this.remotesPanel.SuspendLayout();
             this.remotesListToolStrip.SuspendLayout();
@@ -70,7 +68,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.yOffsetEdit)).BeginInit();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.antennaAdjustAngleEdit)).BeginInit();
-            this.outputPortGroup.SuspendLayout();
+            this.serialOutputGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelBtn
@@ -110,45 +108,45 @@
             // 
             // remotesListToolStrip
             // 
-            resources.ApplyResources(this.remotesListToolStrip, "remotesListToolStrip");
             this.remotesListToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.remotesListToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.toolStripSeparator1,
             this.remotesCheckAllBtn,
             this.remotesUncheckAllBtn});
+            resources.ApplyResources(this.remotesListToolStrip, "remotesListToolStrip");
             this.remotesListToolStrip.Name = "remotesListToolStrip";
             // 
             // toolStripLabel1
             // 
-            resources.ApplyResources(this.toolStripLabel1, "toolStripLabel1");
             this.toolStripLabel1.Name = "toolStripLabel1";
+            resources.ApplyResources(this.toolStripLabel1, "toolStripLabel1");
             // 
             // toolStripSeparator1
             // 
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
             // remotesCheckAllBtn
             // 
-            resources.ApplyResources(this.remotesCheckAllBtn, "remotesCheckAllBtn");
             this.remotesCheckAllBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.remotesCheckAllBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.remotesCheckAllBtn, "remotesCheckAllBtn");
             this.remotesCheckAllBtn.Name = "remotesCheckAllBtn";
             this.remotesCheckAllBtn.Click += new System.EventHandler(this.remotesCheckAllBtn_Click);
             // 
             // remotesUncheckAllBtn
             // 
-            resources.ApplyResources(this.remotesUncheckAllBtn, "remotesUncheckAllBtn");
             this.remotesUncheckAllBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.remotesUncheckAllBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.remotesUncheckAllBtn, "remotesUncheckAllBtn");
             this.remotesUncheckAllBtn.Name = "remotesUncheckAllBtn";
             this.remotesUncheckAllBtn.Click += new System.EventHandler(this.remotesUncheckAllBtn_Click);
             // 
             // auxGNSSGroup
             // 
-            resources.ApplyResources(this.auxGNSSGroup, "auxGNSSGroup");
             this.auxGNSSGroup.Controls.Add(this.auxGNSSBaudrateCbx);
+            resources.ApplyResources(this.auxGNSSGroup, "auxGNSSGroup");
             this.auxGNSSGroup.Name = "auxGNSSGroup";
             this.auxGNSSGroup.TabStop = false;
             // 
@@ -161,9 +159,9 @@
             // 
             // groupBox2
             // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.styDialogBtn);
             this.groupBox2.Controls.Add(this.styEdit);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
@@ -187,8 +185,8 @@
             // 
             // groupBox3
             // 
-            resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Controls.Add(this.maxRangeEdit);
+            resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
             // 
@@ -226,8 +224,8 @@
             // 
             // groupBox4
             // 
-            resources.ApplyResources(this.groupBox4, "groupBox4");
             this.groupBox4.Controls.Add(this.xOffsetEdit);
+            resources.ApplyResources(this.groupBox4, "groupBox4");
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
             // 
@@ -244,8 +242,8 @@
             // 
             // groupBox5
             // 
-            resources.ApplyResources(this.groupBox5, "groupBox5");
             this.groupBox5.Controls.Add(this.yOffsetEdit);
+            resources.ApplyResources(this.groupBox5, "groupBox5");
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
             // 
@@ -262,8 +260,8 @@
             // 
             // groupBox6
             // 
-            resources.ApplyResources(this.groupBox6, "groupBox6");
             this.groupBox6.Controls.Add(this.antennaAdjustAngleEdit);
+            resources.ApplyResources(this.groupBox6, "groupBox6");
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.TabStop = false;
             // 
@@ -278,27 +276,12 @@
             0});
             this.antennaAdjustAngleEdit.Name = "antennaAdjustAngleEdit";
             // 
-            // isUseOutputPortChb
+            // serialOutputGroup
             // 
-            resources.ApplyResources(this.isUseOutputPortChb, "isUseOutputPortChb");
-            this.isUseOutputPortChb.Name = "isUseOutputPortChb";
-            this.isUseOutputPortChb.UseVisualStyleBackColor = true;
-            this.isUseOutputPortChb.CheckedChanged += new System.EventHandler(this.isUseOutputPortChb_CheckedChanged);
-            // 
-            // outputPortGroup
-            // 
-            resources.ApplyResources(this.outputPortGroup, "outputPortGroup");
-            this.outputPortGroup.Controls.Add(this.remoteAddressToOutputCbx);
-            this.outputPortGroup.Controls.Add(this.outputPortBaudrateCbx);
-            this.outputPortGroup.Name = "outputPortGroup";
-            this.outputPortGroup.TabStop = false;
-            // 
-            // remoteAddressToOutputCbx
-            // 
-            resources.ApplyResources(this.remoteAddressToOutputCbx, "remoteAddressToOutputCbx");
-            this.remoteAddressToOutputCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.remoteAddressToOutputCbx.FormattingEnabled = true;
-            this.remoteAddressToOutputCbx.Name = "remoteAddressToOutputCbx";
+            this.serialOutputGroup.Controls.Add(this.outputPortBaudrateCbx);
+            resources.ApplyResources(this.serialOutputGroup, "serialOutputGroup");
+            this.serialOutputGroup.Name = "serialOutputGroup";
+            this.serialOutputGroup.TabStop = false;
             // 
             // outputPortBaudrateCbx
             // 
@@ -311,8 +294,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.outputPortGroup);
-            this.Controls.Add(this.isUseOutputPortChb);
+            this.Controls.Add(this.serialOutputGroup);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -342,7 +324,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.yOffsetEdit)).EndInit();
             this.groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.antennaAdjustAngleEdit)).EndInit();
-            this.outputPortGroup.ResumeLayout(false);
+            this.serialOutputGroup.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -374,9 +356,7 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.NumericUpDown antennaAdjustAngleEdit;
         private System.Windows.Forms.Button styDialogBtn;
-        private System.Windows.Forms.CheckBox isUseOutputPortChb;
-        private System.Windows.Forms.GroupBox outputPortGroup;
+        private System.Windows.Forms.GroupBox serialOutputGroup;
         private System.Windows.Forms.ComboBox outputPortBaudrateCbx;
-        private System.Windows.Forms.ComboBox remoteAddressToOutputCbx;
     }
 }

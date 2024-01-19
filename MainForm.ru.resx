@@ -601,11 +601,38 @@
   <data name="utilsDeviceBtn.Text" xml:space="preserve">
     <value>🤖 УСТРОЙСТВО</value>
   </data>
+  <data name="utilsDeviceViewInfoBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>482, 36</value>
+  </data>
   <data name="utilsDeviceViewInfoBtn.Text" xml:space="preserve">
     <value>Просмотреть информацию...</value>
   </data>
+  <data name="toolStripSeparator10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>479, 6</value>
+  </data>
+  <data name="utilsDeviceResponderSettingsBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>482, 36</value>
+  </data>
   <data name="utilsDeviceResponderSettingsBtn.Text" xml:space="preserve">
     <value>Настройки маяка...</value>
+  </data>
+  <data name="utilsUserDataBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>482, 36</value>
+  </data>
+  <data name="utilsUserDataBtn.Text" xml:space="preserve">
+    <value>Пользовательские данные/команды</value>
+  </data>
+  <data name="userDataReadWriteLocalBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>439, 36</value>
+  </data>
+  <data name="userDataReadWriteLocalBtn.Text" xml:space="preserve">
+    <value>Прочитать/Записать в маяк...</value>
+  </data>
+  <data name="userDataQueryRemoteBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>439, 36</value>
+  </data>
+  <data name="userDataQueryRemoteBtn.Text" xml:space="preserve">
+    <value>Запросить у удаленного маяка...</value>
   </data>
   <data name="toolStripSeparator13.Size" type="System.Drawing.Size, System.Drawing">
     <value>430, 6</value>

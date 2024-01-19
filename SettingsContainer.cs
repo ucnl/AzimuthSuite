@@ -11,9 +11,7 @@ namespace AzimuthSuite
         public bool UseAUXGNSSCompas;
         public BaudRate AUXGNSSCompasBaudrate;
 
-        public bool IsUseOutputport;
-        public BaudRate OutPortBaudrate;
-        public REMOTE_ADDR_Enum RemoteAddressToOutput;
+        public BaudRate SerialOutputPortBaudrate;
 
         public double HeadingAdjust_deg;
         public double LongitudalOffset_m;
@@ -43,10 +41,8 @@ namespace AzimuthSuite
             UseAUXGNSSCompas = false;
             AUXGNSSCompasBaudrate = BaudRate.baudRate38400;
 
-            IsUseOutputport = false;
-            OutPortBaudrate = BaudRate.baudRate9600;
-            RemoteAddressToOutput = REMOTE_ADDR_Enum.REM_ADDR_1;
-
+            SerialOutputPortBaudrate = BaudRate.baudRate9600;
+            
             HeadingAdjust_deg = 0;
             LongitudalOffset_m = 0;
             TransverseOffset_m = 0;

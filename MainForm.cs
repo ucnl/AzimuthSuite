@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -55,6 +56,39 @@ namespace AzimuthSuite
             get => (REMOTE_ADDR_Enum)Enum.Parse(typeof(REMOTE_ADDR_Enum), remoteAddrToOutportCbx.SelectedItem.ToString());
             set => UIHelpers.TrySetCbxItem(remoteAddrToOutportCbx, value.ToString());
         }
+
+        string udpOutputAddrAndPort
+        {
+            get => udpOutputAddrAndPortTxb.Text;
+            set
+            {
+                if (IsValidIPandPort(value, out _, out _))
+                    udpOutputAddrAndPortTxb.Text = value;
+            }
+        }
+
+        string udpOutputAddr
+        {
+            get
+            {
+                if (IsValidIPandPort(udpOutputAddrAndPortTxb.Text, out string ipAddr, out _))
+                    return ipAddr;
+                else
+                    return string.Empty;
+            }
+        }
+
+        ushort udpOutputPort
+        {
+            get
+            {
+                if (IsValidIPandPort(udpOutputAddrAndPortTxb.Text, out _, out ushort port))
+                    return port;
+                else
+                    return 0;
+            }
+        }
+
 
         #region misc. UI things
 
@@ -480,6 +514,7 @@ namespace AzimuthSuite
                 InvokeUpdatePortStatusLbl(mainStatusStrip, auxPortStatusLbl, azmBase.IsActive, azmBase.GNSSPortDetected, azmBase.GNSSPortStatus);
                 InvokeSwitchOutputPortUIEnabledState(azmBase.GNSSPortDetected);
 
+                /*
                 if (azmBase.GNSSPortDetected &&
                     sProvider.Data.IsUseOutputport &&
                     !azmBase.IsOutPortInitiaziled)
@@ -502,6 +537,7 @@ namespace AzimuthSuite
                         outputPortBtn_Click(null, null);
                     }
                 }
+                */
             };
             azmBase.StateUpdateHandler += (o, e) =>
             {
@@ -512,7 +548,13 @@ namespace AzimuthSuite
             azmBase.DeviceInfoValidChanged += (o, e) =>
             {
                 UIHelpers.InvokeSetEnabledState(mainToolStrip, utilsDeviceBtn, azmBase.IsDeviceInfoValid);
-                UIHelpers.InvokeSetEnabledState(mainToolStrip, utilsDeviceResponderSettingsBtn, azmBase.IsDeviceInfoValid && (azmBase.DeviceType == AZM_DEVICE_TYPE_Enum.DT_REMOTE));
+
+                bool responderItemsEnabled = azmBase.IsDeviceInfoValid && (azmBase.DeviceType == AZM_DEVICE_TYPE_Enum.DT_REMOTE);
+                bool stationItemsEnabled = azmBase.IsDeviceInfoValid && (azmBase.DeviceType == AZM_DEVICE_TYPE_Enum.DT_BASE);
+
+                UIHelpers.InvokeSetEnabledState(mainToolStrip, utilsDeviceResponderSettingsBtn, responderItemsEnabled);                
+                UIHelpers.InvokeSetEnabledState(mainToolStrip, userDataReadWriteLocalBtn, responderItemsEnabled);                
+                UIHelpers.InvokeSetEnabledState(mainToolStrip, userDataQueryRemoteBtn, stationItemsEnabled);
             };
 
             if (sProvider.Data.UseAUXGNSSCompas)
@@ -531,10 +573,12 @@ namespace AzimuthSuite
             foreach (var uAddr in usedAddresses)
                 remoteAddrToOutportCbx.Items.Add(uAddr.ToString());
 
-            RemoteAddrToOutput = sProvider.Data.RemoteAddressToOutput;
+            RemoteAddrToOutput = usProvider.Data.RemAddrToOutput;
+            outPortName = usProvider.Data.OutPortName;
+            udpOutputAddrAndPort = usProvider.Data.UDPOutAddrAndPort;
 
             SwitchOutputPortUIEnabledState(false);
-            SwitchOutputPortUIVisibleState(sProvider.Data.IsUseOutputport);
+            SwitchOutputPortUIVisibleState(true);
 
             azmBase.LocationOverrideEnabledChanged += (o, e) =>
             {
@@ -553,7 +597,7 @@ namespace AzimuthSuite
                 }
 
                 InvokeAppendHistoryLine(sb.ToString());
-            };
+            };            
 
             #endregion
 
@@ -570,6 +614,35 @@ namespace AzimuthSuite
         #endregion
 
         #region Methods
+
+        private bool IsValidIPandPort(string src, out string ipAddres, out ushort port)
+        {
+            bool result = false;
+            ipAddres = null;
+            port = 0;
+
+            var splits = src.Split(":".ToCharArray());
+            if (splits.Length == 2)
+            {
+                if (ushort.TryParse(splits[1], out port))
+                {
+                    var splits2 = splits[0].Split(".".ToCharArray());
+                    if (splits2.Length == 4)
+                    {
+                        if (byte.TryParse(splits2[0], out _) &&
+                            byte.TryParse(splits2[1], out _) &&
+                            byte.TryParse(splits2[2], out _) &&
+                            byte.TryParse(splits2[3], out _))
+                        {
+                            ipAddres = splits[0];
+                            result = true;
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
 
         private void InvokeSwitchOutputPortUIEnabledState(bool enabled)
         {
@@ -1264,6 +1337,7 @@ namespace AzimuthSuite
             if (azmBase.LocationOverrideEnabled)
             {
                 azmBase.LocationOverrideDisable();
+                InvokeSwitchOutputPortUIEnabledState(azmBase.GNSSPortDetected);
             }
             else
             {
@@ -1279,61 +1353,153 @@ namespace AzimuthSuite
                         azmBase.LocationOverrideEnable(lDialog.Latitude_deg, lDialog.Longitude_deg, lDialog.Heading_deg);
                     }
                 }
-            }
+
+                InvokeSwitchOutputPortUIEnabledState(azmBase.LocationOverrideEnabled);
+            }            
         }
 
-        #endregion
 
-        #region Outport
-
-        private void outputPortCbx_SelectedIndexChanged(object sender, EventArgs e)
+        private void userDataReadWriteLocalBtn_Click(object sender, EventArgs e)
         {
-            outputPortBtn.Enabled = !string.IsNullOrEmpty(outPortName);
-        }
-
-        private void outPortsCbxUpdateBtn_Click(object sender, EventArgs e)
-        {
-            var portsNames = azmBase.GetAvailablePortNames();
-            outputPortCbx.Items.Clear();
-            outputPortCbx.Items.AddRange(portsNames.ToArray());
-            UIHelpers.TrySetCbxItem(outputPortCbx, usProvider.Data.OutPortName);
-            if ((outputPortCbx.SelectedIndex < 0) && (outputPortCbx.Items.Count > 0))
-                outputPortCbx.SelectedIndex = 0;
-        }
-
-        private void outputPortBtn_Click(object sender, EventArgs e)
-        {
-            if (outputPortBtn.Checked)
+            using (UserDataDialog usDialog = new UserDataDialog())
             {
-                azmBase.DeInitOutputPort();
-            }
-            else
-            {
-                try
-                {
-                    azmBase.RemoteToOutport = RemoteAddrToOutput;
-                    azmBase.InitOutputPort(outPortName, sProvider.Data.OutPortBaudrate);
-                    logger.Write(string.Format("{0} {1}, {2}, {3}: {4}",
-                        LocalisedStrings.MainForm_InitializingOutPortOn,
-                        outPortName, 
-                        sProvider.Data.OutPortBaudrate,
-                        LocalisedStrings.MainForm_RestartPrompt,
-                        RemoteAddrToOutput));
-                }
-                catch (Exception ex)
-                {
-                    ProcessException(ex, true);
-                }
-            }
+                usDialog.Text = string.Format("{0} {1}",
+                    appicon, "Managing local user data");
 
-            outputPortBtn.Checked = azmBase.IsOutPortInitiaziled;
-            outPortsCbxUpdateBtn.Enabled = !azmBase.IsOutPortInitiaziled;
-            outputPortCbx.Enabled = !azmBase.IsOutPortInitiaziled;
+                usDialog.AddressEnabled = false;
+                usDialog.UserDataIDEnabled = true;
+                usDialog.UserDataValueEnabled = true;
 
-            logger.Write(string.Format("{0}={1}", nameof(azmBase.IsOutPortInitiaziled), azmBase.IsOutPortInitiaziled));
+                usDialog.QueryRemoteButtonVisible = false;
+                usDialog.ReadLocalButtonVisible = true;
+                usDialog.WriteLocalButtonVisible = true;
+
+                usDialog.RemoteAddress = REMOTE_ADDR_Enum.REM_ADDR_1;
+
+                void tHandler(object st, CSETReceivedEventArgs et)
+                {
+                    if (usDialog.InvokeRequired)
+                        usDialog.Invoke((MethodInvoker)delegate
+                        {
+                            usDialog.UserDataID = et.UserDataID;
+                            usDialog.UserDataValue = et.UserDataValue;
+                        });
+                    else
+                    {
+                        usDialog.UserDataID = et.UserDataID;
+                        usDialog.UserDataValue = et.UserDataValue;
+                    }
+                };
+
+                azmBase.CSETReceived += tHandler;
+
+                usDialog.WriteLocalRequestReceived += (o, er) =>
+                {
+                    if (!azmBase.QueryCSET_Write(usDialog.UserDataID, usDialog.UserDataValue))
+                        MessageBox.Show(
+                            "Request was not sent, try to repeat later.",
+                            string.Format("{0} Error", appicon),
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                };
+
+                usDialog.ReadLocalRequestReceived += (o, er) =>
+                {
+                    if (!azmBase.QueryCSET_Read(usDialog.UserDataID))
+                        MessageBox.Show(
+                            "Request was not sent, try to repeat later.",
+                            string.Format("{0} Error", appicon),
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                };
+
+                usDialog.ShowDialog();
+                azmBase.CSETReceived -= tHandler;
+            }
         }
 
-        #endregion
+        private void userDataQueryRemoteBtn_Click(object sender, EventArgs e)
+        {
+            using (UserDataDialog usDialog = new UserDataDialog())
+            {
+                usDialog.Text = string.Format("{0} {1}",
+                    appicon, "Querying remote's user data");
+
+                usDialog.AddressEnabled = true;
+                usDialog.UserDataIDEnabled = true;
+                usDialog.UserDataValueEnabled = true;
+
+                usDialog.QueryRemoteButtonVisible = true;
+                usDialog.ReadLocalButtonVisible = false;
+                usDialog.WriteLocalButtonVisible = false;
+
+                usDialog.RemoteAddress = REMOTE_ADDR_Enum.REM_ADDR_1;
+
+                void tHandler(object st, CREQResultReceivedEventArgs et)
+                {
+                    if (usDialog.InvokeRequired)
+                        usDialog.Invoke((MethodInvoker)delegate
+                        {
+                            usDialog.RemoteAddress = et.RemoteAddress;
+                            usDialog.UserDataID = et.ReqCode;
+
+                            if (AZM.IsErrorCode(et.ResCode))
+                            {
+                                usDialog.UserDataValue = -1;
+                                MessageBox.Show(string.Format("? {0}.{1} >> {2}",
+                                    et.RemoteAddress,
+                                    et.ReqCode,
+                                    Enum.ToObject(typeof(CDS_RESP_CODES_Enum), et.ResCode)),
+                                    usDialog.Text,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Exclamation);
+                            }
+                            else
+                            {
+                                usDialog.UserDataValue = et.ResCode;
+                            }
+                        });
+                    else
+                    {
+                        usDialog.RemoteAddress = et.RemoteAddress;
+                        usDialog.UserDataID = et.ReqCode;
+
+                        if (AZM.IsErrorCode(et.ResCode))
+                        {
+                            usDialog.UserDataValue = -1;
+                            MessageBox.Show(string.Format("? {0}.{1} >> {2}",
+                                et.RemoteAddress,
+                                et.ReqCode,
+                                Enum.ToObject(typeof(CDS_RESP_CODES_Enum), et.ResCode)),
+                                usDialog.Text,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                        }
+                        else
+                        {
+                            usDialog.UserDataValue = et.ResCode;
+                        }
+                    }
+                };
+
+                azmBase.CREQReceived += tHandler;
+
+                usDialog.QueryRemoteRequestReceived += (o, er) =>
+                {
+                    if (!azmBase.QueryCREQ(usDialog.RemoteAddress, usDialog.UserDataID))
+                        MessageBox.Show(
+                            "Request was not sent, try to repeat later.",
+                            string.Format("{0} Error", appicon),
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                };
+
+                usDialog.ShowDialog();
+                azmBase.CREQReceived -= tHandler;
+            }
+        }
+
+        #endregion               
 
         private void infoBtn_Click(object sender, EventArgs e)
         {
@@ -1479,7 +1645,7 @@ namespace AzimuthSuite
 
             if (!e.SuppressKeyPress)
             {
-                if (!notesTxb.Focused)
+                if ((!notesTxb.Focused) && (!udpOutputAddrAndPortTxb.Focused))
                     notesTxb.Focus();
             }
         }
@@ -1567,6 +1733,98 @@ namespace AzimuthSuite
             SyncRemotesTree(azmBase.GetRemotesDescription(itemsToShow));
             logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(remLocationVisible)));
         }
+
+        #endregion
+
+        #region bottomToolStrip
+
+        private void remoteAddrToOutportCbx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            azmBase.RemoteToOutport = RemoteAddrToOutput;
+            usProvider.Data.RemAddrToOutput = RemoteAddrToOutput;
+        }
+
+        private void outputPortCbx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            outputPortBtn.Enabled = !string.IsNullOrEmpty(outPortName);            
+        }
+
+        private void outPortsCbxUpdateBtn_Click(object sender, EventArgs e)
+        {
+            var portsNames = azmBase.GetAvailablePortNames();
+            outputPortCbx.Items.Clear();
+            outputPortCbx.Items.AddRange(portsNames.ToArray());
+            UIHelpers.TrySetCbxItem(outputPortCbx, usProvider.Data.OutPortName);
+            if ((outputPortCbx.SelectedIndex < 0) && (outputPortCbx.Items.Count > 0))
+                outputPortCbx.SelectedIndex = 0;
+        }
+
+        private void outputPortBtn_Click(object sender, EventArgs e)
+        {
+            if (outputPortBtn.Checked)
+            {
+                azmBase.DeInitOutputPort();
+            }
+            else
+            {
+                try
+                {
+                    azmBase.InitOutputPort(outPortName, sProvider.Data.SerialOutputPortBaudrate);
+                    logger.Write(string.Format("{0} {1}, {2}, {3}: {4}",
+                        LocalisedStrings.MainForm_InitializingOutPortOn,
+                        outPortName,
+                        sProvider.Data.SerialOutputPortBaudrate,
+                        LocalisedStrings.MainForm_RestartPrompt,
+                        RemoteAddrToOutput));
+
+                    usProvider.Data.OutPortName = outPortName;
+                }
+                catch (Exception ex)
+                {
+                    ProcessException(ex, true);
+                }
+            }
+
+            outputPortBtn.Checked = azmBase.IsOutPortInitiaziled;
+            outPortsCbxUpdateBtn.Enabled = !azmBase.IsOutPortInitiaziled;
+            outputPortCbx.Enabled = !azmBase.IsOutPortInitiaziled;
+
+            if (outputPortBtn.Checked)
+                outputPortBtn.Text = "Serial ✔";
+            else
+                outputPortBtn.Text = "Serial";
+
+            logger.Write(string.Format("{0}={1}", nameof(azmBase.IsOutPortInitiaziled), azmBase.IsOutPortInitiaziled));
+        }
+
+
+        private void udpOutputBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (azmBase.IsUDPOutputInitialized)
+                    azmBase.DeInitUDP();
+                else
+                    azmBase.InitUDP(udpOutputAddr, udpOutputPort);
+            }
+            catch (Exception ex)
+            {
+                ProcessException(ex, true);
+            }
+
+            udpOutputBtn.Checked = azmBase.IsUDPOutputInitialized;
+            if (udpOutputBtn.Checked)
+                udpOutputBtn.Text = "UDP ✔";
+            else
+                udpOutputBtn.Text = "UDP";
+            udpOutputAddrAndPortTxb.Enabled = !azmBase.IsUDPOutputInitialized;
+        }
+
+        private void udpOutputTxb_TextChanged(object sender, EventArgs e)
+        {
+            udpOutputBtn.Enabled = IsValidIPandPort(udpOutputAddrAndPortTxb.Text, out _, out _);
+        }
+
 
         #endregion
 

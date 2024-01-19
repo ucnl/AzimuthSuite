@@ -127,6 +127,9 @@
   <data name="isUseAUXGNSSChb.Text" xml:space="preserve">
     <value>Использовать GNSS компас</value>
   </data>
+  <data name="remotesListToolStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>230, 27</value>
+  </data>
   <data name="toolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 24</value>
   </data>
@@ -190,13 +193,11 @@
   <data name="groupBox6.Text" xml:space="preserve">
     <value>δ, °</value>
   </data>
-  <data name="isUseOutputPortChb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>310, 32</value>
+  <data name="serialOutputGroup.Text" xml:space="preserve">
+    <value>Скорость вых. порта</value>
   </data>
-  <data name="isUseOutputPortChb.Text" xml:space="preserve">
-    <value>Использовать выходной порт</value>
-  </data>
-  <data name="outputPortGroup.Text" xml:space="preserve">
-    <value>Выходной порт</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
 </root>

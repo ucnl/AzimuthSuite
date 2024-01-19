@@ -1,5 +1,6 @@
 ﻿using AzimuthSuite.AzmCore;
 using System;
+using System.Net;
 using System.Windows.Forms;
 using UCNLDrivers;
 using UCNLUI;
@@ -78,23 +79,11 @@ namespace AzimuthSuite
             get => Convert.ToDouble(antennaAdjustAngleEdit.Value);
             set => UIHelpers.SetNumericEditValue(antennaAdjustAngleEdit, value);
         }
-
-        bool isUseOutputPort
-        {
-            get => isUseOutputPortChb.Checked;
-            set => isUseOutputPortChb.Checked = value;
-        }
-
+        
         BaudRate OutputPortBaudrate
         {
             get => (BaudRate)Enum.Parse(typeof(BaudRate), outputPortBaudrateCbx.SelectedItem.ToString());
             set => UIHelpers.TrySetCbxItem(outputPortBaudrateCbx, value.ToString());
-        }
-
-        REMOTE_ADDR_Enum RemoteAddrToOutput
-        {
-            get => (REMOTE_ADDR_Enum)Enum.Parse(typeof(REMOTE_ADDR_Enum), remoteAddressToOutputCbx.SelectedItem.ToString());
-            set => UIHelpers.TrySetCbxItem(remoteAddressToOutputCbx, value.ToString());
         }
 
         public SettingsContainer Value
@@ -111,9 +100,7 @@ namespace AzimuthSuite
                     TransverseOffset_m = xOffset_m,
                     LongitudalOffset_m = yOffset_m,
                     HeadingAdjust_deg = angleAdjust_deg,
-                    IsUseOutputport = isUseOutputPort,
-                    OutPortBaudrate = OutputPortBaudrate,
-                    RemoteAddressToOutput = RemoteAddrToOutput
+                    SerialOutputPortBaudrate = OutputPortBaudrate
                 };
 
                 return result;                    
@@ -128,9 +115,7 @@ namespace AzimuthSuite
                 xOffset_m = value.TransverseOffset_m;
                 yOffset_m = value.LongitudalOffset_m;
                 angleAdjust_deg = value.HeadingAdjust_deg;
-                isUseOutputPort = value.IsUseOutputport;
-                OutputPortBaudrate = value.OutPortBaudrate;
-                RemoteAddrToOutput = value.RemoteAddressToOutput;
+                OutputPortBaudrate = value.SerialOutputPortBaudrate;
             }
         }
 
@@ -160,11 +145,16 @@ namespace AzimuthSuite
 
             outputPortBaudrateCbx.Items.Clear();
             outputPortBaudrateCbx.Items.AddRange(bRates);
-            OutputPortBaudrate = BaudRate.baudRate9600;
+            OutputPortBaudrate = BaudRate.baudRate9600;         
+        }
 
-            remoteAddressToOutputCbx.Items.Clear();
-            remoteAddressToOutputCbx.Items.AddRange(Enum.GetNames(typeof(REMOTE_ADDR_Enum)));
-            RemoteAddrToOutput = REMOTE_ADDR_Enum.REM_ADDR_1;
+        #endregion
+
+        #region Methods
+
+        private void CheckValidity()
+        {
+            okBtn.Enabled = remotesList.CheckedItems.Count > 0;
         }
 
         #endregion
@@ -186,14 +176,6 @@ namespace AzimuthSuite
         private void isUseAUXGNSSChb_CheckedChanged(object sender, EventArgs e)
         {
             auxGNSSGroup.Enabled = isUseAUXGNSS;
-            isUseOutputPortChb.Enabled = isUseAUXGNSS;
-            if (!isUseAUXGNSS)
-                isUseOutputPort = false;
-        }
-
-        private void isUseOutputPortChb_CheckedChanged(object sender, EventArgs e)
-        {
-            outputPortGroup.Enabled = isUseOutputPort;
         }
 
         private void setDaultsBtn_Click(object sender, EventArgs e)
@@ -215,9 +197,10 @@ namespace AzimuthSuite
 
         private void remotesList_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            okBtn.Enabled = !((remotesList.CheckedItems.Count == 1) && (e.NewValue == CheckState.Unchecked));                
+            okBtn.Enabled =
+                (!((remotesList.CheckedItems.Count == 1) && (e.NewValue == CheckState.Unchecked)));
         }
 
-        #endregion        
+        #endregion
     }
 }

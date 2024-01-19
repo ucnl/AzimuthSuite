@@ -87,16 +87,25 @@
             this.utilsDeviceViewInfoBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.utilsDeviceResponderSettingsBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.utilsUserDataBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.userDataReadWriteLocalBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.userDataQueryRemoteBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.utilsLocationOverrideBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.infoBtn = new System.Windows.Forms.ToolStripButton();
-            this.outPortsCbxUpdateBtn = new System.Windows.Forms.ToolStripButton();
-            this.outputPortCbx = new System.Windows.Forms.ToolStripComboBox();
-            this.remoteAddrToOutportCbx = new System.Windows.Forms.ToolStripComboBox();
-            this.outputPortBtn = new System.Windows.Forms.ToolStripButton();
-            this.outportBtnsSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.uiTimer = new System.Windows.Forms.Timer(this.components);
+            this.bottomToolStrip = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.remoteAddrToOutportCbx = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            this.outputPortBtn = new System.Windows.Forms.ToolStripButton();
+            this.outputPortCbx = new System.Windows.Forms.ToolStripComboBox();
+            this.outPortsCbxUpdateBtn = new System.Windows.Forms.ToolStripButton();
+            this.outportBtnsSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.udpOutputBtn = new System.Windows.Forms.ToolStripButton();
+            this.udpOutputAddrAndPortTxb = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplit)).BeginInit();
             this.mainSplit.Panel1.SuspendLayout();
             this.mainSplit.Panel2.SuspendLayout();
@@ -107,6 +116,7 @@
             this.remotesTopStrip.SuspendLayout();
             this.mainStatusStrip.SuspendLayout();
             this.mainToolStrip.SuspendLayout();
+            this.bottomToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainSplit
@@ -116,21 +126,18 @@
             // 
             // mainSplit.Panel1
             // 
-            resources.ApplyResources(this.mainSplit.Panel1, "mainSplit.Panel1");
             this.mainSplit.Panel1.Controls.Add(this.rPlot);
             this.mainSplit.Panel1.Controls.Add(this.rPlotBottomStrip);
             this.mainSplit.Panel1.Controls.Add(this.plotToolStrip);
             // 
             // mainSplit.Panel2
             // 
-            resources.ApplyResources(this.mainSplit.Panel2, "mainSplit.Panel2");
             this.mainSplit.Panel2.Controls.Add(this.remotesTree);
             this.mainSplit.Panel2.Controls.Add(this.remotesBottonStrip);
             this.mainSplit.Panel2.Controls.Add(this.remotesTopStrip);
             // 
             // rPlot
             // 
-            resources.ApplyResources(this.rPlot, "rPlot");
             this.rPlot.AxisBackgroundLabelColor = System.Drawing.Color.Black;
             this.rPlot.AxisColor = System.Drawing.Color.LightGray;
             this.rPlot.AxisLabelColor = System.Drawing.Color.LightGray;
@@ -139,6 +146,7 @@
             this.rPlot.BoatColor = System.Drawing.Color.Yellow;
             this.rPlot.BoatSize = 16;
             this.rPlot.BoatVisible = true;
+            resources.ApplyResources(this.rPlot, "rPlot");
             this.rPlot.Heading = double.NaN;
             this.rPlot.HistoryLinesNumber = 4;
             this.rPlot.HistoryTextColor = System.Drawing.Color.SpringGreen;
@@ -188,20 +196,20 @@
             // 
             // addNoteBtn
             // 
-            resources.ApplyResources(this.addNoteBtn, "addNoteBtn");
             this.addNoteBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.addNoteBtn, "addNoteBtn");
             this.addNoteBtn.Name = "addNoteBtn";
             this.addNoteBtn.Click += new System.EventHandler(this.addNoteBtn_Click);
             // 
             // toolStripSeparator9
             // 
-            resources.ApplyResources(this.toolStripSeparator9, "toolStripSeparator9");
             this.toolStripSeparator9.Name = "toolStripSeparator9";
+            resources.ApplyResources(this.toolStripSeparator9, "toolStripSeparator9");
             // 
             // printScreenBtn
             // 
-            resources.ApplyResources(this.printScreenBtn, "printScreenBtn");
             this.printScreenBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.printScreenBtn, "printScreenBtn");
             this.printScreenBtn.Name = "printScreenBtn";
             this.printScreenBtn.Click += new System.EventHandler(this.printScreenBtn_Click);
             // 
@@ -222,66 +230,66 @@
             // 
             // limboVisibleBtn
             // 
-            resources.ApplyResources(this.limboVisibleBtn, "limboVisibleBtn");
             this.limboVisibleBtn.Checked = true;
             this.limboVisibleBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.limboVisibleBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.limboVisibleBtn, "limboVisibleBtn");
             this.limboVisibleBtn.Name = "limboVisibleBtn";
             this.limboVisibleBtn.Click += new System.EventHandler(this.limboVisibleBtn_Click);
             // 
             // toolStripSeparator5
             // 
-            resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
             this.toolStripSeparator5.Name = "toolStripSeparator5";
+            resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
             // 
             // historyVisibleBtn
             // 
-            resources.ApplyResources(this.historyVisibleBtn, "historyVisibleBtn");
             this.historyVisibleBtn.Checked = true;
             this.historyVisibleBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.historyVisibleBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.historyVisibleBtn, "historyVisibleBtn");
             this.historyVisibleBtn.Name = "historyVisibleBtn";
             this.historyVisibleBtn.Click += new System.EventHandler(this.historyVisibleBtn_Click);
             // 
             // toolStripSeparator6
             // 
-            resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
             this.toolStripSeparator6.Name = "toolStripSeparator6";
+            resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
             // 
             // notesVisibleBtn
             // 
-            resources.ApplyResources(this.notesVisibleBtn, "notesVisibleBtn");
             this.notesVisibleBtn.Checked = true;
             this.notesVisibleBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.notesVisibleBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.notesVisibleBtn, "notesVisibleBtn");
             this.notesVisibleBtn.Name = "notesVisibleBtn";
             this.notesVisibleBtn.Click += new System.EventHandler(this.notesVisibleBtn_Click);
             // 
             // toolStripSeparator7
             // 
-            resources.ApplyResources(this.toolStripSeparator7, "toolStripSeparator7");
             this.toolStripSeparator7.Name = "toolStripSeparator7";
+            resources.ApplyResources(this.toolStripSeparator7, "toolStripSeparator7");
             // 
             // miscInfoVisibleBtn
             // 
-            resources.ApplyResources(this.miscInfoVisibleBtn, "miscInfoVisibleBtn");
             this.miscInfoVisibleBtn.Checked = true;
             this.miscInfoVisibleBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.miscInfoVisibleBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.miscInfoVisibleBtn, "miscInfoVisibleBtn");
             this.miscInfoVisibleBtn.Name = "miscInfoVisibleBtn";
             this.miscInfoVisibleBtn.Click += new System.EventHandler(this.miscInfoVisibleBtn_Click);
             // 
             // paletteBtn
             // 
-            resources.ApplyResources(this.paletteBtn, "paletteBtn");
             this.paletteBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.paletteBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.paletteBtn, "paletteBtn");
             this.paletteBtn.Name = "paletteBtn";
             // 
             // remotesTree
             // 
-            resources.ApplyResources(this.remotesTree, "remotesTree");
             this.remotesTree.BackColor = System.Drawing.Color.Black;
+            resources.ApplyResources(this.remotesTree, "remotesTree");
             this.remotesTree.ForeColor = System.Drawing.Color.LawnGreen;
             this.remotesTree.LineColor = System.Drawing.Color.LightGreen;
             this.remotesTree.Name = "remotesTree";
@@ -301,47 +309,47 @@
             // 
             // isDistanceAndAzimuthVisibleBtn
             // 
-            resources.ApplyResources(this.isDistanceAndAzimuthVisibleBtn, "isDistanceAndAzimuthVisibleBtn");
             this.isDistanceAndAzimuthVisibleBtn.Checked = true;
             this.isDistanceAndAzimuthVisibleBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.isDistanceAndAzimuthVisibleBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.isDistanceAndAzimuthVisibleBtn, "isDistanceAndAzimuthVisibleBtn");
             this.isDistanceAndAzimuthVisibleBtn.Name = "isDistanceAndAzimuthVisibleBtn";
             this.isDistanceAndAzimuthVisibleBtn.Click += new System.EventHandler(this.isTreeDistanceAndAzimuthVisibleBtn_Click);
             // 
             // isTreeDepthVisibleBtn
             // 
-            resources.ApplyResources(this.isTreeDepthVisibleBtn, "isTreeDepthVisibleBtn");
             this.isTreeDepthVisibleBtn.Checked = true;
             this.isTreeDepthVisibleBtn.CheckState = System.Windows.Forms.CheckState.Checked;
             this.isTreeDepthVisibleBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.isTreeDepthVisibleBtn, "isTreeDepthVisibleBtn");
             this.isTreeDepthVisibleBtn.Name = "isTreeDepthVisibleBtn";
             this.isTreeDepthVisibleBtn.Click += new System.EventHandler(this.isTreeDepthVisibleBtn_Click);
             // 
             // isTreeReverseAzimuthVisibleBtn
             // 
-            resources.ApplyResources(this.isTreeReverseAzimuthVisibleBtn, "isTreeReverseAzimuthVisibleBtn");
             this.isTreeReverseAzimuthVisibleBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.isTreeReverseAzimuthVisibleBtn, "isTreeReverseAzimuthVisibleBtn");
             this.isTreeReverseAzimuthVisibleBtn.Name = "isTreeReverseAzimuthVisibleBtn";
             this.isTreeReverseAzimuthVisibleBtn.Click += new System.EventHandler(this.isTreeReverseAzimuthVisibleBtn_Click);
             // 
             // isTreeElevationVisibleBtn
             // 
-            resources.ApplyResources(this.isTreeElevationVisibleBtn, "isTreeElevationVisibleBtn");
             this.isTreeElevationVisibleBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.isTreeElevationVisibleBtn, "isTreeElevationVisibleBtn");
             this.isTreeElevationVisibleBtn.Name = "isTreeElevationVisibleBtn";
             this.isTreeElevationVisibleBtn.Click += new System.EventHandler(this.isTreeElevationVisibleBtn_Click);
             // 
             // isTreeMiscInfoVisibleBtn
             // 
-            resources.ApplyResources(this.isTreeMiscInfoVisibleBtn, "isTreeMiscInfoVisibleBtn");
             this.isTreeMiscInfoVisibleBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.isTreeMiscInfoVisibleBtn, "isTreeMiscInfoVisibleBtn");
             this.isTreeMiscInfoVisibleBtn.Name = "isTreeMiscInfoVisibleBtn";
             this.isTreeMiscInfoVisibleBtn.Click += new System.EventHandler(this.isTreeMiscInfoVisibleBtn_Click);
             // 
             // isTreeLocationVisibleBtn
             // 
-            resources.ApplyResources(this.isTreeLocationVisibleBtn, "isTreeLocationVisibleBtn");
             this.isTreeLocationVisibleBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.isTreeLocationVisibleBtn, "isTreeLocationVisibleBtn");
             this.isTreeLocationVisibleBtn.Name = "isTreeLocationVisibleBtn";
             this.isTreeLocationVisibleBtn.Click += new System.EventHandler(this.isTreeLocationVisibleBtn_Click);
             // 
@@ -357,23 +365,23 @@
             // 
             // treeExpandBtn
             // 
-            resources.ApplyResources(this.treeExpandBtn, "treeExpandBtn");
             this.treeExpandBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.treeExpandBtn, "treeExpandBtn");
             this.treeExpandBtn.Name = "treeExpandBtn";
             this.treeExpandBtn.Click += new System.EventHandler(this.treeExpandBtn_Click);
             // 
             // treeCollapseBtn
             // 
-            resources.ApplyResources(this.treeCollapseBtn, "treeCollapseBtn");
             this.treeCollapseBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.treeCollapseBtn, "treeCollapseBtn");
             this.treeCollapseBtn.Name = "treeCollapseBtn";
             this.treeCollapseBtn.Click += new System.EventHandler(this.treeCollapseBtn_Click);
             // 
             // toolStripLabel1
             // 
-            resources.ApplyResources(this.toolStripLabel1, "toolStripLabel1");
             this.toolStripLabel1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLabel1.Name = "toolStripLabel1";
+            resources.ApplyResources(this.toolStripLabel1, "toolStripLabel1");
             // 
             // mainStatusStrip
             // 
@@ -395,8 +403,8 @@
             // 
             // spacingLbl1
             // 
-            resources.ApplyResources(this.spacingLbl1, "spacingLbl1");
             this.spacingLbl1.Name = "spacingLbl1";
+            resources.ApplyResources(this.spacingLbl1, "spacingLbl1");
             // 
             // auxPortStatusLbl
             // 
@@ -405,14 +413,14 @@
             // 
             // logLbl
             // 
-            resources.ApplyResources(this.logLbl, "logLbl");
             this.logLbl.Name = "logLbl";
+            resources.ApplyResources(this.logLbl, "logLbl");
             this.logLbl.Spring = true;
             // 
             // moonPhaseLbl
             // 
-            resources.ApplyResources(this.moonPhaseLbl, "moonPhaseLbl");
             this.moonPhaseLbl.Name = "moonPhaseLbl";
+            resources.ApplyResources(this.moonPhaseLbl, "moonPhaseLbl");
             this.moonPhaseLbl.Click += new System.EventHandler(this.moonPhaseLbl_Click);
             // 
             // mainToolStrip
@@ -428,41 +436,35 @@
             this.toolStripSeparator3,
             this.utilsBtn,
             this.toolStripSeparator4,
-            this.infoBtn,
-            this.outPortsCbxUpdateBtn,
-            this.outputPortCbx,
-            this.remoteAddrToOutportCbx,
-            this.outputPortBtn,
-            this.outportBtnsSeparator});
+            this.infoBtn});
             this.mainToolStrip.Name = "mainToolStrip";
             // 
             // linkBtn
             // 
-            resources.ApplyResources(this.linkBtn, "linkBtn");
             this.linkBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.linkBtn, "linkBtn");
             this.linkBtn.Name = "linkBtn";
             this.linkBtn.Click += new System.EventHandler(this.linkBtn_Click);
             // 
             // toolStripSeparator1
             // 
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
             // settingsBtn
             // 
-            resources.ApplyResources(this.settingsBtn, "settingsBtn");
             this.settingsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.settingsBtn, "settingsBtn");
             this.settingsBtn.Name = "settingsBtn";
             this.settingsBtn.Click += new System.EventHandler(this.settingsBtn_Click);
             // 
             // toolStripSeparator2
             // 
-            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             // 
             // logBtn
             // 
-            resources.ApplyResources(this.logBtn, "logBtn");
             this.logBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.logBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.logViewCurrentBtn,
@@ -473,6 +475,7 @@
             this.toolStripSeparator12,
             this.logDeleteAllEntriesBtn,
             this.logDoThemAllBtn});
+            resources.ApplyResources(this.logBtn, "logBtn");
             this.logBtn.Name = "logBtn";
             // 
             // logViewCurrentBtn
@@ -489,8 +492,8 @@
             // 
             // toolStripSeparator11
             // 
-            resources.ApplyResources(this.toolStripSeparator11, "toolStripSeparator11");
             this.toolStripSeparator11.Name = "toolStripSeparator11";
+            resources.ApplyResources(this.toolStripSeparator11, "toolStripSeparator11");
             // 
             // logClearEmptyEntriesBtn
             // 
@@ -506,8 +509,8 @@
             // 
             // toolStripSeparator12
             // 
-            resources.ApplyResources(this.toolStripSeparator12, "toolStripSeparator12");
             this.toolStripSeparator12.Name = "toolStripSeparator12";
+            resources.ApplyResources(this.toolStripSeparator12, "toolStripSeparator12");
             // 
             // logDeleteAllEntriesBtn
             // 
@@ -523,12 +526,11 @@
             // 
             // toolStripSeparator3
             // 
-            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             this.toolStripSeparator3.Name = "toolStripSeparator3";
+            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             // 
             // utilsBtn
             // 
-            resources.ApplyResources(this.utilsBtn, "utilsBtn");
             this.utilsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.utilsBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.utilsTrackBtn,
@@ -536,33 +538,35 @@
             this.utilsDeviceBtn,
             this.toolStripSeparator13,
             this.utilsLocationOverrideBtn});
+            resources.ApplyResources(this.utilsBtn, "utilsBtn");
             this.utilsBtn.Name = "utilsBtn";
             // 
             // utilsTrackBtn
             // 
-            resources.ApplyResources(this.utilsTrackBtn, "utilsTrackBtn");
             this.utilsTrackBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.utilsTracksExportBtn});
+            resources.ApplyResources(this.utilsTrackBtn, "utilsTrackBtn");
             this.utilsTrackBtn.Name = "utilsTrackBtn";
             // 
             // utilsTracksExportBtn
             // 
-            resources.ApplyResources(this.utilsTracksExportBtn, "utilsTracksExportBtn");
             this.utilsTracksExportBtn.Name = "utilsTracksExportBtn";
+            resources.ApplyResources(this.utilsTracksExportBtn, "utilsTracksExportBtn");
             this.utilsTracksExportBtn.Click += new System.EventHandler(this.utilsTracksExportBtn_Click);
             // 
             // toolStripSeparator8
             // 
-            resources.ApplyResources(this.toolStripSeparator8, "toolStripSeparator8");
             this.toolStripSeparator8.Name = "toolStripSeparator8";
+            resources.ApplyResources(this.toolStripSeparator8, "toolStripSeparator8");
             // 
             // utilsDeviceBtn
             // 
-            resources.ApplyResources(this.utilsDeviceBtn, "utilsDeviceBtn");
             this.utilsDeviceBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.utilsDeviceViewInfoBtn,
             this.toolStripSeparator10,
-            this.utilsDeviceResponderSettingsBtn});
+            this.utilsDeviceResponderSettingsBtn,
+            this.utilsUserDataBtn});
+            resources.ApplyResources(this.utilsDeviceBtn, "utilsDeviceBtn");
             this.utilsDeviceBtn.Name = "utilsDeviceBtn";
             // 
             // utilsDeviceViewInfoBtn
@@ -573,19 +577,41 @@
             // 
             // toolStripSeparator10
             // 
-            resources.ApplyResources(this.toolStripSeparator10, "toolStripSeparator10");
             this.toolStripSeparator10.Name = "toolStripSeparator10";
+            resources.ApplyResources(this.toolStripSeparator10, "toolStripSeparator10");
             // 
             // utilsDeviceResponderSettingsBtn
             // 
+            this.utilsDeviceResponderSettingsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             resources.ApplyResources(this.utilsDeviceResponderSettingsBtn, "utilsDeviceResponderSettingsBtn");
             this.utilsDeviceResponderSettingsBtn.Name = "utilsDeviceResponderSettingsBtn";
             this.utilsDeviceResponderSettingsBtn.Click += new System.EventHandler(this.utilsDeviceResponderSettingsBtn_Click);
             // 
+            // utilsUserDataBtn
+            // 
+            this.utilsUserDataBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.utilsUserDataBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.userDataReadWriteLocalBtn,
+            this.userDataQueryRemoteBtn});
+            this.utilsUserDataBtn.Name = "utilsUserDataBtn";
+            resources.ApplyResources(this.utilsUserDataBtn, "utilsUserDataBtn");
+            // 
+            // userDataReadWriteLocalBtn
+            // 
+            resources.ApplyResources(this.userDataReadWriteLocalBtn, "userDataReadWriteLocalBtn");
+            this.userDataReadWriteLocalBtn.Name = "userDataReadWriteLocalBtn";
+            this.userDataReadWriteLocalBtn.Click += new System.EventHandler(this.userDataReadWriteLocalBtn_Click);
+            // 
+            // userDataQueryRemoteBtn
+            // 
+            resources.ApplyResources(this.userDataQueryRemoteBtn, "userDataQueryRemoteBtn");
+            this.userDataQueryRemoteBtn.Name = "userDataQueryRemoteBtn";
+            this.userDataQueryRemoteBtn.Click += new System.EventHandler(this.userDataQueryRemoteBtn_Click);
+            // 
             // toolStripSeparator13
             // 
-            resources.ApplyResources(this.toolStripSeparator13, "toolStripSeparator13");
             this.toolStripSeparator13.Name = "toolStripSeparator13";
+            resources.ApplyResources(this.toolStripSeparator13, "toolStripSeparator13");
             // 
             // utilsLocationOverrideBtn
             // 
@@ -595,59 +621,106 @@
             // 
             // toolStripSeparator4
             // 
-            resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
             this.toolStripSeparator4.Name = "toolStripSeparator4";
+            resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
             // 
             // infoBtn
             // 
-            resources.ApplyResources(this.infoBtn, "infoBtn");
             this.infoBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.infoBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.infoBtn, "infoBtn");
             this.infoBtn.Name = "infoBtn";
             this.infoBtn.Click += new System.EventHandler(this.infoBtn_Click);
-            // 
-            // outPortsCbxUpdateBtn
-            // 
-            resources.ApplyResources(this.outPortsCbxUpdateBtn, "outPortsCbxUpdateBtn");
-            this.outPortsCbxUpdateBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.outPortsCbxUpdateBtn.Name = "outPortsCbxUpdateBtn";
-            this.outPortsCbxUpdateBtn.Click += new System.EventHandler(this.outPortsCbxUpdateBtn_Click);
-            // 
-            // outputPortCbx
-            // 
-            resources.ApplyResources(this.outputPortCbx, "outputPortCbx");
-            this.outputPortCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.outputPortCbx.Name = "outputPortCbx";
-            this.outputPortCbx.SelectedIndexChanged += new System.EventHandler(this.outputPortCbx_SelectedIndexChanged);
-            // 
-            // remoteAddrToOutportCbx
-            // 
-            resources.ApplyResources(this.remoteAddrToOutportCbx, "remoteAddrToOutportCbx");
-            this.remoteAddrToOutportCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.remoteAddrToOutportCbx.DropDownWidth = 200;
-            this.remoteAddrToOutportCbx.Name = "remoteAddrToOutportCbx";
-            // 
-            // outputPortBtn
-            // 
-            resources.ApplyResources(this.outputPortBtn, "outputPortBtn");
-            this.outputPortBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.outputPortBtn.Name = "outputPortBtn";
-            this.outputPortBtn.Click += new System.EventHandler(this.outputPortBtn_Click);
-            // 
-            // outportBtnsSeparator
-            // 
-            resources.ApplyResources(this.outportBtnsSeparator, "outportBtnsSeparator");
-            this.outportBtnsSeparator.Name = "outportBtnsSeparator";
             // 
             // uiTimer
             // 
             this.uiTimer.Tick += new System.EventHandler(this.uiTimer_Tick);
+            // 
+            // bottomToolStrip
+            // 
+            resources.ApplyResources(this.bottomToolStrip, "bottomToolStrip");
+            this.bottomToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.bottomToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel2,
+            this.remoteAddrToOutportCbx,
+            this.toolStripSeparator14,
+            this.outputPortBtn,
+            this.outputPortCbx,
+            this.outPortsCbxUpdateBtn,
+            this.outportBtnsSeparator,
+            this.udpOutputBtn,
+            this.udpOutputAddrAndPortTxb,
+            this.toolStripSeparator16});
+            this.bottomToolStrip.Name = "bottomToolStrip";
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            resources.ApplyResources(this.toolStripLabel2, "toolStripLabel2");
+            // 
+            // remoteAddrToOutportCbx
+            // 
+            this.remoteAddrToOutportCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.remoteAddrToOutportCbx.DropDownWidth = 200;
+            resources.ApplyResources(this.remoteAddrToOutportCbx, "remoteAddrToOutportCbx");
+            this.remoteAddrToOutportCbx.Name = "remoteAddrToOutportCbx";
+            this.remoteAddrToOutportCbx.SelectedIndexChanged += new System.EventHandler(this.remoteAddrToOutportCbx_SelectedIndexChanged);
+            // 
+            // toolStripSeparator14
+            // 
+            this.toolStripSeparator14.Name = "toolStripSeparator14";
+            resources.ApplyResources(this.toolStripSeparator14, "toolStripSeparator14");
+            // 
+            // outputPortBtn
+            // 
+            this.outputPortBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.outputPortBtn, "outputPortBtn");
+            this.outputPortBtn.Name = "outputPortBtn";
+            this.outputPortBtn.Click += new System.EventHandler(this.outputPortBtn_Click);
+            // 
+            // outputPortCbx
+            // 
+            this.outputPortCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            resources.ApplyResources(this.outputPortCbx, "outputPortCbx");
+            this.outputPortCbx.Name = "outputPortCbx";
+            this.outputPortCbx.SelectedIndexChanged += new System.EventHandler(this.outputPortCbx_SelectedIndexChanged);
+            // 
+            // outPortsCbxUpdateBtn
+            // 
+            this.outPortsCbxUpdateBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.outPortsCbxUpdateBtn, "outPortsCbxUpdateBtn");
+            this.outPortsCbxUpdateBtn.Name = "outPortsCbxUpdateBtn";
+            this.outPortsCbxUpdateBtn.Click += new System.EventHandler(this.outPortsCbxUpdateBtn_Click);
+            // 
+            // outportBtnsSeparator
+            // 
+            this.outportBtnsSeparator.Name = "outportBtnsSeparator";
+            resources.ApplyResources(this.outportBtnsSeparator, "outportBtnsSeparator");
+            // 
+            // udpOutputBtn
+            // 
+            this.udpOutputBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.udpOutputBtn, "udpOutputBtn");
+            this.udpOutputBtn.Name = "udpOutputBtn";
+            this.udpOutputBtn.Click += new System.EventHandler(this.udpOutputBtn_Click);
+            // 
+            // udpOutputAddrAndPortTxb
+            // 
+            resources.ApplyResources(this.udpOutputAddrAndPortTxb, "udpOutputAddrAndPortTxb");
+            this.udpOutputAddrAndPortTxb.Name = "udpOutputAddrAndPortTxb";
+            this.udpOutputAddrAndPortTxb.TextChanged += new System.EventHandler(this.udpOutputTxb_TextChanged);
+            // 
+            // toolStripSeparator16
+            // 
+            this.toolStripSeparator16.Name = "toolStripSeparator16";
+            resources.ApplyResources(this.toolStripSeparator16, "toolStripSeparator16");
             // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.mainSplit);
+            this.Controls.Add(this.bottomToolStrip);
             this.Controls.Add(this.mainToolStrip);
             this.Controls.Add(this.mainStatusStrip);
             this.DoubleBuffered = true;
@@ -675,6 +748,8 @@
             this.mainStatusStrip.PerformLayout();
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
+            this.bottomToolStrip.ResumeLayout(false);
+            this.bottomToolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -735,11 +810,6 @@
         private System.Windows.Forms.ToolStripButton addNoteBtn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripButton printScreenBtn;
-        private System.Windows.Forms.ToolStripComboBox outputPortCbx;
-        private System.Windows.Forms.ToolStripButton outputPortBtn;
-        private System.Windows.Forms.ToolStripSeparator outportBtnsSeparator;
-        private System.Windows.Forms.ToolStripButton outPortsCbxUpdateBtn;
-        private System.Windows.Forms.ToolStripComboBox remoteAddrToOutportCbx;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem utilsDeviceBtn;
         private System.Windows.Forms.ToolStripMenuItem utilsDeviceViewInfoBtn;
@@ -749,6 +819,20 @@
         private System.Windows.Forms.Timer uiTimer;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
         private System.Windows.Forms.ToolStripMenuItem utilsLocationOverrideBtn;
+        private System.Windows.Forms.ToolStripMenuItem utilsUserDataBtn;
+        private System.Windows.Forms.ToolStripMenuItem userDataReadWriteLocalBtn;
+        private System.Windows.Forms.ToolStripMenuItem userDataQueryRemoteBtn;
+        private System.Windows.Forms.ToolStrip bottomToolStrip;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripComboBox remoteAddrToOutportCbx;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
+        private System.Windows.Forms.ToolStripButton outputPortBtn;
+        private System.Windows.Forms.ToolStripComboBox outputPortCbx;
+        private System.Windows.Forms.ToolStripButton outPortsCbxUpdateBtn;
+        private System.Windows.Forms.ToolStripSeparator outportBtnsSeparator;
+        private System.Windows.Forms.ToolStripButton udpOutputBtn;
+        private System.Windows.Forms.ToolStripTextBox udpOutputAddrAndPortTxb;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
     }
 }
 

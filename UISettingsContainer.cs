@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AzimuthSuite.AzmCore;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using UCNLDrivers;
@@ -28,7 +29,9 @@ namespace AzimuthSuite
 
         public string VisualStyle;
 
+        public REMOTE_ADDR_Enum RemAddrToOutput;
         public string OutPortName;
+        public string UDPOutAddrAndPort;
         
         #endregion
 
@@ -53,7 +56,9 @@ namespace AzimuthSuite
 
             VisualStyle = VisualStyleContainer.DefaultName;
 
+            RemAddrToOutput = REMOTE_ADDR_Enum.REM_ADDR_1;
             OutPortName = "COM1";
+            UDPOutAddrAndPort = "255.255.255.255:28128";
         }
 
         #endregion
