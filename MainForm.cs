@@ -491,6 +491,8 @@ namespace AzimuthSuite
                 sProvider.Data.TransverseOffset_m,
                 sProvider.Data.LongitudalOffset_m);
 
+            azmBase.IsMagneticCompassOnly = sProvider.Data.IsUseMagneticCompassOnly;
+
             azmBase.LogEventHandler += (o, e) => logger.Write(string.Format("{0}: {1}", e.EventType, e.LogString));
             azmBase.AbsoluteLocationUpdated += (o, e) =>
                 trackManager.AddPoint(e.ID, e.Latitude_deg, e.Longitude_deg, e.Depth_m, DateTime.Now);

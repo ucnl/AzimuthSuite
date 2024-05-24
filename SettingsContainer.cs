@@ -27,6 +27,8 @@ namespace AzimuthSuite
 
         public bool SpecControlsEnabled;
 
+        public bool IsUseMagneticCompassOnly;
+
         #endregion
 
         #region Constructor
@@ -51,6 +53,8 @@ namespace AzimuthSuite
 
             AddressMask = 1;
             MaxDist_m = 1000;
+
+            IsUseMagneticCompassOnly = false;
 
             CustomLabel = string.Empty;
             CultureOverride = string.Empty;

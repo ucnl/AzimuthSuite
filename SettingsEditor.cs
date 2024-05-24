@@ -44,6 +44,12 @@ namespace AzimuthSuite
             set => isUseAUXGNSSChb.Checked = value;
         }
 
+        bool isUseMagneticCompassOnly
+        {
+            get => IsUseMagneticCompassOnlyChb.Checked;
+            set => IsUseMagneticCompassOnlyChb.Checked = value;
+        }
+
         BaudRate AUXGNSSBaudrate
         {
             get => (BaudRate)Enum.Parse(typeof(BaudRate), auxGNSSBaudrateCbx.SelectedItem.ToString());
@@ -100,7 +106,8 @@ namespace AzimuthSuite
                     TransverseOffset_m = xOffset_m,
                     LongitudalOffset_m = yOffset_m,
                     HeadingAdjust_deg = angleAdjust_deg,
-                    SerialOutputPortBaudrate = OutputPortBaudrate
+                    SerialOutputPortBaudrate = OutputPortBaudrate,
+                    IsUseMagneticCompassOnly = isUseMagneticCompassOnly,
                 };
 
                 return result;                    
@@ -116,6 +123,7 @@ namespace AzimuthSuite
                 yOffset_m = value.LongitudalOffset_m;
                 angleAdjust_deg = value.HeadingAdjust_deg;
                 OutputPortBaudrate = value.SerialOutputPortBaudrate;
+                isUseMagneticCompassOnly = value.IsUseMagneticCompassOnly;
             }
         }
 

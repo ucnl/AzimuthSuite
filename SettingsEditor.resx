@@ -145,7 +145,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cancelBtn.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="okBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -172,7 +172,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;okBtn.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="isUseAUXGNSSChb.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -199,7 +199,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;isUseAUXGNSSChb.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="remotesList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -228,72 +228,12 @@
   <data name="&gt;&gt;remotesList.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <metadata name="remotesListToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="remotesPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="&gt;&gt;remotesListToolStrip.Name" xml:space="preserve">
-    <value>remotesListToolStrip</value>
-  </data>
-  <data name="&gt;&gt;remotesListToolStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;remotesListToolStrip.Parent" xml:space="preserve">
-    <value>remotesPanel</value>
-  </data>
-  <data name="&gt;&gt;remotesListToolStrip.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="remotesPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 26</value>
-  </data>
-  <data name="remotesPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>230, 426</value>
-  </data>
-  <data name="remotesPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;remotesPanel.Name" xml:space="preserve">
-    <value>remotesPanel</value>
-  </data>
-  <data name="&gt;&gt;remotesPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;remotesPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;remotesPanel.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
   <metadata name="remotesListToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="remotesListToolStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="remotesListToolStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>230, 27</value>
-  </data>
-  <data name="remotesListToolStrip.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="remotesListToolStrip.Text" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="&gt;&gt;remotesListToolStrip.Name" xml:space="preserve">
-    <value>remotesListToolStrip</value>
-  </data>
-  <data name="&gt;&gt;remotesListToolStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;remotesListToolStrip.Parent" xml:space="preserve">
-    <value>remotesPanel</value>
-  </data>
-  <data name="&gt;&gt;remotesListToolStrip.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="toolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 24</value>
   </data>
@@ -357,6 +297,63 @@
   <data name="remotesUncheckAllBtn.ToolTipText" xml:space="preserve">
     <value>Uncheck all</value>
   </data>
+  <data name="remotesListToolStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="remotesListToolStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>230, 27</value>
+  </data>
+  <data name="remotesListToolStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="remotesListToolStrip.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;remotesListToolStrip.Name" xml:space="preserve">
+    <value>remotesListToolStrip</value>
+  </data>
+  <data name="&gt;&gt;remotesListToolStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;remotesListToolStrip.Parent" xml:space="preserve">
+    <value>remotesPanel</value>
+  </data>
+  <data name="&gt;&gt;remotesListToolStrip.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="remotesPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 26</value>
+  </data>
+  <data name="remotesPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>230, 426</value>
+  </data>
+  <data name="remotesPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;remotesPanel.Name" xml:space="preserve">
+    <value>remotesPanel</value>
+  </data>
+  <data name="&gt;&gt;remotesPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;remotesPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;remotesPanel.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="auxGNSSBaudrateCbx.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="auxGNSSBaudrateCbx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 42</value>
+  </data>
+  <data name="auxGNSSBaudrateCbx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 36</value>
+  </data>
+  <data name="auxGNSSBaudrateCbx.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="&gt;&gt;auxGNSSBaudrateCbx.Name" xml:space="preserve">
     <value>auxGNSSBaudrateCbx</value>
   </data>
@@ -394,79 +391,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;auxGNSSGroup.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="auxGNSSBaudrateCbx.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
-  </data>
-  <data name="auxGNSSBaudrateCbx.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 42</value>
-  </data>
-  <data name="auxGNSSBaudrateCbx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 36</value>
-  </data>
-  <data name="auxGNSSBaudrateCbx.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;auxGNSSBaudrateCbx.Name" xml:space="preserve">
-    <value>auxGNSSBaudrateCbx</value>
-  </data>
-  <data name="&gt;&gt;auxGNSSBaudrateCbx.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;auxGNSSBaudrateCbx.Parent" xml:space="preserve">
-    <value>auxGNSSGroup</value>
-  </data>
-  <data name="&gt;&gt;auxGNSSBaudrateCbx.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;styDialogBtn.Name" xml:space="preserve">
-    <value>styDialogBtn</value>
-  </data>
-  <data name="&gt;&gt;styDialogBtn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;styDialogBtn.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;styDialogBtn.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;styEdit.Name" xml:space="preserve">
-    <value>styEdit</value>
-  </data>
-  <data name="&gt;&gt;styEdit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;styEdit.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;styEdit.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>267, 146</value>
-  </data>
-  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>244, 84</value>
-  </data>
-  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>Salinity, PSU</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="styDialogBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -519,6 +444,42 @@
   <data name="&gt;&gt;styEdit.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>267, 146</value>
+  </data>
+  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>244, 84</value>
+  </data>
+  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Salinity, PSU</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="maxRangeEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="maxRangeEdit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 44</value>
+  </data>
+  <data name="maxRangeEdit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 34</value>
+  </data>
+  <data name="maxRangeEdit.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
   <data name="&gt;&gt;maxRangeEdit.Name" xml:space="preserve">
     <value>maxRangeEdit</value>
   </data>
@@ -553,31 +514,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="maxRangeEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
-  </data>
-  <data name="maxRangeEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 44</value>
-  </data>
-  <data name="maxRangeEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 34</value>
-  </data>
-  <data name="maxRangeEdit.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;maxRangeEdit.Name" xml:space="preserve">
-    <value>maxRangeEdit</value>
-  </data>
-  <data name="&gt;&gt;maxRangeEdit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;maxRangeEdit.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;maxRangeEdit.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>6</value>
   </data>
   <data name="setDaultsBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -604,7 +541,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;setDaultsBtn.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
+  </data>
+  <data name="xOffsetEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="xOffsetEdit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 44</value>
+  </data>
+  <data name="xOffsetEdit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>225, 34</value>
+  </data>
+  <data name="xOffsetEdit.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;xOffsetEdit.Name" xml:space="preserve">
     <value>xOffsetEdit</value>
@@ -640,31 +589,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
-  <data name="xOffsetEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="yOffsetEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
-  <data name="xOffsetEdit.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="yOffsetEdit.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 44</value>
   </data>
-  <data name="xOffsetEdit.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="yOffsetEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>225, 34</value>
   </data>
-  <data name="xOffsetEdit.TabIndex" type="System.Int32, mscorlib">
+  <data name="yOffsetEdit.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
-  </data>
-  <data name="&gt;&gt;xOffsetEdit.Name" xml:space="preserve">
-    <value>xOffsetEdit</value>
-  </data>
-  <data name="&gt;&gt;xOffsetEdit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;xOffsetEdit.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;xOffsetEdit.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;yOffsetEdit.Name" xml:space="preserve">
     <value>yOffsetEdit</value>
@@ -700,31 +637,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
-  <data name="yOffsetEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="antennaAdjustAngleEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
-  <data name="yOffsetEdit.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="antennaAdjustAngleEdit.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 44</value>
   </data>
-  <data name="yOffsetEdit.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="antennaAdjustAngleEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>225, 34</value>
   </data>
-  <data name="yOffsetEdit.TabIndex" type="System.Int32, mscorlib">
+  <data name="antennaAdjustAngleEdit.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
-  </data>
-  <data name="&gt;&gt;yOffsetEdit.Name" xml:space="preserve">
-    <value>yOffsetEdit</value>
-  </data>
-  <data name="&gt;&gt;yOffsetEdit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;yOffsetEdit.Parent" xml:space="preserve">
-    <value>groupBox5</value>
-  </data>
-  <data name="&gt;&gt;yOffsetEdit.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;antennaAdjustAngleEdit.Name" xml:space="preserve">
     <value>antennaAdjustAngleEdit</value>
@@ -760,31 +685,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="antennaAdjustAngleEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
-  </data>
-  <data name="antennaAdjustAngleEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 44</value>
-  </data>
-  <data name="antennaAdjustAngleEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>225, 34</value>
-  </data>
-  <data name="antennaAdjustAngleEdit.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;antennaAdjustAngleEdit.Name" xml:space="preserve">
-    <value>antennaAdjustAngleEdit</value>
-  </data>
-  <data name="&gt;&gt;antennaAdjustAngleEdit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;antennaAdjustAngleEdit.Parent" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="&gt;&gt;antennaAdjustAngleEdit.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="outputPortBaudrateCbx.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
@@ -832,6 +733,36 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;serialOutputGroup.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="IsUseMagneticCompassOnlyChb.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="IsUseMagneticCompassOnlyChb.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="IsUseMagneticCompassOnlyChb.Location" type="System.Drawing.Point, System.Drawing">
+    <value>267, 420</value>
+  </data>
+  <data name="IsUseMagneticCompassOnlyChb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>300, 32</value>
+  </data>
+  <data name="IsUseMagneticCompassOnlyChb.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="IsUseMagneticCompassOnlyChb.Text" xml:space="preserve">
+    <value>Use HDM/HDG instead of HDT</value>
+  </data>
+  <data name="&gt;&gt;IsUseMagneticCompassOnlyChb.Name" xml:space="preserve">
+    <value>IsUseMagneticCompassOnlyChb</value>
+  </data>
+  <data name="&gt;&gt;IsUseMagneticCompassOnlyChb.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IsUseMagneticCompassOnlyChb.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;IsUseMagneticCompassOnlyChb.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

@@ -55,6 +55,7 @@
             this.antennaAdjustAngleEdit = new System.Windows.Forms.NumericUpDown();
             this.serialOutputGroup = new System.Windows.Forms.GroupBox();
             this.outputPortBaudrateCbx = new System.Windows.Forms.ComboBox();
+            this.IsUseMagneticCompassOnlyChb = new System.Windows.Forms.CheckBox();
             this.remotesPanel.SuspendLayout();
             this.remotesListToolStrip.SuspendLayout();
             this.auxGNSSGroup.SuspendLayout();
@@ -290,10 +291,17 @@
             this.outputPortBaudrateCbx.FormattingEnabled = true;
             this.outputPortBaudrateCbx.Name = "outputPortBaudrateCbx";
             // 
+            // IsUseMagneticCompassOnlyChb
+            // 
+            resources.ApplyResources(this.IsUseMagneticCompassOnlyChb, "IsUseMagneticCompassOnlyChb");
+            this.IsUseMagneticCompassOnlyChb.Name = "IsUseMagneticCompassOnlyChb";
+            this.IsUseMagneticCompassOnlyChb.UseVisualStyleBackColor = true;
+            // 
             // SettingsEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.IsUseMagneticCompassOnlyChb);
             this.Controls.Add(this.serialOutputGroup);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
@@ -358,5 +366,6 @@
         private System.Windows.Forms.Button styDialogBtn;
         private System.Windows.Forms.GroupBox serialOutputGroup;
         private System.Windows.Forms.ComboBox outputPortBaudrateCbx;
+        private System.Windows.Forms.CheckBox IsUseMagneticCompassOnlyChb;
     }
 }
