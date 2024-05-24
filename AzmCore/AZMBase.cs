@@ -256,7 +256,7 @@ namespace AzimuthSuite.AzmCore
         readonly AZMPort azmPort;
         uGNSSSerialPort gnssPort;
         NMEASerialPort outPort;
-        UDPTranslator udpTranslator;
+        UDPTranslator udpTranslator;        
 
         public bool IsActive
         {
@@ -356,6 +356,8 @@ namespace AzimuthSuite.AzmCore
         PrecisionTimer pTimer;
 
         public bool LocationOverrideEnabled { get => pTimer.IsRunning; }
+
+        public bool IsMagneticCompassOnly { get; set; }
 
         #endregion
 
@@ -1124,8 +1126,10 @@ namespace AzimuthSuite.AzmCore
                 gnssPort = new uGNSSSerialPort(baudrate)
                 {
                     IsLogIncoming = true,
-                    IsTryAlways = true
+                    IsTryAlways = true                   
                 };
+
+                gnssPort.MagneticOnly = IsMagneticCompassOnly;
 
                 gnssPort.DetectedChanged += (o, e) => GNSSPortDetectedChanged.Rise(o, e);
                 gnssPort.IsActiveChanged += (o, e) => IsGNSSActiveChanged.Rise(o, e);
@@ -1139,8 +1143,12 @@ namespace AzimuthSuite.AzmCore
                 {
                     latitude_deg.Value = gnssPort.Latitude;
                     longitude_deg.Value = gnssPort.Longitude;
-                    course_deg.Value = gnssPort.CourseOverGround;
-                    speed.Value = gnssPort.GroundSpeed;
+
+                    if (!double.IsNaN(gnssPort.CourseOverGround))
+                        course_deg.Value = gnssPort.CourseOverGround;
+
+                    if (!double.IsNaN(gnssPort.GroundSpeed))
+                        speed.Value = gnssPort.GroundSpeed;
 
                     AbsoluteLocationUpdated.Rise(this,
                         new AbsoluteLocationUpdatedEventArgs("Station",
