@@ -491,6 +491,9 @@ namespace AzimuthSuite
                 sProvider.Data.TransverseOffset_m,
                 sProvider.Data.LongitudalOffset_m);
 
+            azmBase.AZMPreferredPortName = usProvider.Data.AZMPreferredPortName;
+            azmBase.GNSSPreferredPortName = usProvider.Data.AUXGNSSCompasPreferredPortName;
+
             azmBase.IsMagneticCompassOnly = sProvider.Data.IsUseMagneticCompassOnly;
 
             azmBase.LogEventHandler += (o, e) => logger.Write(string.Format("{0}: {1}", e.EventType, e.LogString));
@@ -499,7 +502,11 @@ namespace AzimuthSuite
             azmBase.RelativeLocationUpdated += (o, e) =>
                 InvokeUpdateRelativeLocation(e.ID, e.PRange_m, e.Azimuth_deg);
             azmBase.AZMPortDetectedChanged += (o, e) =>
+            {
                 InvokeUpdatePortStatusLbl(mainStatusStrip, azmPortStatusLbl, azmBase.IsActive, azmBase.AZMPortDetected, azmBase.AZMPortStatus);
+                if (azmBase.AZMPortDetected)
+                    usProvider.Data.AZMPreferredPortName = azmBase.AZMPortName;
+            };
             azmBase.IsActiveChanged += (o, e) =>
             {
                 UIHelpers.InvokeSetCheckedState(mainToolStrip, linkBtn, azmBase.IsActive);
@@ -516,6 +523,9 @@ namespace AzimuthSuite
                 InvokeUpdatePortStatusLbl(mainStatusStrip, auxPortStatusLbl, azmBase.IsActive, azmBase.GNSSPortDetected, azmBase.GNSSPortStatus);
                 InvokeSwitchOutputPortUIEnabledState(azmBase.GNSSPortDetected);
 
+                if (azmBase.GNSSPortDetected)
+                    usProvider.Data.AUXGNSSCompasPreferredPortName = azmBase.GNSSPortName;
+                    
                 /*
                 if (azmBase.GNSSPortDetected &&
                     sProvider.Data.IsUseOutputport &&
@@ -943,12 +953,22 @@ namespace AzimuthSuite
                 var path = Path.Combine(snapshotsPath, fName);
                 target.Save(path, ImageFormat.Png);
 
-                return string.Format("{0}: {1}", LocalisedStrings.MainForm_ScreenshotSaved, fName);
+                return string.Format("{0}: {1}|{2}", 
+                    LocalisedStrings.MainForm_ScreenshotSaved, 
+                    fName,
+                    path);
             }
             catch (Exception ex)
             {
                 return ex.Message;
             }
+        }
+
+        private void StatusHintLinkUpdate(string text, string linkText)
+        {
+            logLbl.Text = text;
+            logLbl.Tag = linkText;
+            logLbl.ToolTipText = linkText;
         }
 
         #region Log management
@@ -1017,7 +1037,7 @@ namespace AzimuthSuite
         #endregion
 
         #region Handlers
-
+        
         #region UI
 
         #region mainToolStrip
@@ -1149,8 +1169,10 @@ namespace AzimuthSuite
                     try
                     {
                         ZipFile.CreateFromDirectory(logPath, sDialog.FileName);
-                        logLbl.Text = string.Format("{0} {1}",
-                           LocalisedStrings.MainForm_LogArchiveResult, Path.GetFileName(sDialog.FileName));
+
+                        StatusHintLinkUpdate(
+                            string.Format("{0} {1}", LocalisedStrings.MainForm_LogArchiveResult, Path.GetFileName(sDialog.FileName)),
+                            sDialog.FileName);
                     }
                     catch (Exception ex)
                     {
@@ -1203,8 +1225,11 @@ namespace AzimuthSuite
                         try
                         {
                             ZipFile.CreateFromDirectory(logPath, sDialog.FileName);
-                            logLbl.Text = string.Format("{0} {1}",
-                               LocalisedStrings.MainForm_LogMoveToArchiveResult, Path.GetFileName(sDialog.FileName));
+                            
+                            StatusHintLinkUpdate(
+                            string.Format("{0} {1}", LocalisedStrings.MainForm_LogMoveToArchiveResult, Path.GetFileName(sDialog.FileName)),
+                            sDialog.FileName);
+
                             archived = true;
                         }
                         catch (Exception ex)
@@ -1236,6 +1261,7 @@ namespace AzimuthSuite
         private void utilsTracksExportBtn_Click(object sender, EventArgs e)
         {
             bool saved = false;
+            string tracksSavedTo = string.Empty;
             using (SaveFileDialog sDialog = new SaveFileDialog())
             {
                 sDialog.Title = string.Format("{0} {1}", 
@@ -1245,6 +1271,8 @@ namespace AzimuthSuite
 
                 if (sDialog.ShowDialog() == DialogResult.OK)
                 {
+                    tracksSavedTo = sDialog.FileName;
+
                     try
                     {
                         // KML
@@ -1267,12 +1295,17 @@ namespace AzimuthSuite
                 }
             }
 
-            if (saved &&
-                (MessageBox.Show(LocalisedStrings.MainForm_ClearTracksPrompt,
-                string.Format("{0} {1} - {2}", appicon, Application.ProductName, LocalisedStrings.MainForm_Question),
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question) == DialogResult.Yes))
+            if (saved)
+            {
+                StatusHintLinkUpdate(string.Format("{0} {1}", LocalisedStrings.MainForm_TracksExtportedTo, Path.GetFileName(tracksSavedTo)),
+                    tracksSavedTo);
+
+                if (MessageBox.Show(LocalisedStrings.MainForm_ClearTracksPrompt,
+                    string.Format("{0} {1} - {2}", appicon, Application.ProductName, LocalisedStrings.MainForm_Question),
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
                 trackManager.Clear();
+            }
         }
 
         private void utilsDeviceViewInfoBtn_Click(object sender, EventArgs e)
@@ -1537,7 +1570,10 @@ namespace AzimuthSuite
 
         private void printScreenBtn_Click(object sender, EventArgs e)
         {
-            logLbl.Text = SaveFullScreenshot();
+            var res = SaveFullScreenshot();
+            var splits = res.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+            if (splits.Length >= 2)
+                StatusHintLinkUpdate(splits[0], splits[1]);            
         }
 
         #endregion
@@ -1664,7 +1700,7 @@ namespace AzimuthSuite
         private void treeCollapseBtn_Click(object sender, EventArgs e)
         {
             remotesTree.CollapseAll();
-        }
+        }   
 
         #endregion
 
@@ -1835,6 +1871,23 @@ namespace AzimuthSuite
         {
             mpIdx = 0;
             uiTimer.Start();
+        }
+
+        private void logLbl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (logLbl.Tag != null)
+                {
+                    var fpath = (string)logLbl.Tag;
+                    if (!string.IsNullOrEmpty(fpath))
+                        Process.Start(fpath);
+                }
+            }
+            catch (Exception ex)
+            {
+                ProcessException(ex, true);
+            }
         }
 
         #endregion

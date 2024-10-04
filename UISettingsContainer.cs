@@ -32,6 +32,9 @@ namespace AzimuthSuite
         public REMOTE_ADDR_Enum RemAddrToOutput;
         public string OutPortName;
         public string UDPOutAddrAndPort;
+
+        public string AZMPreferredPortName;
+        public string AUXGNSSCompasPreferredPortName;
         
         #endregion
 
@@ -59,7 +62,10 @@ namespace AzimuthSuite
             RemAddrToOutput = REMOTE_ADDR_Enum.REM_ADDR_1;
             OutPortName = "COM1";
             UDPOutAddrAndPort = "255.255.255.255:28128";
-        }
+
+            AZMPreferredPortName = string.Empty;
+            AUXGNSSCompasPreferredPortName = string.Empty;
+    }
 
         #endregion
     }
