@@ -1,7 +1,5 @@
-﻿using AzimuthSuite.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Globalization;
 using System.IO.Ports;
 using System.Net;
@@ -278,6 +276,11 @@ namespace AzimuthSuite.AzmCore
             get { return azmPort.ToString(); }
         }
 
+        public string AZMPreferredPortName
+        {
+            get { return azmPort.ProposedPortName; }
+            set { azmPort.ProposedPortName = value; }
+        }
 
         public bool IsOutPortInitiaziled
         {
@@ -299,6 +302,21 @@ namespace AzimuthSuite.AzmCore
         public bool GNSSPortDetected
         {
             get { return (gnssPort != null) && (gnssPort.Detected); }
+        }
+
+        public string GNSSPortName
+        {
+            get { return (gnssPort != null) ? gnssPort.PortName : string.Empty; }
+        }
+
+        string gnssPreferredPortName = string.Empty;
+        public string GNSSPreferredPortName
+        {
+            get { return (gnssPort != null) ? gnssPort.ProposedPortName : string.Empty; }
+            set 
+            {
+                gnssPreferredPortName = value;
+            }
         }
 
         public string GNSSPortStatus
@@ -357,7 +375,7 @@ namespace AzimuthSuite.AzmCore
 
         public bool LocationOverrideEnabled { get => pTimer.IsRunning; }
 
-        public bool IsMagneticCompassOnly { get; set; }
+        public bool IsMagneticCompassOnly { get; set; }        
 
         #endregion
 
@@ -424,7 +442,10 @@ namespace AzimuthSuite.AzmCore
 
                 if (azmPort.Detected)
                     if (IsUseGNSS && !gnssPort.IsActive)
-                        gnssPort.Start();                
+                    {
+                        gnssPort.ProposedPortName = gnssPreferredPortName;
+                        gnssPort.Start();
+                    }
             };
             azmPort.DeviceInfoValidChanged += (o, e) =>
             {
@@ -927,7 +948,7 @@ namespace AzimuthSuite.AzmCore
                     DateTime ts = DateTime.Now;
 
                     if (remotes[e.Address].FilterState == null)
-                        remotes[e.Address].FilterState = new DHFilter(8, 1, 10);
+                        remotes[e.Address].FilterState = new DHFilter(8, 1, 5);
 
                     if (remotes[e.Address].FilterState.Process(rlat_rad, rlon_rad, 0, ts, 
                             out rlat_rad, out rlon_rad, out _, out ts))
