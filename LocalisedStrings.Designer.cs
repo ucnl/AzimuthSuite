@@ -349,6 +349,15 @@ namespace AzimuthSuite {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Tracks exported to .
+        /// </summary>
+        internal static string MainForm_TracksExtportedTo {
+            get {
+                return ResourceManager.GetString("MainForm_TracksExtportedTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Tracks are not saved. Do you want to save it before exit?.
         /// </summary>
         internal static string MainForm_TracksSavePrompt {

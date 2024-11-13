@@ -413,9 +413,11 @@
             // 
             // logLbl
             // 
+            this.logLbl.IsLink = true;
             this.logLbl.Name = "logLbl";
             resources.ApplyResources(this.logLbl, "logLbl");
             this.logLbl.Spring = true;
+            this.logLbl.Click += new System.EventHandler(this.logLbl_Click);
             // 
             // moonPhaseLbl
             // 

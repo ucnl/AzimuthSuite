@@ -213,6 +213,9 @@
   <data name="MainForm_TracksExportDialogTitle" xml:space="preserve">
     <value>다음으로 트랙 내보내기...</value>
   </data>
+  <data name="MainForm_TracksExtportedTo" xml:space="preserve">
+    <value>다음에 저장된 트랙</value>
+  </data>
   <data name="MainForm_TracksSavePrompt" xml:space="preserve">
     <value>트랙은 저장되지 않습니다. 종료하기 전에 저장하시겠습니까?</value>
   </data>

@@ -213,6 +213,9 @@
   <data name="MainForm_TracksExportDialogTitle" xml:space="preserve">
     <value>将曲目导出到...</value>
   </data>
+  <data name="MainForm_TracksExtportedTo" xml:space="preserve">
+    <value>轨迹已保存至</value>
+  </data>
   <data name="MainForm_TracksSavePrompt" xml:space="preserve">
     <value>不保存曲目。 退出前要保存吗？</value>
   </data>

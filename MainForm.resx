@@ -145,7 +145,7 @@
     <value>rPlot</value>
   </data>
   <data name="&gt;&gt;rPlot.Type" xml:space="preserve">
-    <value>UCNLUI.Controls.RadialPlot, UCNLUI, Version=1.0.8761.19585, Culture=neutral, PublicKeyToken=null</value>
+    <value>UCNLUI.Controls.RadialPlot, UCNLUI, Version=1.0.8844.23134, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rPlot.Parent" xml:space="preserve">
     <value>mainSplit.Panel1</value>
@@ -810,30 +810,6 @@
   <data name="mainStatusStrip.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
-  <data name="mainStatusStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 684</value>
-  </data>
-  <data name="mainStatusStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1000, 34</value>
-  </data>
-  <data name="mainStatusStrip.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="mainStatusStrip.Text" xml:space="preserve">
-    <value>statusStrip1</value>
-  </data>
-  <data name="&gt;&gt;mainStatusStrip.Name" xml:space="preserve">
-    <value>mainStatusStrip</value>
-  </data>
-  <data name="&gt;&gt;mainStatusStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;mainStatusStrip.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;mainStatusStrip.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="azmPortStatusLbl.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt, style=Bold</value>
   </data>
@@ -865,13 +841,37 @@
     <value>Auxilary GNSS Compass connection status</value>
   </data>
   <data name="logLbl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>727, 28</value>
+    <value>688, 28</value>
   </data>
   <data name="moonPhaseLbl.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 28</value>
   </data>
   <data name="moonPhaseLbl.Text" xml:space="preserve">
     <value>🌙</value>
+  </data>
+  <data name="mainStatusStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 684</value>
+  </data>
+  <data name="mainStatusStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1000, 34</value>
+  </data>
+  <data name="mainStatusStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="mainStatusStrip.Text" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;mainStatusStrip.Name" xml:space="preserve">
+    <value>mainStatusStrip</value>
+  </data>
+  <data name="&gt;&gt;mainStatusStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;mainStatusStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;mainStatusStrip.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <metadata name="mainToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>181, 17</value>
@@ -1239,6 +1239,30 @@
   <data name="bottomToolStrip.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
+  <data name="bottomToolStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 645</value>
+  </data>
+  <data name="bottomToolStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1000, 39</value>
+  </data>
+  <data name="bottomToolStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="bottomToolStrip.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;bottomToolStrip.Name" xml:space="preserve">
+    <value>bottomToolStrip</value>
+  </data>
+  <data name="&gt;&gt;bottomToolStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bottomToolStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;bottomToolStrip.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="toolStripLabel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 36</value>
   </data>
@@ -1373,30 +1397,6 @@
   </data>
   <data name="toolStripSeparator16.Size" type="System.Drawing.Size, System.Drawing">
     <value>6, 39</value>
-  </data>
-  <data name="bottomToolStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 645</value>
-  </data>
-  <data name="bottomToolStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1000, 39</value>
-  </data>
-  <data name="bottomToolStrip.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="bottomToolStrip.Text" xml:space="preserve">
-    <value>toolStrip1</value>
-  </data>
-  <data name="&gt;&gt;bottomToolStrip.Name" xml:space="preserve">
-    <value>bottomToolStrip</value>
-  </data>
-  <data name="&gt;&gt;bottomToolStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;bottomToolStrip.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;bottomToolStrip.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

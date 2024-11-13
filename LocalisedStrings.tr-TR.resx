@@ -213,6 +213,9 @@
   <data name="MainForm_TracksExportDialogTitle" xml:space="preserve">
     <value>Export tracks to...</value>
   </data>
+  <data name="MainForm_TracksExtportedTo" xml:space="preserve">
+    <value>Parçalar şuraya kaydedildi</value>
+  </data>
   <data name="MainForm_TracksSavePrompt" xml:space="preserve">
     <value>Tracks are not saved. Do you want to save it before exit?</value>
   </data>

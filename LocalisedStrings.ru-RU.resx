@@ -213,6 +213,9 @@
   <data name="MainForm_TracksExportDialogTitle" xml:space="preserve">
     <value>Экспорт треков...</value>
   </data>
+  <data name="MainForm_TracksExtportedTo" xml:space="preserve">
+    <value>Треки сохранены в </value>
+  </data>
   <data name="MainForm_TracksSavePrompt" xml:space="preserve">
     <value>Есть несохраненные треки, сохранить их перед завершением работы?</value>
   </data>

@@ -184,6 +184,11 @@ namespace AzimuthSuite
         private void isUseAUXGNSSChb_CheckedChanged(object sender, EventArgs e)
         {
             auxGNSSGroup.Enabled = isUseAUXGNSS;
+
+            if (!isUseAUXGNSS)
+                IsUseMagneticCompassOnlyChb.Checked = false;
+
+            IsUseMagneticCompassOnlyChb.Enabled = isUseAUXGNSS;
         }
 
         private void setDaultsBtn_Click(object sender, EventArgs e)
