@@ -49,7 +49,9 @@ namespace AzimuthSuite.AzmCore
         public bool IsTimeout { get; set; }
         public AgingValue<string> Message { get; private set; }
 
-        public DHFilter FilterState;
+        public DHFilter DHFilterState;
+
+        public TrackFilter TFilterState;
 
         #endregion
 
@@ -947,12 +949,24 @@ namespace AzimuthSuite.AzmCore
 
                     DateTime ts = DateTime.Now;
 
-                    if (remotes[e.Address].FilterState == null)
-                        remotes[e.Address].FilterState = new DHFilter(8, 1, 5);
+                    if (remotes[e.Address].DHFilterState == null)
+                        remotes[e.Address].DHFilterState = new DHFilter(8, 1, 5);
 
-                    if (remotes[e.Address].FilterState.Process(rlat_rad, rlon_rad, 0, ts, 
+                    if (remotes[e.Address].DHFilterState.Process(rlat_rad, rlon_rad, 0, ts, 
                             out rlat_rad, out rlon_rad, out _, out ts))
                     {
+
+                        /// 17 OCT 2024
+
+                        if (remotes[e.Address].TFilterState == null)
+                            remotes[e.Address].TFilterState = new TrackFilter(4, 20);
+
+                        var sm_result = remotes[e.Address].TFilterState.Filter(Algorithms.Rad2Deg(rlat_rad), Algorithms.Rad2Deg(rlon_rad));
+                        rlat_rad = Algorithms.Deg2Rad(sm_result.Latitude);
+                        rlon_rad = Algorithms.Deg2Rad(sm_result.Longitude);
+
+                        ///
+
                         remotes[e.Address].AAzimuth_deg.Value = a_azm;
                         remotes[e.Address].ReverseAzimuth_deg.Value = Algorithms.Wrap360(a_azm + 180);
                         remotes[e.Address].ADistance_m.Value = a_rng;
