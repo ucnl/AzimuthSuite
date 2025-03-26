@@ -43,6 +43,9 @@ namespace AzimuthSuite.AzmCore
         public AgingValue<double> ReverseAzimuth_deg { get; private set; }
         public AgingValue<double> PTime_s { get; private set; }
         public AgingValue<double> MSR_dB { get; private set; }
+
+        public AgingValue<double> VCC_V { get; private set; }
+
         
         public AgingValue<double> Latitude_deg { get; private set; }
         public AgingValue<double> Longitude_deg { get; private set; }
@@ -52,6 +55,25 @@ namespace AzimuthSuite.AzmCore
         public DHFilter DHFilterState;
 
         public TrackFilter TFilterState;
+
+        public int TotalRequests { get => SuccededRequests + Timeouts; }
+        public int SuccededRequests { get; set; }
+        public int Timeouts { get; set; }
+
+        public string SuccessfulRequestStatistics
+        {
+            get
+            {
+                if (TotalRequests > 0)
+                {
+                    return string.Format(CultureInfo.InvariantCulture, "{0:F01}% ({1}/{2})", 100.0 * SuccededRequests / TotalRequests, SuccededRequests, TotalRequests);
+                }
+                else
+                {
+                    return "- - -";
+                }
+            }
+        }
 
         #endregion
 
@@ -70,6 +92,7 @@ namespace AzimuthSuite.AzmCore
             Elevation_deg = new AgingValue<double>(3, 32, AZM.degrees1dec_fmtr);
             PTime_s = new AgingValue<double>(3, 32, x => string.Format(CultureInfo.InvariantCulture, "{0:F04} sec", x));
             MSR_dB = new AgingValue<double>(3, 32, AZM.db_fmtr);
+            VCC_V = new AgingValue<double>(3, 300, AZM.v1dec_fmt);
             Latitude_deg = new AgingValue<double>(3, 32, AZM.latlon_fmtr);
             Longitude_deg = new AgingValue<double>(3, 32, AZM.latlon_fmtr);
             ReverseAzimuth_deg = new AgingValue<double>(3, 32, AZM.degrees1dec_fmtr);
@@ -128,6 +151,12 @@ namespace AzimuthSuite.AzmCore
 
                 if (PTime_s.IsInitialized)
                     result.Add("PTM", PTime_s.ToString());
+
+                if (VCC_V.IsInitialized)
+                    result.Add("VCC", VCC_V.ToString());
+
+                result.Add("RST", SuccessfulRequestStatistics);
+                
             }
 
             if (visibleItems.HasFlag(RemoteVisibleDataItems.isLocation))
@@ -255,6 +284,7 @@ namespace AzimuthSuite.AzmCore
         bool disposed = false;
         readonly AZMPort azmPort;
         uGNSSSerialPort gnssPort;
+        uMagneticCompassPort mPort;
         NMEASerialPort outPort;
         UDPTranslator udpTranslator;        
 
@@ -305,12 +335,10 @@ namespace AzimuthSuite.AzmCore
         {
             get { return (gnssPort != null) && (gnssPort.Detected); }
         }
-
         public string GNSSPortName
         {
             get { return (gnssPort != null) ? gnssPort.PortName : string.Empty; }
         }
-
         string gnssPreferredPortName = string.Empty;
         public string GNSSPreferredPortName
         {
@@ -320,18 +348,42 @@ namespace AzimuthSuite.AzmCore
                 gnssPreferredPortName = value;
             }
         }
-
         public string GNSSPortStatus
         {
             get { return gnssPort == null ? string.Empty : gnssPort.ToString(); }
         }
-
         public double Heading
         {
             get { return (!heading.IsInitialized) ? 0 : heading.Value; }
         }
 
-        
+
+        public bool IsUseMagneticCompass { get; private set; }
+        public bool MagneticCompassPortDetected
+        {
+            get { return (mPort != null) && (mPort.Detected); }
+        }
+        public string MagneticCompassPortName
+        {
+            get { return (mPort != null) ? mPort.PortName : string.Empty; }
+        }
+        string magneticCompassPreferredPortName = string.Empty;
+        public string MagneticCompassPreferredPortName
+        {
+            get { return (mPort != null) ? mPort.ProposedPortName : string.Empty; }
+            set
+            {
+                magneticCompassPreferredPortName = value;
+            }
+        }
+        public string MagneticCompassPortStatus
+        {
+            get { return mPort == null ? string.Empty : mPort.ToString(); }
+        }
+
+
+
+
         public ushort AddressMask { get; private set; }
 
         public double MaxDist_m { get; private set; }
@@ -351,6 +403,7 @@ namespace AzimuthSuite.AzmCore
         double x_offset_m;
         double y_offset_m;
 
+        AgingValue<double> stationPressure_mBar;
         AgingValue<double> stationDepth_m;
         AgingValue<double> waterTemperature_C;
         AgingValue<double> stationPitch_deg;
@@ -416,6 +469,7 @@ namespace AzimuthSuite.AzmCore
 
             #region AgingValues
 
+            stationPressure_mBar = new AgingValue<double>(3, 10, AZM.mBar_fmtr);
             stationDepth_m = new AgingValue<double>(3, 10, AZM.meters1dec_fmtr);
             waterTemperature_C = new AgingValue<double>(3, 10, AZM.degC_fmtr);
             stationPitch_deg = new AgingValue<double>(3, 10, AZM.degrees1dec_fmtr);
@@ -443,11 +497,13 @@ namespace AzimuthSuite.AzmCore
                 AZMPortDetectedChanged.Rise(o, e);
 
                 if (azmPort.Detected)
+                {
                     if (IsUseGNSS && !gnssPort.IsActive)
                     {
                         gnssPort.ProposedPortName = gnssPreferredPortName;
                         gnssPort.Start();
-                    }
+                    }                    
+                }
             };
             azmPort.DeviceInfoValidChanged += (o, e) =>
             {
@@ -837,6 +893,7 @@ namespace AzimuthSuite.AzmCore
                 remotes.Add(address, new Remote(address));
 
             remotes[address].IsTimeout = true;
+            remotes[address].Timeouts++;
 
             if (remotes[address].Azimuth_deg.IsInitialized &&
                 remotes[address].SlantRangeProjection_m.IsInitialized)
@@ -875,6 +932,7 @@ namespace AzimuthSuite.AzmCore
             bool is_srp = false;
 
             remotes[e.Address].IsTimeout = false;
+            remotes[e.Address].SuccededRequests++;
 
             if (AZM.IsUserDataReqCode(e.RequestCode))
             {
@@ -890,7 +948,13 @@ namespace AzimuthSuite.AzmCore
                     remotes[e.Address].Message.Value = rError.ToString().Replace("CDS", "").Replace('_', ' ');
                 else
                     remotes[e.Address].Message.Value = string.Format("{0} caused {1}", e.RequestCode, rError);
+
+            } 
+            else if (e.RequestCode == CDS_REQ_CODES_Enum.CDS_REQ_VCC)
+            {
+                remotes[e.Address].VCC_V.Value = (double)(e.ResponseCode) * (AZM.ABS_MAX_VCC_V - AZM.ABS_MIN_VCC_V) / AZM.CRANGE + AZM.ABS_MIN_VCC_V;
             }
+
 
             if (!double.IsNaN(e.MSR_dB))
                 remotes[e.Address].MSR_dB.Value = e.MSR_dB;
@@ -1061,6 +1125,8 @@ namespace AzimuthSuite.AzmCore
 
             if (!double.IsNaN(e.LocPrs_mBar))
             {
+                stationPressure_mBar.Value = e.LocPrs_mBar;
+
                 if (waterTemperature_C.IsInitialized)
                 {
                     double waterDensity_kgm3 =
@@ -1166,7 +1232,20 @@ namespace AzimuthSuite.AzmCore
 
                 gnssPort.MagneticOnly = IsMagneticCompassOnly;
 
-                gnssPort.DetectedChanged += (o, e) => GNSSPortDetectedChanged.Rise(o, e);
+                gnssPort.DetectedChanged += (o, e) =>
+                {
+                    GNSSPortDetectedChanged.Rise(o, e);
+
+                    if (gnssPort.Detected)
+                    {
+                        if (IsUseMagneticCompass && !mPort.IsActive)
+                        {
+                            mPort.ProposedPortName = magneticCompassPreferredPortName;
+                            mPort.Start();
+                        }
+                    }
+
+                };
                 gnssPort.IsActiveChanged += (o, e) => IsGNSSActiveChanged.Rise(o, e);
                 gnssPort.HeadingUpdated += (o, e) =>
                 {
@@ -1198,10 +1277,38 @@ namespace AzimuthSuite.AzmCore
             }
         }
 
+        public void MagneticCompassInit(BaudRate baudrate)
+        {
+            if (!IsUseMagneticCompass)
+            {
+                IsUseMagneticCompass = true;
+
+                mPort = new uMagneticCompassPort(baudrate)
+                {
+                    IsLogIncoming = true,
+                    IsTryAlways = true
+                };
+
+                mPort.DetectedChanged += (o, e) => MagneticCompassPortDetectedChanged.Rise(o, e);
+                mPort.IsActiveChanged += (o, e) => IsMagneticCompassActiveChanged.Rise(o, e);
+                mPort.HeadingUpdated += (o, e) =>
+                {
+                    heading.Value = mPort.Heading;
+                    HeadingUpdated.Rise(this, new EventArgs());
+                };
+
+                mPort.LogEventHandler += (o, e) => LogEventHandler.Rise(o, e);
+            }
+        }
+
+
         public void Start()
         {
             if (IsUseGNSS && gnssPort.IsActive)
                 gnssPort.Stop();
+
+            if (IsUseMagneticCompass && mPort.IsActive)
+                mPort.Stop();
 
             if (!azmPort.IsActive)
             {
@@ -1219,39 +1326,51 @@ namespace AzimuthSuite.AzmCore
 
                 if (IsUseGNSS && gnssPort.IsActive)
                     gnssPort.Stop();
+
+                if (IsUseMagneticCompass && mPort.IsActive)
+                    mPort.Stop();
             }       
         }
 
-        public string GetMiscInfoDescription()
+        public string GetMiscInfoDescription(bool prs, bool dpt, bool tmp, bool ptcrol, bool latlon, bool spd, bool crs, bool hdn)
         {
             StringBuilder sb = new StringBuilder();
 
             sb.Append("STATION\r\n━━━━━━━\r\n");
 
-            if (stationDepth_m.IsInitialized)
+            if ((prs) && (stationPressure_mBar.IsInitialized))
+                sb.AppendFormat("PRS: {0}\r\n", stationPressure_mBar.ToString());
+
+            if ((dpt) && (stationDepth_m.IsInitialized))
                 sb.AppendFormat("DPT: {0}\r\n", stationDepth_m.ToString());
 
-            if (waterTemperature_C.IsInitialized)
+            if ((tmp) && (waterTemperature_C.IsInitialized))
                 sb.AppendFormat("WTM: {0}\r\n", waterTemperature_C.ToString());
 
-            if (stationPitch_deg.IsInitialized)
-                sb.AppendFormat("PTC: {0}\r\n", stationPitch_deg.ToString());
+            if (ptcrol)
+            {  
+                if (stationPitch_deg.IsInitialized)
+                    sb.AppendFormat("PTC: {0}\r\n", stationPitch_deg.ToString());
 
-            if (stationRoll_deg.IsInitialized)
-                sb.AppendFormat("ROL: {0}\r\n", stationRoll_deg.ToString());
+                if (stationRoll_deg.IsInitialized)
+                    sb.AppendFormat("ROL: {0}\r\n", stationRoll_deg.ToString());
+            }
 
-            if (latitude_deg.IsInitialized)
-                sb.AppendFormat("LAT: {0}\r\n", latitude_deg.ToString());
-            if (longitude_deg.IsInitialized)
-                sb.AppendFormat("LON: {0}\r\n", longitude_deg.ToString());
+            if (latlon)
+            {
+                if (latitude_deg.IsInitialized)
+                    sb.AppendFormat("LAT: {0}\r\n", latitude_deg.ToString());
+                if (longitude_deg.IsInitialized)
+                    sb.AppendFormat("LON: {0}\r\n", longitude_deg.ToString());
+            }
 
-            if (speed.IsInitialized)
+            if ((spd) && (speed.IsInitialized))
                 sb.AppendFormat("SPD: {0}\r\n", speed.ToString());
 
-            if (course_deg.IsInitialized)
+            if ((crs) && (course_deg.IsInitialized))
                 sb.AppendFormat("CRS: {0}\r\n", course_deg.ToString());
 
-            if (heading.IsInitialized)
+            if ((hdn) && (heading.IsInitialized))
                 sb.AppendFormat("HDN: {0}\r\n", heading.ToString());
 
             return sb.ToString();
@@ -1371,6 +1490,9 @@ namespace AzimuthSuite.AzmCore
 
         public EventHandler IsActiveChanged;
         public EventHandler IsGNSSActiveChanged;
+
+        public EventHandler MagneticCompassPortDetectedChanged;
+        public EventHandler IsMagneticCompassActiveChanged;
 
         public EventHandler HeadingUpdated;
         public EventHandler<AbsoluteLocationUpdatedEventArgs> AbsoluteLocationUpdated;

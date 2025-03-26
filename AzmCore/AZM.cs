@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Security.Permissions;
 
 namespace AzimuthSuite.AzmCore
 {
@@ -158,7 +159,17 @@ namespace AzimuthSuite.AzmCore
         #region Properties
 
         public static readonly int ABS_MAX_RANGE_M = 5500;
-        public static readonly int ABS_MIN_RANGE_M = 500;            
+        public static readonly int ABS_MIN_RANGE_M = 500;
+
+        public static readonly double ABS_MAX_VCC_V = 30.0;
+        public static readonly double ABS_MIN_VCC_V = 0.0;
+
+        public static readonly double ABS_MAX_TEMP_C = -10.0;
+        public static readonly double ABS_MIN_TEMP_C = 80.0;
+
+        public static readonly double CRANGE = 499;
+
+
 
         static readonly Dictionary<string, ICs> ICsIdxArray = new Dictionary<string, ICs>()
         {
