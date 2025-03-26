@@ -44,6 +44,12 @@ namespace AzimuthSuite
             set => isUseAUXGNSSChb.Checked = value;
         }
 
+        bool isUseMagneticCompass
+        {
+            get => isUseMagneticCompassChb.Checked;
+            set => isUseMagneticCompassChb.Checked = value;
+        }
+
         bool isUseMagneticCompassOnly
         {
             get => IsUseMagneticCompassOnlyChb.Checked;
@@ -54,6 +60,12 @@ namespace AzimuthSuite
         {
             get => (BaudRate)Enum.Parse(typeof(BaudRate), auxGNSSBaudrateCbx.SelectedItem.ToString());
             set => UIHelpers.TrySetCbxItem(auxGNSSBaudrateCbx, value.ToString());
+        }
+
+        BaudRate MagneticCompassBaudrate
+        {
+            get => (BaudRate)Enum.Parse(typeof(BaudRate), magneticCompassBaudrateCbx.SelectedItem.ToString());
+            set => UIHelpers.TrySetCbxItem(magneticCompassBaudrateCbx, value.ToString());
         }
 
         double salinity_PSU
@@ -99,8 +111,10 @@ namespace AzimuthSuite
                 SettingsContainer result = new SettingsContainer
                 {
                     AddressMask = addrMask,
-                    UseAUXGNSSCompas = isUseAUXGNSS,
-                    AUXGNSSCompasBaudrate = AUXGNSSBaudrate,
+                    UseAUXGNSS = isUseAUXGNSS,
+                    UseMagneticCompass = isUseMagneticCompass,
+                    AUXGNSSBaudrate = AUXGNSSBaudrate,
+                    MagneticCompassBaudrate = MagneticCompassBaudrate,
                     Salinity_PSU = salinity_PSU,
                     MaxDist_m = maxRange_m,
                     TransverseOffset_m = xOffset_m,
@@ -115,8 +129,10 @@ namespace AzimuthSuite
             set
             {
                 addrMask = value.AddressMask;
-                isUseAUXGNSS = value.UseAUXGNSSCompas;
-                AUXGNSSBaudrate = value.AUXGNSSCompasBaudrate;
+                isUseAUXGNSS = value.UseAUXGNSS;
+                isUseMagneticCompass = value.UseMagneticCompass;
+                AUXGNSSBaudrate = value.AUXGNSSBaudrate;
+                MagneticCompassBaudrate = value.MagneticCompassBaudrate;
                 salinity_PSU = value.Salinity_PSU;
                 maxRange_m = value.MaxDist_m;
                 xOffset_m = value.TransverseOffset_m;
@@ -150,6 +166,10 @@ namespace AzimuthSuite
             auxGNSSBaudrateCbx.Items.Clear();
             auxGNSSBaudrateCbx.Items.AddRange(bRates);
             AUXGNSSBaudrate = BaudRate.baudRate9600;
+
+            magneticCompassBaudrateCbx.Items.Clear();
+            magneticCompassBaudrateCbx.Items.AddRange(bRates);
+            MagneticCompassBaudrate = BaudRate.baudRate9600;
 
             outputPortBaudrateCbx.Items.Clear();
             outputPortBaudrateCbx.Items.AddRange(bRates);
@@ -186,9 +206,14 @@ namespace AzimuthSuite
             auxGNSSGroup.Enabled = isUseAUXGNSS;
 
             if (!isUseAUXGNSS)
+            {
                 IsUseMagneticCompassOnlyChb.Checked = false;
+                isUseMagneticCompassChb.Checked = false;
+
+            }
 
             IsUseMagneticCompassOnlyChb.Enabled = isUseAUXGNSS;
+            isUseMagneticCompassChb.Enabled = isUseAUXGNSS;
         }
 
         private void setDaultsBtn_Click(object sender, EventArgs e)
@@ -215,5 +240,10 @@ namespace AzimuthSuite
         }
 
         #endregion
+
+        private void isUseMagneticCompassChb_CheckedChanged(object sender, EventArgs e)
+        {
+            magneticGroup.Enabled = isUseMagneticCompass;
+        }
     }
 }

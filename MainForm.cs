@@ -8,7 +8,6 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
-using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -140,6 +139,98 @@ namespace AzimuthSuite
             }
         }
 
+        bool locPressureVisible
+        {
+            get => miscInfoShowLocalPressureBtn.Checked;
+            set
+            {
+                miscInfoShowLocalPressureBtn.Checked = value;
+                usProvider.Data.LocPressureVisible = value;
+                rPlot.Invalidate();
+            }
+        }
+        bool locDepthVisible
+        {
+            get => miscInfoShowLocalDepthBtn.Checked;
+            set
+            {
+                miscInfoShowLocalDepthBtn.Checked = value;
+                usProvider.Data.LocDepthVisible = value;
+                rPlot.Invalidate();
+            }
+        }
+
+        bool locWaterTemperatureVisible
+        {
+            get => miscInfoShowLocalWaterTemperatureBtn.Checked;
+            set
+            {
+                miscInfoShowLocalWaterTemperatureBtn.Checked = value;
+                usProvider.Data.LocWaterTemperatureVisible = value;
+                rPlot.Invalidate();
+            }
+        }
+
+        bool locPitchRollVisible
+        {
+            get => miscInfoShowLocalPitchRollBtn.Checked;
+            set
+            {
+                miscInfoShowLocalPitchRollBtn.Checked = value;
+                usProvider.Data.LocPitchRollVisible = value;
+                rPlot.Invalidate();
+            }
+        }
+
+        bool locLatLonVisible
+        {
+            get => miscInfoShowLocalLatLonBtn.Checked;
+            set
+            {
+                miscInfoShowLocalLatLonBtn.Checked = value;
+                usProvider.Data.LocLatLonVisible = value;
+                rPlot.Invalidate();
+            }
+        }
+
+        bool locSpeedVisible
+        {
+            get => miscInfoShowLocalSpeedBtn.Checked;
+            set
+            {
+                miscInfoShowLocalSpeedBtn.Checked = value;
+                usProvider.Data.LocSpeedVisible = value;
+                rPlot.Invalidate();
+            }
+        }
+
+        bool locCourseVisible
+        {
+            get => miscInfoShowLocalCourseBtn.Checked;
+            set
+            {
+                miscInfoShowLocalCourseBtn.Checked = value;
+                usProvider.Data.LocCourseVisible = value;
+                rPlot.Invalidate();
+            }
+        }
+
+        bool locHeadingVisible
+        {
+            get => miscInfoShowLocalHeadingBtn.Checked;
+            set
+            {
+                miscInfoShowLocalHeadingBtn.Checked = value;
+                usProvider.Data.LocHeadingVisible = value;
+                rPlot.Invalidate();
+            }
+        }
+
+
+
+
+
+
 
         bool remDistanceAndAzimuthVisible
         {
@@ -243,6 +334,7 @@ namespace AzimuthSuite
         ToolTip tTip;
         IWin32Window tTipWin;
         int mpIdx = 0;
+        int mpIdxActual = 0;        
 
         #endregion
 
@@ -468,6 +560,16 @@ namespace AzimuthSuite
             remMiscInfoVisible = usProvider.Data.RemMiscInfoVisible;
             remLocationVisible = usProvider.Data.RemLocationVisible;
 
+            locPressureVisible = usProvider.Data.LocPressureVisible;
+            locDepthVisible = usProvider.Data.LocDepthVisible;
+            locWaterTemperatureVisible = usProvider.Data.LocWaterTemperatureVisible;
+            locPitchRollVisible = usProvider.Data.LocPitchRollVisible;
+            locLatLonVisible = usProvider.Data.LocLatLonVisible;
+            locSpeedVisible = usProvider.Data.LocSpeedVisible;
+            locCourseVisible = usProvider.Data.LocCourseVisible;
+            locHeadingVisible = usProvider.Data.LocHeadingVisible;
+
+
             if ((usProvider.Data.WSize.Width >= this.MinimumSize.Width) &&
                 (usProvider.Data.WSize.Height >= this.MinimumSize.Height))
                 this.Size = usProvider.Data.WSize;
@@ -479,6 +581,12 @@ namespace AzimuthSuite
                 ApplyVisualStyle(usProvider.Data.VisualStyle);
             else
                 ApplyVisualStyle(VisualStyleContainer.DefaultName);
+
+            if ((usProvider.Data.SplitterDistanceRatio >= 1.0) ||
+                (usProvider.Data.SplitterDistanceRatio <= 0.1))            
+                usProvider.Data.SplitterDistanceRatio = 0.75;
+
+            mainSplit.SplitterDistance = Convert.ToInt32(mainSplit.Width * usProvider.Data.SplitterDistanceRatio);
 
             #endregion
 
@@ -493,6 +601,7 @@ namespace AzimuthSuite
 
             azmBase.AZMPreferredPortName = usProvider.Data.AZMPreferredPortName;
             azmBase.GNSSPreferredPortName = usProvider.Data.AUXGNSSCompasPreferredPortName;
+            azmBase.MagneticCompassPreferredPortName = usProvider.Data.MagneticCompassPreferredPortName;
 
             azmBase.IsMagneticCompassOnly = sProvider.Data.IsUseMagneticCompassOnly;
 
@@ -516,7 +625,7 @@ namespace AzimuthSuite
                 logger.Write(string.Format("{0}={1}", nameof(azmBase.IsActive), azmBase.IsActive));
             };
             azmBase.IsGNSSActiveChanged += (o, e) =>
-                InvokeUpdatePortStatusLbl(mainStatusStrip, auxPortStatusLbl, azmBase.IsActive, azmBase.GNSSPortDetected, azmBase.GNSSPortStatus);
+            InvokeUpdatePortStatusLbl(mainStatusStrip, auxPortStatusLbl, azmBase.IsActive, azmBase.GNSSPortDetected, azmBase.GNSSPortStatus);
 
             azmBase.GNSSPortDetectedChanged += (o, e) =>
             {
@@ -551,9 +660,32 @@ namespace AzimuthSuite
                 }
                 */
             };
+
+            azmBase.IsMagneticCompassActiveChanged += (o, e) =>
+            InvokeUpdatePortStatusLbl(mainStatusStrip, magneticCompassPortStatusLbl, azmBase.IsActive, azmBase.MagneticCompassPortDetected, azmBase.MagneticCompassPortStatus);
+
+            azmBase.MagneticCompassPortDetectedChanged += (o, e) =>
+            {
+                InvokeUpdatePortStatusLbl(mainStatusStrip, magneticCompassPortStatusLbl, azmBase.IsActive, azmBase.MagneticCompassPortDetected, azmBase.MagneticCompassPortStatus);
+                InvokeSwitchOutputPortUIEnabledState(azmBase.MagneticCompassPortDetected);
+
+                if (azmBase.MagneticCompassPortDetected)
+                    usProvider.Data.MagneticCompassPreferredPortName = azmBase.GNSSPortName;
+            };
+
+
             azmBase.StateUpdateHandler += (o, e) =>
             {
-                InvokeSetPlotLeftUpperText(azmBase.GetMiscInfoDescription());
+                InvokeSetPlotLeftUpperText(azmBase.GetMiscInfoDescription(
+                    locPressureVisible, 
+                    locDepthVisible, 
+                    locWaterTemperatureVisible, 
+                    locPitchRollVisible,
+                    locLatLonVisible,
+                    locSpeedVisible,
+                    locCourseVisible,
+                    locHeadingVisible));
+
                 InvokeSyncRemotesTree(azmBase.GetRemotesDescription(itemsToShow));
             };
             azmBase.HeadingUpdated += (o, e) => InvokeSetHeading(azmBase.Heading);
@@ -569,14 +701,24 @@ namespace AzimuthSuite
                 UIHelpers.InvokeSetEnabledState(mainToolStrip, userDataQueryRemoteBtn, stationItemsEnabled);
             };
 
-            if (sProvider.Data.UseAUXGNSSCompas)
+            if (sProvider.Data.UseAUXGNSS)
             {
-                azmBase.AuxGNSSInit(sProvider.Data.AUXGNSSCompasBaudrate);
+                azmBase.AuxGNSSInit(sProvider.Data.AUXGNSSBaudrate);
                 auxPortStatusLbl.Visible = true;
             }
             else
             {
                 auxPortStatusLbl.Visible = false;
+            }
+
+            if (sProvider.Data.UseMagneticCompass)
+            {
+                azmBase.MagneticCompassInit(sProvider.Data.MagneticCompassBaudrate);
+                magneticCompassPortStatusLbl.Visible = true;
+            }
+            else
+            {
+                magneticCompassPortStatusLbl.Visible = false;
             }
 
             remoteAddrToOutportCbx.Items.Clear();
@@ -1037,8 +1179,18 @@ namespace AzimuthSuite
         #endregion
 
         #region Handlers
-        
+
         #region UI
+
+        #region mainSplit
+
+        private void mainSplit_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            if (usProvider != null)
+                usProvider.Data.SplitterDistanceRatio = (double)mainSplit.SplitterDistance / mainSplit.Width;
+        }
+
+        #endregion
 
         #region mainToolStrip
 
@@ -1728,8 +1880,59 @@ namespace AzimuthSuite
         {
             miscInfoVisible = !miscInfoVisible;
             logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(miscInfoVisible)));
+
+            miscInfoAdditionalBtn.Enabled = miscInfoVisible;
         }
 
+        private void miscInfoShowLocalPressureBtn_Click(object sender, EventArgs e)
+        {
+            locPressureVisible = !locPressureVisible;
+            logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(locPressureVisible)));
+        }
+
+        private void miscInfoShowLocalDepthBtn_Click(object sender, EventArgs e)
+        {
+            locDepthVisible = !locDepthVisible;
+            logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(locDepthVisible)));
+        }
+
+        private void miscInfoShowLocalWaterTemperatureBtn_Click(object sender, EventArgs e)
+        {
+            locWaterTemperatureVisible = !locWaterTemperatureVisible;
+            logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(locWaterTemperatureVisible)));
+        }
+
+        private void miscInfoShowLocalPitchRollBtn_Click(object sender, EventArgs e)
+        {
+            locPitchRollVisible = !locPitchRollVisible;
+            logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(locPitchRollVisible)));
+        }
+
+        private void miscInfoShowLocalLatLonBtn_Click(object sender, EventArgs e)
+        {
+            locLatLonVisible = !locLatLonVisible;
+            logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(locLatLonVisible)));
+        }
+
+        private void miscInfoShowLocalSpeedBtn_Click(object sender, EventArgs e)
+        {
+            locSpeedVisible = !locSpeedVisible;
+            logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(locSpeedVisible)));
+        }
+
+        private void miscInfoShowLocalCourseBtn_Click(object sender, EventArgs e)
+        {
+            locCourseVisible = !locCourseVisible;
+            logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(locCourseVisible)));
+        }
+
+        private void miscInfoShowLocalHeadingBtn_Click(object sender, EventArgs e)
+        {
+            locHeadingVisible = !locHeadingVisible;
+            logger.Write(uiAutomation.GetBoolPropertyStateLogString<MainForm>(this, nameof(locHeadingVisible)));
+        }
+
+        
         private void isTreeDistanceAndAzimuthVisibleBtn_Click(object sender, EventArgs e)
         {
             remDistanceAndAzimuthVisible = !remDistanceAndAzimuthVisible;
@@ -1869,7 +2072,8 @@ namespace AzimuthSuite
         #region mainStatusStrip
         private void moonPhaseLbl_Click(object sender, EventArgs e)
         {
-            mpIdx = 0;
+            mpIdx = AstroAndTimeUtils.MoonPhase(DateTime.Now, AstroAndTimeUtils.MoonPhaseNumber);
+            mpIdxActual = mpIdx;            
             uiTimer.Start();
         }
 
@@ -1898,12 +2102,10 @@ namespace AzimuthSuite
 
         private void uiTimer_Tick(object sender, EventArgs e)
         {
-            if (mpIdx < AstroAndTimeUtils.MoonPhaseNumber)
-            {
-                moonPhaseLbl.Text = AstroAndTimeUtils.GetMoonPhaseByIdx(mpIdx);
-                mpIdx++;
-            }
-            else
+            moonPhaseLbl.Text = AstroAndTimeUtils.GetMoonPhaseByIdx(mpIdx);
+            mpIdx = (mpIdx + 1) % AstroAndTimeUtils.MoonPhaseNumber;
+
+            if (mpIdx == mpIdxActual)
             {
                 uiTimer.Stop();
                 moonPhaseLbl.Text = AstroAndTimeUtils.MoonPhaseIcon(DateTime.Now);
@@ -1913,6 +2115,6 @@ namespace AzimuthSuite
 
         #endregion
 
-        #endregion        
+        #endregion       
     }
 }

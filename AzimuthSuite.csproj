@@ -85,6 +85,7 @@
     <Compile Include="AzmCore\AZMBase.cs" />
     <Compile Include="AzmCore\AZMPort.cs" />
     <Compile Include="AzmCore\DHFilter.cs" />
+    <Compile Include="AzmCore\uMagneticCompassPort.cs" />
     <Compile Include="Dialogs\DeviceInfoView.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -46,6 +46,16 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.miscInfoVisibleBtn = new System.Windows.Forms.ToolStripButton();
             this.paletteBtn = new System.Windows.Forms.ToolStripDropDownButton();
+            this.miscInfoAdditionalBtn = new System.Windows.Forms.ToolStripDropDownButton();
+            this.miscInfoShowLocalPressureBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.miscInfoShowLocalDepthBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.miscInfoShowLocalWaterTemperatureBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.miscInfoShowLocalPitchRollBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.miscInfoShowLocalLatLonBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.miscInfoShowLocalSpeedBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.miscInfoShowLocalCourseBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.miscInfoShowLocalHeadingBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.remotesTree = new System.Windows.Forms.TreeView();
             this.remotesBottonStrip = new System.Windows.Forms.ToolStrip();
             this.isDistanceAndAzimuthVisibleBtn = new System.Windows.Forms.ToolStripButton();
@@ -62,6 +72,8 @@
             this.azmPortStatusLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.spacingLbl1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.auxPortStatusLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.magneticCompassPortStatusLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.logLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.moonPhaseLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainToolStrip = new System.Windows.Forms.ToolStrip();
@@ -122,6 +134,7 @@
             // mainSplit
             // 
             resources.ApplyResources(this.mainSplit, "mainSplit");
+            this.mainSplit.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.mainSplit.Name = "mainSplit";
             // 
             // mainSplit.Panel1
@@ -135,6 +148,7 @@
             this.mainSplit.Panel2.Controls.Add(this.remotesTree);
             this.mainSplit.Panel2.Controls.Add(this.remotesBottonStrip);
             this.mainSplit.Panel2.Controls.Add(this.remotesTopStrip);
+            this.mainSplit.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.mainSplit_SplitterMoved);
             // 
             // rPlot
             // 
@@ -225,7 +239,9 @@
             this.notesVisibleBtn,
             this.toolStripSeparator7,
             this.miscInfoVisibleBtn,
-            this.paletteBtn});
+            this.paletteBtn,
+            this.miscInfoAdditionalBtn,
+            this.toolStripSeparator15});
             this.plotToolStrip.Name = "plotToolStrip";
             // 
             // limboVisibleBtn
@@ -285,6 +301,74 @@
             this.paletteBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             resources.ApplyResources(this.paletteBtn, "paletteBtn");
             this.paletteBtn.Name = "paletteBtn";
+            // 
+            // miscInfoAdditionalBtn
+            // 
+            this.miscInfoAdditionalBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.miscInfoAdditionalBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miscInfoShowLocalPressureBtn,
+            this.miscInfoShowLocalDepthBtn,
+            this.miscInfoShowLocalWaterTemperatureBtn,
+            this.miscInfoShowLocalPitchRollBtn,
+            this.miscInfoShowLocalLatLonBtn,
+            this.miscInfoShowLocalSpeedBtn,
+            this.miscInfoShowLocalCourseBtn,
+            this.miscInfoShowLocalHeadingBtn});
+            resources.ApplyResources(this.miscInfoAdditionalBtn, "miscInfoAdditionalBtn");
+            this.miscInfoAdditionalBtn.Name = "miscInfoAdditionalBtn";
+            // 
+            // miscInfoShowLocalPressureBtn
+            // 
+            this.miscInfoShowLocalPressureBtn.Name = "miscInfoShowLocalPressureBtn";
+            resources.ApplyResources(this.miscInfoShowLocalPressureBtn, "miscInfoShowLocalPressureBtn");
+            this.miscInfoShowLocalPressureBtn.Click += new System.EventHandler(this.miscInfoShowLocalPressureBtn_Click);
+            // 
+            // miscInfoShowLocalDepthBtn
+            // 
+            this.miscInfoShowLocalDepthBtn.Name = "miscInfoShowLocalDepthBtn";
+            resources.ApplyResources(this.miscInfoShowLocalDepthBtn, "miscInfoShowLocalDepthBtn");
+            this.miscInfoShowLocalDepthBtn.Click += new System.EventHandler(this.miscInfoShowLocalDepthBtn_Click);
+            // 
+            // miscInfoShowLocalWaterTemperatureBtn
+            // 
+            this.miscInfoShowLocalWaterTemperatureBtn.Name = "miscInfoShowLocalWaterTemperatureBtn";
+            resources.ApplyResources(this.miscInfoShowLocalWaterTemperatureBtn, "miscInfoShowLocalWaterTemperatureBtn");
+            this.miscInfoShowLocalWaterTemperatureBtn.Click += new System.EventHandler(this.miscInfoShowLocalWaterTemperatureBtn_Click);
+            // 
+            // miscInfoShowLocalPitchRollBtn
+            // 
+            this.miscInfoShowLocalPitchRollBtn.Name = "miscInfoShowLocalPitchRollBtn";
+            resources.ApplyResources(this.miscInfoShowLocalPitchRollBtn, "miscInfoShowLocalPitchRollBtn");
+            this.miscInfoShowLocalPitchRollBtn.Click += new System.EventHandler(this.miscInfoShowLocalPitchRollBtn_Click);
+            // 
+            // miscInfoShowLocalLatLonBtn
+            // 
+            this.miscInfoShowLocalLatLonBtn.Name = "miscInfoShowLocalLatLonBtn";
+            resources.ApplyResources(this.miscInfoShowLocalLatLonBtn, "miscInfoShowLocalLatLonBtn");
+            this.miscInfoShowLocalLatLonBtn.Click += new System.EventHandler(this.miscInfoShowLocalLatLonBtn_Click);
+            // 
+            // miscInfoShowLocalSpeedBtn
+            // 
+            this.miscInfoShowLocalSpeedBtn.Name = "miscInfoShowLocalSpeedBtn";
+            resources.ApplyResources(this.miscInfoShowLocalSpeedBtn, "miscInfoShowLocalSpeedBtn");
+            this.miscInfoShowLocalSpeedBtn.Click += new System.EventHandler(this.miscInfoShowLocalSpeedBtn_Click);
+            // 
+            // miscInfoShowLocalCourseBtn
+            // 
+            this.miscInfoShowLocalCourseBtn.Name = "miscInfoShowLocalCourseBtn";
+            resources.ApplyResources(this.miscInfoShowLocalCourseBtn, "miscInfoShowLocalCourseBtn");
+            this.miscInfoShowLocalCourseBtn.Click += new System.EventHandler(this.miscInfoShowLocalCourseBtn_Click);
+            // 
+            // miscInfoShowLocalHeadingBtn
+            // 
+            this.miscInfoShowLocalHeadingBtn.Name = "miscInfoShowLocalHeadingBtn";
+            resources.ApplyResources(this.miscInfoShowLocalHeadingBtn, "miscInfoShowLocalHeadingBtn");
+            this.miscInfoShowLocalHeadingBtn.Click += new System.EventHandler(this.miscInfoShowLocalHeadingBtn_Click);
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            resources.ApplyResources(this.toolStripSeparator15, "toolStripSeparator15");
             // 
             // remotesTree
             // 
@@ -391,6 +475,8 @@
             this.azmPortStatusLbl,
             this.spacingLbl1,
             this.auxPortStatusLbl,
+            this.toolStripStatusLabel1,
+            this.magneticCompassPortStatusLbl,
             this.logLbl,
             this.moonPhaseLbl});
             this.mainStatusStrip.Name = "mainStatusStrip";
@@ -410,6 +496,16 @@
             // 
             resources.ApplyResources(this.auxPortStatusLbl, "auxPortStatusLbl");
             this.auxPortStatusLbl.Name = "auxPortStatusLbl";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
+            // 
+            // magneticCompassPortStatusLbl
+            // 
+            resources.ApplyResources(this.magneticCompassPortStatusLbl, "magneticCompassPortStatusLbl");
+            this.magneticCompassPortStatusLbl.Name = "magneticCompassPortStatusLbl";
             // 
             // logLbl
             // 
@@ -835,6 +931,18 @@
         private System.Windows.Forms.ToolStripButton udpOutputBtn;
         private System.Windows.Forms.ToolStripTextBox udpOutputAddrAndPortTxb;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
+        private System.Windows.Forms.ToolStripDropDownButton miscInfoAdditionalBtn;
+        private System.Windows.Forms.ToolStripMenuItem miscInfoShowLocalPressureBtn;
+        private System.Windows.Forms.ToolStripMenuItem miscInfoShowLocalPitchRollBtn;
+        private System.Windows.Forms.ToolStripMenuItem miscInfoShowLocalDepthBtn;
+        private System.Windows.Forms.ToolStripMenuItem miscInfoShowLocalWaterTemperatureBtn;
+        private System.Windows.Forms.ToolStripMenuItem miscInfoShowLocalLatLonBtn;
+        private System.Windows.Forms.ToolStripMenuItem miscInfoShowLocalSpeedBtn;
+        private System.Windows.Forms.ToolStripMenuItem miscInfoShowLocalCourseBtn;
+        private System.Windows.Forms.ToolStripMenuItem miscInfoShowLocalHeadingBtn;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel magneticCompassPortStatusLbl;
     }
 }
 

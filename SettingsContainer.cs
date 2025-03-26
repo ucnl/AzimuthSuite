@@ -8,8 +8,11 @@ namespace AzimuthSuite
     {
         #region Properties
 
-        public bool UseAUXGNSSCompas;
-        public BaudRate AUXGNSSCompasBaudrate;
+        public bool UseAUXGNSS;
+        public BaudRate AUXGNSSBaudrate;
+
+        public bool UseMagneticCompass;
+        public BaudRate MagneticCompassBaudrate;
 
         public BaudRate SerialOutputPortBaudrate;
 
@@ -40,8 +43,11 @@ namespace AzimuthSuite
 
         public override void SetDefaults()
         {
-            UseAUXGNSSCompas = false;
-            AUXGNSSCompasBaudrate = BaudRate.baudRate38400;
+            UseAUXGNSS = false;
+            AUXGNSSBaudrate = BaudRate.baudRate38400;
+
+            UseMagneticCompass = false;
+            MagneticCompassBaudrate = BaudRate.baudRate9600;
 
             SerialOutputPortBaudrate = BaudRate.baudRate9600;
             

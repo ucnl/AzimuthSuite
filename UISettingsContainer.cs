@@ -15,6 +15,8 @@ namespace AzimuthSuite
         public Size WSize;
         public Point WLocation;
 
+        public double SplitterDistanceRatio;
+
         public bool LimboVisible;
         public bool HistoryVisible;
         public bool NotesVisible;
@@ -27,6 +29,15 @@ namespace AzimuthSuite
         public bool RemMiscInfoVisible;
         public bool RemLocationVisible;
 
+        public bool LocPressureVisible;
+        public bool LocDepthVisible;
+        public bool LocWaterTemperatureVisible;
+        public bool LocPitchRollVisible;
+        public bool LocLatLonVisible;
+        public bool LocSpeedVisible;
+        public bool LocCourseVisible;
+        public bool LocHeadingVisible;
+
         public string VisualStyle;
 
         public REMOTE_ADDR_Enum RemAddrToOutput;
@@ -35,6 +46,7 @@ namespace AzimuthSuite
 
         public string AZMPreferredPortName;
         public string AUXGNSSCompasPreferredPortName;
+        public string MagneticCompassPreferredPortName;
         
         #endregion
 
@@ -44,6 +56,8 @@ namespace AzimuthSuite
         {
             WState = FormWindowState.Normal;
             WLocation = new Point(0, 0);
+
+            SplitterDistanceRatio = 0.75;
 
             LimboVisible = true;
             HistoryVisible = true;
@@ -57,6 +71,15 @@ namespace AzimuthSuite
             RemMiscInfoVisible = true;
             RemLocationVisible = true;
 
+            LocPressureVisible = false;
+            LocDepthVisible = true;
+            LocWaterTemperatureVisible = true;
+            LocPitchRollVisible = true;
+            LocLatLonVisible = true;
+            LocSpeedVisible = true;
+            LocCourseVisible = true;
+            LocHeadingVisible = true;
+
             VisualStyle = VisualStyleContainer.DefaultName;
 
             RemAddrToOutput = REMOTE_ADDR_Enum.REM_ADDR_1;
@@ -65,6 +88,7 @@ namespace AzimuthSuite
 
             AZMPreferredPortName = string.Empty;
             AUXGNSSCompasPreferredPortName = string.Empty;
+            MagneticCompassPreferredPortName = string.Empty;
     }
 
         #endregion

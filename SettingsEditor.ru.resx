@@ -122,27 +122,27 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="isUseAUXGNSSChb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>291, 32</value>
+    <value>256, 36</value>
   </data>
   <data name="isUseAUXGNSSChb.Text" xml:space="preserve">
-    <value>Использовать GNSS компас</value>
+    <value>GNSS/GNSS компас</value>
   </data>
   <data name="remotesListToolStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>230, 27</value>
+    <value>272, 34</value>
   </data>
   <data name="toolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>64, 24</value>
+    <value>78, 29</value>
   </data>
   <data name="toolStripLabel1.Text" xml:space="preserve">
     <value>АДРЕСА</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 27</value>
+    <value>6, 34</value>
   </data>
   <data name="remotesCheckAllBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
         YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
         0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
         bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
@@ -155,7 +155,7 @@
 </value>
   </data>
   <data name="remotesCheckAllBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 24</value>
+    <value>34, 29</value>
   </data>
   <data name="remotesCheckAllBtn.ToolTipText" xml:space="preserve">
     <value>Выбрать все</value>
@@ -163,7 +163,7 @@
   <data name="remotesUncheckAllBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
         YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
         0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
         bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
@@ -176,7 +176,7 @@
 </value>
   </data>
   <data name="remotesUncheckAllBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 24</value>
+    <value>34, 29</value>
   </data>
   <data name="remotesUncheckAllBtn.ToolTipText" xml:space="preserve">
     <value>Снять выбор со всех</value>
@@ -206,13 +206,18 @@
     <value>Скорость вых. порта</value>
   </data>
   <data name="IsUseMagneticCompassOnlyChb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>443, 32</value>
+    <value>536, 36</value>
   </data>
   <data name="IsUseMagneticCompassOnlyChb.Text" xml:space="preserve">
     <value>Использовать только HDM/HDG вместо HDT</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="magneticGroup.Text" xml:space="preserve">
+    <value>Скорость порта</value>
+  </data>
+  <data name="isUseMagneticCompassChb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>253, 36</value>
+  </data>
+  <data name="isUseMagneticCompassChb.Text" xml:space="preserve">
+    <value>Магнитный компас</value>
   </data>
 </root>

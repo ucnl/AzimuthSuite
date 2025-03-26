@@ -123,10 +123,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="cancelBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>644, 490</value>
+    <value>527, 368</value>
+  </data>
+  <data name="cancelBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="cancelBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 43</value>
+    <value>102, 32</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="cancelBtn.TabIndex" type="System.Int32, mscorlib">
@@ -145,16 +148,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cancelBtn.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="okBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
   <data name="okBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>492, 490</value>
+    <value>402, 368</value>
+  </data>
+  <data name="okBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="okBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 43</value>
+    <value>102, 32</value>
   </data>
   <data name="okBtn.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -172,22 +178,25 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;okBtn.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="isUseAUXGNSSChb.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="isUseAUXGNSSChb.Location" type="System.Drawing.Point, System.Drawing">
-    <value>267, 21</value>
+    <value>219, 16</value>
+  </data>
+  <data name="isUseAUXGNSSChb.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="isUseAUXGNSSChb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 32</value>
+    <value>182, 25</value>
   </data>
   <data name="isUseAUXGNSSChb.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="isUseAUXGNSSChb.Text" xml:space="preserve">
-    <value>Use AUX GNSS</value>
+    <value>GNSS/GNSS compass</value>
   </data>
   <data name="&gt;&gt;isUseAUXGNSSChb.Name" xml:space="preserve">
     <value>isUseAUXGNSSChb</value>
@@ -199,7 +208,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;isUseAUXGNSSChb.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="remotesList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -208,10 +217,13 @@
     <value>False</value>
   </data>
   <data name="remotesList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 30</value>
+    <value>3, 27</value>
+  </data>
+  <data name="remotesList.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="remotesList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>224, 390</value>
+    <value>184, 289</value>
   </data>
   <data name="remotesList.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -235,18 +247,18 @@
     <value>17, 17</value>
   </metadata>
   <data name="toolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>73, 24</value>
+    <value>57, 22</value>
   </data>
   <data name="toolStripLabel1.Text" xml:space="preserve">
     <value>REMOTES</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>6, 27</value>
+    <value>6, 25</value>
   </data>
   <data name="remotesCheckAllBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
         YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
         0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
         bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
@@ -262,7 +274,7 @@
     <value>Magenta</value>
   </data>
   <data name="remotesCheckAllBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 24</value>
+    <value>23, 22</value>
   </data>
   <data name="remotesCheckAllBtn.Text" xml:space="preserve">
     <value>🗹</value>
@@ -273,7 +285,7 @@
   <data name="remotesUncheckAllBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
         YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
         0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
         bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
@@ -289,7 +301,7 @@
     <value>Magenta</value>
   </data>
   <data name="remotesUncheckAllBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 24</value>
+    <value>23, 22</value>
   </data>
   <data name="remotesUncheckAllBtn.Text" xml:space="preserve">
     <value>☐</value>
@@ -301,7 +313,7 @@
     <value>0, 0</value>
   </data>
   <data name="remotesListToolStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>230, 27</value>
+    <value>188, 25</value>
   </data>
   <data name="remotesListToolStrip.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -322,10 +334,13 @@
     <value>0</value>
   </data>
   <data name="remotesPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 26</value>
+    <value>10, 20</value>
+  </data>
+  <data name="remotesPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="remotesPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>230, 426</value>
+    <value>188, 320</value>
   </data>
   <data name="remotesPanel.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -340,16 +355,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;remotesPanel.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="auxGNSSBaudrateCbx.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
   <data name="auxGNSSBaudrateCbx.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 42</value>
+    <value>5, 32</value>
+  </data>
+  <data name="auxGNSSBaudrateCbx.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="auxGNSSBaudrateCbx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 36</value>
+    <value>190, 29</value>
   </data>
   <data name="auxGNSSBaudrateCbx.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -370,16 +388,22 @@
     <value>False</value>
   </data>
   <data name="auxGNSSGroup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>267, 56</value>
+    <value>219, 42</value>
+  </data>
+  <data name="auxGNSSGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="auxGNSSGroup.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="auxGNSSGroup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>244, 84</value>
+    <value>199, 63</value>
   </data>
   <data name="auxGNSSGroup.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
   <data name="auxGNSSGroup.Text" xml:space="preserve">
-    <value>AUX GNSS Baudrate</value>
+    <value>Port baudrate</value>
   </data>
   <data name="&gt;&gt;auxGNSSGroup.Name" xml:space="preserve">
     <value>auxGNSSGroup</value>
@@ -391,16 +415,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;auxGNSSGroup.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="styDialogBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
   <data name="styDialogBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>186, 44</value>
+    <value>152, 33</value>
+  </data>
+  <data name="styDialogBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="styDialogBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>52, 34</value>
+    <value>42, 26</value>
   </data>
   <data name="styDialogBtn.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -424,10 +451,13 @@
     <value>Bottom, Left, Right</value>
   </data>
   <data name="styEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 44</value>
+    <value>6, 33</value>
+  </data>
+  <data name="styEdit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="styEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 34</value>
+    <value>143, 29</value>
   </data>
   <data name="styEdit.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -445,10 +475,16 @@
     <value>1</value>
   </data>
   <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>267, 146</value>
+    <value>219, 110</value>
+  </data>
+  <data name="groupBox2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="groupBox2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>244, 84</value>
+    <value>199, 63</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -466,16 +502,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="maxRangeEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
   <data name="maxRangeEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 44</value>
+    <value>6, 33</value>
+  </data>
+  <data name="maxRangeEdit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="maxRangeEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 34</value>
+    <value>143, 29</value>
   </data>
   <data name="maxRangeEdit.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -493,10 +532,16 @@
     <value>0</value>
   </data>
   <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>267, 236</value>
+    <value>219, 177</value>
+  </data>
+  <data name="groupBox3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="groupBox3.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>244, 84</value>
+    <value>199, 63</value>
   </data>
   <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -514,16 +559,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="setDaultsBtn.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
   <data name="setDaultsBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 490</value>
+    <value>10, 368</value>
+  </data>
+  <data name="setDaultsBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="setDaultsBtn.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 43</value>
+    <value>102, 32</value>
   </data>
   <data name="setDaultsBtn.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -541,16 +589,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;setDaultsBtn.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="xOffsetEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
   <data name="xOffsetEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 44</value>
+    <value>5, 33</value>
+  </data>
+  <data name="xOffsetEdit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="xOffsetEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>225, 34</value>
+    <value>184, 29</value>
   </data>
   <data name="xOffsetEdit.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -568,10 +619,16 @@
     <value>0</value>
   </data>
   <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>531, 56</value>
+    <value>435, 110</value>
+  </data>
+  <data name="groupBox4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="groupBox4.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 84</value>
+    <value>194, 63</value>
   </data>
   <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -589,16 +646,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="yOffsetEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
   <data name="yOffsetEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 44</value>
+    <value>4, 33</value>
+  </data>
+  <data name="yOffsetEdit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="yOffsetEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>225, 34</value>
+    <value>184, 29</value>
   </data>
   <data name="yOffsetEdit.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -616,10 +676,16 @@
     <value>0</value>
   </data>
   <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>531, 146</value>
+    <value>435, 177</value>
+  </data>
+  <data name="groupBox5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="groupBox5.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 84</value>
+    <value>194, 63</value>
   </data>
   <data name="groupBox5.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -637,16 +703,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="antennaAdjustAngleEdit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
   <data name="antennaAdjustAngleEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 44</value>
+    <value>4, 33</value>
+  </data>
+  <data name="antennaAdjustAngleEdit.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="antennaAdjustAngleEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>225, 34</value>
+    <value>184, 29</value>
   </data>
   <data name="antennaAdjustAngleEdit.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -664,10 +733,16 @@
     <value>0</value>
   </data>
   <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>531, 236</value>
+    <value>435, 245</value>
+  </data>
+  <data name="groupBox6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="groupBox6.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 84</value>
+    <value>194, 63</value>
   </data>
   <data name="groupBox6.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -685,16 +760,19 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="outputPortBaudrateCbx.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
   <data name="outputPortBaudrateCbx.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 42</value>
+    <value>5, 32</value>
+  </data>
+  <data name="outputPortBaudrateCbx.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="outputPortBaudrateCbx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 36</value>
+    <value>190, 29</value>
   </data>
   <data name="outputPortBaudrateCbx.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -712,10 +790,16 @@
     <value>0</value>
   </data>
   <data name="serialOutputGroup.Location" type="System.Drawing.Point, System.Drawing">
-    <value>267, 326</value>
+    <value>219, 245</value>
+  </data>
+  <data name="serialOutputGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="serialOutputGroup.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="serialOutputGroup.Size" type="System.Drawing.Size, System.Drawing">
-    <value>244, 84</value>
+    <value>199, 63</value>
   </data>
   <data name="serialOutputGroup.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -733,7 +817,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;serialOutputGroup.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="IsUseMagneticCompassOnlyChb.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -745,10 +829,13 @@
     <value>NoControl</value>
   </data>
   <data name="IsUseMagneticCompassOnlyChb.Location" type="System.Drawing.Point, System.Drawing">
-    <value>267, 420</value>
+    <value>219, 315</value>
+  </data>
+  <data name="IsUseMagneticCompassOnlyChb.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="IsUseMagneticCompassOnlyChb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 32</value>
+    <value>239, 25</value>
   </data>
   <data name="IsUseMagneticCompassOnlyChb.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -766,22 +853,118 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;IsUseMagneticCompassOnlyChb.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="magneticCompassBaudrateCbx.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="magneticCompassBaudrateCbx.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 32</value>
+  </data>
+  <data name="magneticCompassBaudrateCbx.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="magneticCompassBaudrateCbx.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 29</value>
+  </data>
+  <data name="magneticCompassBaudrateCbx.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;magneticCompassBaudrateCbx.Name" xml:space="preserve">
+    <value>magneticCompassBaudrateCbx</value>
+  </data>
+  <data name="&gt;&gt;magneticCompassBaudrateCbx.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;magneticCompassBaudrateCbx.Parent" xml:space="preserve">
+    <value>magneticGroup</value>
+  </data>
+  <data name="&gt;&gt;magneticCompassBaudrateCbx.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="magneticGroup.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="magneticGroup.Location" type="System.Drawing.Point, System.Drawing">
+    <value>435, 42</value>
+  </data>
+  <data name="magneticGroup.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="magneticGroup.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="magneticGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 63</value>
+  </data>
+  <data name="magneticGroup.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="magneticGroup.Text" xml:space="preserve">
+    <value>Port baudrate</value>
+  </data>
+  <data name="&gt;&gt;magneticGroup.Name" xml:space="preserve">
+    <value>magneticGroup</value>
+  </data>
+  <data name="&gt;&gt;magneticGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;magneticGroup.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;magneticGroup.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="isUseMagneticCompassChb.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="isUseMagneticCompassChb.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="isUseMagneticCompassChb.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="isUseMagneticCompassChb.Location" type="System.Drawing.Point, System.Drawing">
+    <value>435, 16</value>
+  </data>
+  <data name="isUseMagneticCompassChb.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="isUseMagneticCompassChb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 25</value>
+  </data>
+  <data name="isUseMagneticCompassChb.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="isUseMagneticCompassChb.Text" xml:space="preserve">
+    <value>Magnetic compass</value>
+  </data>
+  <data name="&gt;&gt;isUseMagneticCompassChb.Name" xml:space="preserve">
+    <value>isUseMagneticCompassChb</value>
+  </data>
+  <data name="&gt;&gt;isUseMagneticCompassChb.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;isUseMagneticCompassChb.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;isUseMagneticCompassChb.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>11, 28</value>
+    <value>9, 21</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>780, 545</value>
+    <value>638, 409</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 5, 4, 5</value>
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>SettingsEditor</value>

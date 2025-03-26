@@ -56,6 +56,9 @@
             this.serialOutputGroup = new System.Windows.Forms.GroupBox();
             this.outputPortBaudrateCbx = new System.Windows.Forms.ComboBox();
             this.IsUseMagneticCompassOnlyChb = new System.Windows.Forms.CheckBox();
+            this.magneticGroup = new System.Windows.Forms.GroupBox();
+            this.magneticCompassBaudrateCbx = new System.Windows.Forms.ComboBox();
+            this.isUseMagneticCompassChb = new System.Windows.Forms.CheckBox();
             this.remotesPanel.SuspendLayout();
             this.remotesListToolStrip.SuspendLayout();
             this.auxGNSSGroup.SuspendLayout();
@@ -70,6 +73,7 @@
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.antennaAdjustAngleEdit)).BeginInit();
             this.serialOutputGroup.SuspendLayout();
+            this.magneticGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelBtn
@@ -271,7 +275,7 @@
             resources.ApplyResources(this.antennaAdjustAngleEdit, "antennaAdjustAngleEdit");
             this.antennaAdjustAngleEdit.DecimalPlaces = 1;
             this.antennaAdjustAngleEdit.Maximum = new decimal(new int[] {
-            40,
+            360,
             0,
             0,
             0});
@@ -297,10 +301,33 @@
             this.IsUseMagneticCompassOnlyChb.Name = "IsUseMagneticCompassOnlyChb";
             this.IsUseMagneticCompassOnlyChb.UseVisualStyleBackColor = true;
             // 
+            // magneticGroup
+            // 
+            this.magneticGroup.Controls.Add(this.magneticCompassBaudrateCbx);
+            resources.ApplyResources(this.magneticGroup, "magneticGroup");
+            this.magneticGroup.Name = "magneticGroup";
+            this.magneticGroup.TabStop = false;
+            // 
+            // magneticCompassBaudrateCbx
+            // 
+            resources.ApplyResources(this.magneticCompassBaudrateCbx, "magneticCompassBaudrateCbx");
+            this.magneticCompassBaudrateCbx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.magneticCompassBaudrateCbx.FormattingEnabled = true;
+            this.magneticCompassBaudrateCbx.Name = "magneticCompassBaudrateCbx";
+            // 
+            // isUseMagneticCompassChb
+            // 
+            resources.ApplyResources(this.isUseMagneticCompassChb, "isUseMagneticCompassChb");
+            this.isUseMagneticCompassChb.Name = "isUseMagneticCompassChb";
+            this.isUseMagneticCompassChb.UseVisualStyleBackColor = true;
+            this.isUseMagneticCompassChb.CheckedChanged += new System.EventHandler(this.isUseMagneticCompassChb_CheckedChanged);
+            // 
             // SettingsEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.magneticGroup);
+            this.Controls.Add(this.isUseMagneticCompassChb);
             this.Controls.Add(this.IsUseMagneticCompassOnlyChb);
             this.Controls.Add(this.serialOutputGroup);
             this.Controls.Add(this.groupBox6);
@@ -333,6 +360,7 @@
             this.groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.antennaAdjustAngleEdit)).EndInit();
             this.serialOutputGroup.ResumeLayout(false);
+            this.magneticGroup.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -367,5 +395,8 @@
         private System.Windows.Forms.GroupBox serialOutputGroup;
         private System.Windows.Forms.ComboBox outputPortBaudrateCbx;
         private System.Windows.Forms.CheckBox IsUseMagneticCompassOnlyChb;
+        private System.Windows.Forms.GroupBox magneticGroup;
+        private System.Windows.Forms.ComboBox magneticCompassBaudrateCbx;
+        private System.Windows.Forms.CheckBox isUseMagneticCompassChb;
     }
 }
