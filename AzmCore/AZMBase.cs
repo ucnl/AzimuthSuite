@@ -46,6 +46,8 @@ namespace AzimuthSuite.AzmCore
 
         public AgingValue<double> VCC_V { get; private set; }
 
+        public AgingValue<double> WaterTemperature_C { get; private set; }
+
         
         public AgingValue<double> Latitude_deg { get; private set; }
         public AgingValue<double> Longitude_deg { get; private set; }
@@ -93,6 +95,7 @@ namespace AzimuthSuite.AzmCore
             PTime_s = new AgingValue<double>(3, 32, x => string.Format(CultureInfo.InvariantCulture, "{0:F04} sec", x));
             MSR_dB = new AgingValue<double>(3, 32, AZM.db_fmtr);
             VCC_V = new AgingValue<double>(3, 300, AZM.v1dec_fmt);
+            WaterTemperature_C = new AgingValue<double>(3, 300, AZM.degC_fmtr);
             Latitude_deg = new AgingValue<double>(3, 32, AZM.latlon_fmtr);
             Longitude_deg = new AgingValue<double>(3, 32, AZM.latlon_fmtr);
             ReverseAzimuth_deg = new AgingValue<double>(3, 32, AZM.degrees1dec_fmtr);
@@ -155,8 +158,10 @@ namespace AzimuthSuite.AzmCore
                 if (VCC_V.IsInitialized)
                     result.Add("VCC", VCC_V.ToString());
 
-                result.Add("RST", SuccessfulRequestStatistics);
-                
+                if (WaterTemperature_C.IsInitialized)
+                    result.Add("WTM", WaterTemperature_C.ToString());
+
+                result.Add("RST", SuccessfulRequestStatistics);                
             }
 
             if (visibleItems.HasFlag(RemoteVisibleDataItems.isLocation))
@@ -692,7 +697,7 @@ namespace AzimuthSuite.AzmCore
 
         #region Private        
 
-        private IEnumerable<string> GetOutputString(double lat_deg, double lon_deg, double rdpt_m, double razm_deg)
+        private IEnumerable<string> GetOutputString(double lat_deg, double lon_deg, double rdpt_m, double razm_deg, double wtemp_C)
         {
             List<string> eStrings = new List<string>();
             string latCardinal = lat_deg > 0 ? "N" : "S";
@@ -754,6 +759,19 @@ namespace AzimuthSuite.AzmCore
                     {
                         double.IsNaN(razm_deg) ? null : (object)razm_deg,
                         "T"
+                    }));
+
+            #endregion
+
+            #region MTW
+
+            eStrings.Add(
+                NMEAParser.BuildSentence(
+                    TalkerIdentifiers.GP,
+                    SentenceIdentifiers.MTW,
+                    new object[]
+                    {
+                        double.IsNaN(wtemp_C) ? null : (object)wtemp_C,
                     }));
 
             #endregion
@@ -954,6 +972,10 @@ namespace AzimuthSuite.AzmCore
             {
                 remotes[e.Address].VCC_V.Value = (double)(e.ResponseCode) * (AZM.ABS_MAX_VCC_V - AZM.ABS_MIN_VCC_V) / AZM.CRANGE + AZM.ABS_MIN_VCC_V;
             }
+            else if (e.RequestCode == CDS_REQ_CODES_Enum.CDS_REQ_TMP)
+            {
+                remotes[e.Address].WaterTemperature_C.Value = (double)(e.ResponseCode) * (AZM.ABS_MAX_TEMP_C - AZM.ABS_MIN_TEMP_C) / AZM.CRANGE + AZM.ABS_MIN_TEMP_C;
+            }
 
 
             if (!double.IsNaN(e.MSR_dB))
@@ -1061,7 +1083,12 @@ namespace AzimuthSuite.AzmCore
                         {
                             if (IsOutPortInitiaziled || IsUDPOutputInitialized)
                             {
-                                var eStrings = GetOutputString(rlat_deg, rlon_deg, rdpt_m, a_azm);
+                                var eStrings = GetOutputString(
+                                    rlat_deg,
+                                    rlon_deg,
+                                    rdpt_m,
+                                    a_azm,
+                                    remotes[e.Address].WaterTemperature_C.IsInitialized ? remotes[e.Address].WaterTemperature_C.Value : double.NaN);
 
                                 if (IsOutPortInitiaziled)
                                     TryWriteSerialOutput(eStrings);
