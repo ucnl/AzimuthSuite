@@ -1,6 +1,5 @@
 ﻿using AzimuthSuite.AzmCore;
 using System;
-using System.Net;
 using System.Windows.Forms;
 using UCNLDrivers;
 using UCNLUI;
@@ -104,6 +103,11 @@ namespace AzimuthSuite
             set => UIHelpers.TrySetCbxItem(outputPortBaudrateCbx, value.ToString());
         }
 
+        bool specControlsEnabled = false;
+        string customLabel = string.Empty;
+        string cultureOverride = string.Empty;
+        bool isExtendedHolidays = true;
+
         public SettingsContainer Value
         {
             get
@@ -122,6 +126,10 @@ namespace AzimuthSuite
                     HeadingAdjust_deg = angleAdjust_deg,
                     SerialOutputPortBaudrate = OutputPortBaudrate,
                     IsUseMagneticCompassOnly = isUseMagneticCompassOnly,
+                    SpecControlsEnabled = specControlsEnabled,
+                    CustomLabel = customLabel,
+                    CultureOverride = cultureOverride,
+                    IsExtendedHolidays = isExtendedHolidays
                 };
 
                 return result;                    
@@ -140,6 +148,10 @@ namespace AzimuthSuite
                 angleAdjust_deg = value.HeadingAdjust_deg;
                 OutputPortBaudrate = value.SerialOutputPortBaudrate;
                 isUseMagneticCompassOnly = value.IsUseMagneticCompassOnly;
+                specControlsEnabled = value.SpecControlsEnabled;
+                customLabel = value.CustomLabel;
+                cultureOverride = value.CultureOverride;
+                isExtendedHolidays = value.IsExtendedHolidays;
             }
         }
 

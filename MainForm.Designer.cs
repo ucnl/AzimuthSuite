@@ -84,6 +84,7 @@
             this.logBtn = new System.Windows.Forms.ToolStripDropDownButton();
             this.logViewCurrentBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.logPlaybackBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.logPlaybackInstantBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.logClearEmptyEntriesBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.logArchiveAllEntriesBtn = new System.Windows.Forms.ToolStripMenuItem();
@@ -567,6 +568,7 @@
             this.logBtn.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.logViewCurrentBtn,
             this.logPlaybackBtn,
+            this.logPlaybackInstantBtn,
             this.toolStripSeparator11,
             this.logClearEmptyEntriesBtn,
             this.logArchiveAllEntriesBtn,
@@ -587,6 +589,12 @@
             resources.ApplyResources(this.logPlaybackBtn, "logPlaybackBtn");
             this.logPlaybackBtn.Name = "logPlaybackBtn";
             this.logPlaybackBtn.Click += new System.EventHandler(this.logPlaybackBtn_Click);
+            // 
+            // logPlaybackInstantBtn
+            // 
+            resources.ApplyResources(this.logPlaybackInstantBtn, "logPlaybackInstantBtn");
+            this.logPlaybackInstantBtn.Name = "logPlaybackInstantBtn";
+            this.logPlaybackInstantBtn.Click += new System.EventHandler(this.logPlaybackInstantBtn_Click);
             // 
             // toolStripSeparator11
             // 
@@ -943,6 +951,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel magneticCompassPortStatusLbl;
+        private System.Windows.Forms.ToolStripMenuItem logPlaybackInstantBtn;
     }
 }
 

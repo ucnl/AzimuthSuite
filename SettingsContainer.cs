@@ -32,6 +32,8 @@ namespace AzimuthSuite
 
         public bool IsUseMagneticCompassOnly;
 
+        public bool IsExtendedHolidays;
+
         #endregion
 
         #region Constructor
@@ -66,6 +68,8 @@ namespace AzimuthSuite
             CultureOverride = string.Empty;
 
             SpecControlsEnabled = false;
+
+            IsExtendedHolidays = false;
         }
 
         #endregion

@@ -147,6 +147,9 @@
   <data name="MainForm_InitializingOutPortOn" xml:space="preserve">
     <value>Инциализация выходного порта на</value>
   </data>
+  <data name="MainForm_InstantPlayback" xml:space="preserve">
+    <value>Воспроизвести без задержек...</value>
+  </data>
   <data name="MainForm_LocationOverrideDialogTitle" xml:space="preserve">
     <value>Задать положение станции принудительно</value>
   </data>

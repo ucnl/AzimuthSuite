@@ -151,6 +151,15 @@ namespace AzimuthSuite {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Instant playback....
+        /// </summary>
+        internal static string MainForm_InstantPlayback {
+            get {
+                return ResourceManager.GetString("MainForm_InstantPlayback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Override location.
         /// </summary>
         internal static string MainForm_LocationOverrideDialogTitle {

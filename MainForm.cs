@@ -334,7 +334,10 @@ namespace AzimuthSuite
         ToolTip tTip;
         IWin32Window tTipWin;
         int mpIdx = 0;
-        int mpIdxActual = 0;        
+        int mpIdxActual = 0;
+
+        DateTime emu_TS = DateTime.Now;
+        bool is_emu_TS = false;
 
         #endregion
 
@@ -343,14 +346,14 @@ namespace AzimuthSuite
         #region Constructor
 
         public MainForm()
-        {
+        {            
+
             #region App title init
 
-            string vString = string.Format("{0} {1} v{2} {3}",
+            string vString = string.Format("{0} {1} v{2}",
                 appicon,
                 Application.ProductName,
-                Assembly.GetExecutingAssembly().GetName().Version.ToString(),
-                MDates.GetReferenceNote());            
+                Assembly.GetExecutingAssembly().GetName().Version.ToString());                        
 
             #endregion
 
@@ -415,7 +418,10 @@ namespace AzimuthSuite
 
             InitializeComponent();
 
-            this.Text = string.Format("{0} {1}", vString, sProvider.Data.CustomLabel);
+            if (sProvider.Data.IsExtendedHolidays)
+                this.Text = string.Format("{0} {1} {2}", vString, UnicodeDays.GetDayDescriptionAndIcons().Replace("|","-"), sProvider.Data.CustomLabel);
+            else
+                this.Text = string.Format("{0} {1} {2}", vString, MDates.GetReferenceNote(), sProvider.Data.CustomLabel);
 
             #region visual styles
 
@@ -450,6 +456,7 @@ namespace AzimuthSuite
             moonPhaseLbl.ToolTipText = AstroAndTimeUtils.MoonPhaseDescription(DateTime.Now);
 
             utilsLocationOverrideBtn.Visible = sProvider.Data.SpecControlsEnabled;
+            logPlaybackInstantBtn.Visible = sProvider.Data.SpecControlsEnabled;
 
             #endregion
 
@@ -482,6 +489,13 @@ namespace AzimuthSuite
             lPlayer = new LogPlayer();
             lPlayer.NewLogLineHandler += (o, e) =>
             {
+                if (e.TS != TimeSpan.Zero)
+                {
+                    var now = DateTime.Now;
+                    emu_TS = new DateTime(now.Year, now.Month, now.Day, e.TS.Hours, e.TS.Minutes, e.TS.Seconds);
+                    is_emu_TS = true;
+                }
+
                 if (e.Line.StartsWith("INFO"))
                 {
                     int idx = e.Line.IndexOf(' ');
@@ -514,6 +528,7 @@ namespace AzimuthSuite
                         settingsBtn.Enabled = true;
                         linkBtn.Enabled = true;
                         logPlaybackBtn.Text = string.Format("▶ {0}", LocalisedStrings.MainForm_Playback);
+                        logPlaybackInstantBtn.Text = string.Format("▶ {0}", LocalisedStrings.MainForm_InstantPlayback);
                         MessageBox.Show(string.Format("{0} \"{1}\" {2}",
                             LocalisedStrings.MainForm_LogFile,
                             lPlayer.LogFileName,
@@ -528,6 +543,7 @@ namespace AzimuthSuite
                     settingsBtn.Enabled = true;
                     linkBtn.Enabled = true;
                     logPlaybackBtn.Text = string.Format("▶ {0}", LocalisedStrings.MainForm_Playback);
+                    logPlaybackInstantBtn.Text = string.Format("▶ {0}", LocalisedStrings.MainForm_InstantPlayback);
                     MessageBox.Show(string.Format("{0} \"{1}\" {2}",
                         LocalisedStrings.MainForm_LogFile,
                         lPlayer.LogFileName,
@@ -606,8 +622,14 @@ namespace AzimuthSuite
             azmBase.IsMagneticCompassOnly = sProvider.Data.IsUseMagneticCompassOnly;
 
             azmBase.LogEventHandler += (o, e) => logger.Write(string.Format("{0}: {1}", e.EventType, e.LogString));
+
             azmBase.AbsoluteLocationUpdated += (o, e) =>
-                trackManager.AddPoint(e.ID, e.Latitude_deg, e.Longitude_deg, e.Depth_m, DateTime.Now);
+            {
+                if (lPlayer.IsRunning)
+                    trackManager.AddPoint(e.ID, e.Latitude_deg, e.Longitude_deg, e.Depth_m, emu_TS);
+                else
+                    trackManager.AddPoint(e.ID, e.Latitude_deg, e.Longitude_deg, e.Depth_m, DateTime.Now);
+            };
             azmBase.RelativeLocationUpdated += (o, e) =>
                 InvokeUpdateRelativeLocation(e.ID, e.PRange_m, e.Azimuth_deg);
             azmBase.AZMPortDetectedChanged += (o, e) =>
@@ -1284,6 +1306,37 @@ namespace AzimuthSuite
             }
         }
 
+        private void logPlaybackInstantBtn_Click(object sender, EventArgs e)
+        {
+            if (lPlayer.IsRunning)
+            {
+                if (MessageBox.Show(LocalisedStrings.MainForm_LogPlaybackAbortPrompt,
+                    string.Format("{0} {1} - {2}",
+                    appicon, Application.ProductName, LocalisedStrings.MainForm_Question),
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    lPlayer.RequestToStop();
+            }
+            else
+            {
+                using (OpenFileDialog oDialog = new OpenFileDialog())
+                {
+                    oDialog.Title = string.Format("{0} {1}",
+                        appicon, LocalisedStrings.MainForm_LogPlaybackSelectDialogTitle);
+                    oDialog.DefaultExt = "log";
+                    oDialog.Filter = "Log files (*.log)|*.log";
+
+                    if (oDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        lPlayer.PlaybackInstant(oDialog.FileName);
+
+                        logPlaybackInstantBtn.Text = string.Format("⏹ {0}", LocalisedStrings.MainForm_LogPlaybackStopBtnText);
+                        settingsBtn.Enabled = false;
+                        linkBtn.Enabled = false;
+                    }
+                }
+            }
+        }
+
         private void logCLearEmptyEntriesBtn_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show(LocalisedStrings.MainForm_LogDeleteEmptyEntriesPrompt,
@@ -1759,7 +1812,7 @@ namespace AzimuthSuite
                     dResult = MessageBox.Show(LocalisedStrings.MainForm_TracksSavePrompt,
                     string.Format("{0} {1} - {2}", appicon, Application.ProductName, LocalisedStrings.MainForm_Question),
                     isRestart ? MessageBoxButtons.YesNo : MessageBoxButtons.YesNoCancel,
-                    MessageBoxIcon.Question);
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 
                     if (dResult == DialogResult.Yes)
                         utilsTracksExportBtn_Click(utilsTracksExportBtn, EventArgs.Empty);
@@ -1774,7 +1827,7 @@ namespace AzimuthSuite
                     (MessageBox.Show(LocalisedStrings.MainForm_ApplicationClosePrompt,
                     string.Format("{0} {1} - {2}", appicon, Application.ProductName, LocalisedStrings.MainForm_Question),
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question) != DialogResult.Yes);
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes);
             }
         }
 
@@ -2115,6 +2168,6 @@ namespace AzimuthSuite
 
         #endregion
 
-        #endregion       
+        #endregion        
     }
 }
