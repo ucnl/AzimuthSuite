@@ -9,29 +9,24 @@ on:
 
 jobs:
   sonar-dotnet:
-    runs-on: [self-hosted]   # твой раннер "sonar" с меткой self-hosted
+    runs-on: self-hosted        # раннер с меткой self-hosted
     env:
-      SONAR_HOST_URL: "http://localhost:9000"   # или http://192.168.x.x:9000, как у тебя реально
-      SONAR_PROJECT_KEY: "ucnl_AzimuthSuite_55067894-0518-4dee-b96c-56c08b52006d"         # ключ проекта в SonarQube
-      SONAR_PROJECT_NAME: "ucnl/AzimuthSuite"        # имя проекта (как хочешь)
+      SONAR_HOST_URL: "http://192.168.7.179:9000"   # тот же URL, что и в UI
+      SONAR_PROJECT_KEY: "ucnl_AzimuthSuite_55067894-0518-4dee-b96c-56c08b52006d"
+      SONAR_PROJECT_NAME: "ucnl/AzimuthSuite"
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     steps:
-       - name: Checkout
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # dotnet уже установлен через apt, просто убеждаемся и добавляем tools в PATH
-      - name: Check dotnet
-        run: |
-          dotnet --info
+      - name: Ensure dotnet tools in PATH
+        run: echo "$HOME/.dotnet/tools" >> "$GITHUB_PATH"
 
-      - name: Add dotnet tools to PATH
-        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
-
-      - name: Install/Update SonarScanner for .NET
+      - name: Install / Update SonarScanner for .NET
         run: |
-          dotnet tool install --global dotnet-sonarscanner || \
-          dotnet tool update --global dotnet-sonarscanner
+          dotnet tool update --global dotnet-sonarscanner || \
+          dotnet tool install --global dotnet-sonarscanner
 
       - name: SonarQube begin
         run: |
@@ -41,8 +36,10 @@ jobs:
             /d:sonar.host.url="$SONAR_HOST_URL" \
             /d:sonar.token="$SONAR_TOKEN"
 
-      - name: Build
+      - name: Build solution
         run: dotnet build --no-incremental
+        # при необходимости подставь конкретный .sln:
+        # run: dotnet build AzimuthSuite.sln --no-incremental
 
       - name: SonarQube end
         run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
