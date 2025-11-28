@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main   # твоя основная ветка
+  workflow_dispatch:   # ← это даёт кнопку Run workflow в UI
+
 
 jobs:
   sonar:
