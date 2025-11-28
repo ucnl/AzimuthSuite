@@ -17,18 +17,21 @@ jobs:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     steps:
-      - name: Checkout
+       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8.0.x"   # или та версия, на которой ты собираешь
-
-      - name: Install SonarScanner for .NET
+      # dotnet уже установлен через apt, просто убеждаемся и добавляем tools в PATH
+      - name: Check dotnet
         run: |
-          dotnet tool install --global dotnet-sonarscanner
-          echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+          dotnet --info
+
+      - name: Add dotnet tools to PATH
+        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
+      - name: Install/Update SonarScanner for .NET
+        run: |
+          dotnet tool install --global dotnet-sonarscanner || \
+          dotnet tool update --global dotnet-sonarscanner
 
       - name: SonarQube begin
         run: |
