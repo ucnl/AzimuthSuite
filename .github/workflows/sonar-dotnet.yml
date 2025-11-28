@@ -9,9 +9,9 @@ on:
 
 jobs:
   sonar-dotnet:
-    runs-on: self-hosted        # раннер с меткой self-hosted
+    runs-on: self-hosted
     env:
-      SONAR_HOST_URL: "http://192.168.7.179:9000"   # тот же URL, что и в UI
+      SONAR_HOST_URL: "http://192.168.7.179:9000"
       SONAR_PROJECT_KEY: "ucnl_AzimuthSuite_55067894-0518-4dee-b96c-56c08b52006d"
       SONAR_PROJECT_NAME: "ucnl/AzimuthSuite"
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -36,10 +36,11 @@ jobs:
             /d:sonar.host.url="$SONAR_HOST_URL" \
             /d:sonar.token="$SONAR_TOKEN"
 
-      - name: Build solution
+      - name: Build solution (with Mono reference assemblies)
+        env:
+          FrameworkPathOverride: /usr/lib/mono/4.8-api   # или 4.7.1-api, если такой каталог
         run: dotnet build --no-incremental
-        # при необходимости подставь конкретный .sln:
-        # run: dotnet build AzimuthSuite.sln --no-incremental
+        # при необходимости: dotnet build AzimuthSuite.sln --no-incremental
 
       - name: SonarQube end
         run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
