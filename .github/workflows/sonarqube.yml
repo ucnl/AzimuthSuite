@@ -7,7 +7,7 @@ on:
 
 jobs:
   sonar:
-    runs-on: ubuntu-latest   # или self-hosted, если поднимешь своего runner-а
+    runs-on: self-hosted   # или self-hosted, если поднимешь своего runner-а
     steps:
       - name: Checkout
         uses: actions/checkout@v4
