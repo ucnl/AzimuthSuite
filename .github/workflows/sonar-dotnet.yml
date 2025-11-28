@@ -1,0 +1,45 @@
+name: SonarQube .NET analysis
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  sonar-dotnet:
+    runs-on: [self-hosted]   # твой раннер "sonar" с меткой self-hosted
+    env:
+      SONAR_HOST_URL: "http://localhost:9000"   # или http://192.168.x.x:9000, как у тебя реально
+      SONAR_PROJECT_KEY: "ucnl_AzimuthSuite_55067894-0518-4dee-b96c-56c08b52006d"         # ключ проекта в SonarQube
+      SONAR_PROJECT_NAME: "ucnl/AzimuthSuite"        # имя проекта (как хочешь)
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"   # или та версия, на которой ты собираешь
+
+      - name: Install SonarScanner for .NET
+        run: |
+          dotnet tool install --global dotnet-sonarscanner
+          echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
+      - name: SonarQube begin
+        run: |
+          dotnet sonarscanner begin \
+            /k:"$SONAR_PROJECT_KEY" \
+            /n:"$SONAR_PROJECT_NAME" \
+            /d:sonar.host.url="$SONAR_HOST_URL" \
+            /d:sonar.token="$SONAR_TOKEN"
+
+      - name: Build
+        run: dotnet build --no-incremental
+
+      - name: SonarQube end
+        run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
