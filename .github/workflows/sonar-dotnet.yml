@@ -21,8 +21,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Делаем так, чтобы глобальные dotnet-tools (в т.ч. dotnet-sonarscanner)
-      # попадали в PATH для всех следующих шагов
       - name: Add dotnet tools to PATH
         run: echo "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
 
@@ -43,11 +41,11 @@ jobs:
             /d:sonar.token="$env:SONAR_TOKEN"
 
       - name: Build solution
-        run: >
-          "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe"
-          AzimuthSuite.csproj
-          /t:Rebuild
-          /p:Configuration=Release
+        run: |
+          & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe" `
+            AzimuthSuite.csproj `
+            /t:Rebuild `
+            /p:Configuration=Release
 
       - name: SonarQube end
-        run: dotnet sonarscanner end /d:sonar.token="$env:SONAR_TOKEN"
+        run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
