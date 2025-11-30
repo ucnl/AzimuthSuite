@@ -21,12 +21,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Делаем так, чтобы глобальные dotnet-tools (в т.ч. dotnet-sonarscanner)
+      # попадали в PATH для всех следующих шагов
+      - name: Add dotnet tools to PATH
+        run: echo "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
+
       - name: Install / Update SonarScanner for .NET
         run: |
           dotnet tool update --global dotnet-sonarscanner 2>$null
           if ($LASTEXITCODE -ne 0) {
             dotnet tool install --global dotnet-sonarscanner
           }
+          dotnet tool list -g
 
       - name: SonarQube begin
         run: |
