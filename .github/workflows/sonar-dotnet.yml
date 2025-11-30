@@ -33,7 +33,7 @@ jobs:
           dotnet tool list -g
 
       - name: Copy UCNL libs into project workspace
-        shell: pwsh
+        shell: powershell
         run: |
           # RUNNER_WORKSPACE = C:\actions-runner\_work\AzimuthSuite
           $projectWS = $env:RUNNER_WORKSPACE
