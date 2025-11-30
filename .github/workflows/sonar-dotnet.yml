@@ -21,15 +21,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Add dotnet tools to PATH
-        run: echo "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
-        shell: pwsh
-
       - name: Install / Update SonarScanner for .NET
         run: |
-          dotnet tool update --global dotnet-sonarscanner 2>$null `
-            || dotnet tool install --global dotnet-sonarscanner
-        shell: pwsh
+          dotnet tool update --global dotnet-sonarscanner 2>$null
+          if ($LASTEXITCODE -ne 0) {
+            dotnet tool install --global dotnet-sonarscanner
+          }
 
       - name: SonarQube begin
         run: |
@@ -38,7 +35,6 @@ jobs:
             /n:"$env:SONAR_PROJECT_NAME" `
             /d:sonar.host.url="$env:SONAR_HOST_URL" `
             /d:sonar.token="$env:SONAR_TOKEN"
-        shell: pwsh
 
       - name: Build solution
         run: >
@@ -46,8 +42,6 @@ jobs:
           AzimuthSuite.csproj
           /t:Rebuild
           /p:Configuration=Release
-        shell: pwsh
 
       - name: SonarQube end
         run: dotnet sonarscanner end /d:sonar.token="$env:SONAR_TOKEN"
-        shell: pwsh
