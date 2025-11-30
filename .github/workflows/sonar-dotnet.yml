@@ -18,8 +18,15 @@ jobs:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     steps:
-      - name: Checkout
+      - name: Checkout AzimuthSuite
         uses: actions/checkout@v4
+
+      # ВАЖНО: подтягиваем репозиторий с библиотеками в папку UCNLLibs
+      - name: Checkout UCNLLibs
+        uses: actions/checkout@v4
+        with:
+          repository: ucnl/UCNLLibs        # если имя другое — поправь
+          path: UCNLLibs                   # важно, чтобы путь совпадал с HintPath в .csproj
 
       - name: Add dotnet tools to PATH
         run: echo "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
@@ -40,7 +47,16 @@ jobs:
             /d:sonar.host.url="$env:SONAR_HOST_URL" `
             /d:sonar.token="$env:SONAR_TOKEN"
 
-      - name: Build solution
+      # 1) Сначала собираем библиотеки, чтобы получить UCNL*.dll в bin\Release
+      - name: Build UCNLLibs
+        run: |
+          & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe" `
+            UCNLLibs\UCNLLibs.sln `
+            /t:Rebuild `
+            /p:Configuration=Release
+
+      # 2) Теперь собираем основное приложение
+      - name: Build AzimuthSuite
         run: |
           & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe" `
             AzimuthSuite.csproj `
@@ -48,4 +64,4 @@ jobs:
             /p:Configuration=Release
 
       - name: SonarQube end
-        run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+        run: dotnet sonarscanner end /d:sonar.token="$env:SONAR_TOKEN"
