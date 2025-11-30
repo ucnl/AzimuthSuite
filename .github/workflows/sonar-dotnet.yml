@@ -9,7 +9,8 @@ on:
 
 jobs:
   sonar-dotnet:
-    runs-on: self-hosted
+    runs-on: [self-hosted, windows]
+
     env:
       SONAR_HOST_URL: "http://192.168.7.179:9000"
       SONAR_PROJECT_KEY: "ucnl_AzimuthSuite_55067894-0518-4dee-b96c-56c08b52006d"
@@ -20,27 +21,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Ensure dotnet tools in PATH
-        run: echo "$HOME/.dotnet/tools" >> "$GITHUB_PATH"
+      - name: Add dotnet tools to PATH
+        run: echo "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
+        shell: pwsh
 
       - name: Install / Update SonarScanner for .NET
         run: |
-          dotnet tool update --global dotnet-sonarscanner || \
-          dotnet tool install --global dotnet-sonarscanner
+          dotnet tool update --global dotnet-sonarscanner 2>$null `
+            || dotnet tool install --global dotnet-sonarscanner
+        shell: pwsh
 
       - name: SonarQube begin
         run: |
-          dotnet sonarscanner begin \
-            /k:"$SONAR_PROJECT_KEY" \
-            /n:"$SONAR_PROJECT_NAME" \
-            /d:sonar.host.url="$SONAR_HOST_URL" \
-            /d:sonar.token="$SONAR_TOKEN"
+          dotnet sonarscanner begin `
+            /k:"$env:SONAR_PROJECT_KEY" `
+            /n:"$env:SONAR_PROJECT_NAME" `
+            /d:sonar.host.url="$env:SONAR_HOST_URL" `
+            /d:sonar.token="$env:SONAR_TOKEN"
+        shell: pwsh
 
-      - name: Build solution (with Mono reference assemblies)
-        env:
-          FrameworkPathOverride: /usr/lib/mono/4.8-api   # или 4.7.1-api, если такой каталог
-        run: dotnet build --no-incremental
-        # при необходимости: dotnet build AzimuthSuite.sln --no-incremental
+      - name: Build solution
+        run: >
+          "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe"
+          AzimuthSuite.csproj
+          /t:Rebuild
+          /p:Configuration=Release
+        shell: pwsh
 
       - name: SonarQube end
-        run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
+        run: dotnet sonarscanner end /d:sonar.token="$env:SONAR_TOKEN"
+        shell: pwsh
