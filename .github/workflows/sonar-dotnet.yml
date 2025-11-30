@@ -42,10 +42,14 @@ jobs:
 
       - name: Build AzimuthSuite
         run: |
+          $refPath = "$env:RUNNER_WORKSPACE\UCNLLibs"
+          Write-Host "Using ReferencePath = $refPath"
+
           & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe" `
             AzimuthSuite.csproj `
             /t:Rebuild `
-            /p:Configuration=Release
+            /p:Configuration=Release `
+            /p:ReferencePath="$refPath"
 
       - name: SonarQube end
         run: dotnet sonarscanner end /d:sonar.token="$env:SONAR_TOKEN"
