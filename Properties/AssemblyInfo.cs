@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Underwater communication & navigation laboratory, LLC")]
 [assembly: AssemblyProduct("AzimuthSuite")]
-[assembly: AssemblyCopyright("Copyright © Underwater communication & navigation laboratory, 2022-2023")]
+[assembly: AssemblyCopyright("Copyright © Underwater communication & navigation laboratory, 2022-2025")]
 [assembly: AssemblyTrademark("UC&NL")]
 [assembly: AssemblyCulture("")]
 
@@ -48,5 +48,5 @@ using System.Runtime.InteropServices;
 // Можно задать все значения или принять номера сборки и редакции по умолчанию 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.5.4.0")]
+[assembly: AssemblyVersion("1.5.5.1")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
