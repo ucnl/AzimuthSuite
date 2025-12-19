@@ -40,7 +40,8 @@ namespace AzimuthSuite.AzmCore
         REM_ADDR_13 = 12,
         REM_ADDR_14 = 13,
         REM_ADDR_15 = 14,
-        REM_ADDR_16 = 15,
+        REM_ADDR_16 = 15,        
+        REM_ADDR_UNKNOWN,
         REM_ADDR_INVALID
     }
 
@@ -138,8 +139,9 @@ namespace AzimuthSuite.AzmCore
 
     public enum AZM_DEVICE_TYPE_Enum
     {
-        DT_BASE = 0,
+        DT_USBL_TSV = 0,
         DT_REMOTE = 1,
+        DT_LBL_TSV = 2,
         DT_INVALID
     }
 
@@ -161,6 +163,8 @@ namespace AzimuthSuite.AzmCore
         public static readonly int ABS_MAX_RANGE_M = 5500;
         public static readonly int ABS_MIN_RANGE_M = 500;
 
+        public static readonly double ABS_MIN_PTIME_S = -0.002;
+
         public static readonly double ABS_MAX_VCC_V = 30.0;
         public static readonly double ABS_MIN_VCC_V = 0.0;
 
@@ -168,6 +172,8 @@ namespace AzimuthSuite.AzmCore
         public static readonly double ABS_MIN_TEMP_C = 80.0;
 
         public static readonly double CRANGE = 499;
+
+        public static readonly int UNKNOWN_RESPONDER_ID = 256;
 
 
 
@@ -229,8 +235,16 @@ namespace AzimuthSuite.AzmCore
         }
 
         public static string Addr2Str(REMOTE_ADDR_Enum addr)
-        {
+        {            
             return ((int)addr + 1).ToString();
+        }
+
+        public static string Addr2StrTree(REMOTE_ADDR_Enum addr)
+        {
+            if (addr == REMOTE_ADDR_Enum.REM_ADDR_UNKNOWN)
+                return "Extra";
+            else
+                return $"#{(int)addr + 1}";
         }
 
         public static bool IsErrorCode(int rc_resp_code)

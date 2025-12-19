@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using UCNLDrivers;
 using UCNLNav;
+using UCNLNav.TrackFilters;
 using UCNLNMEA;
 using UCNLPhysics;
 
@@ -54,9 +55,9 @@ namespace AzimuthSuite.AzmCore
         public bool IsTimeout { get; set; }
         public AgingValue<string> Message { get; private set; }
 
-        public DHFilter DHFilterState;
+        public DHTrackFilter DHFilterState;
 
-        public TrackFilter TFilterState;
+        public TrackMovingAverageSmoother TFilterState;
 
         public int TotalRequests { get => SuccededRequests + Timeouts; }
         public int SuccededRequests { get; set; }
@@ -161,7 +162,8 @@ namespace AzimuthSuite.AzmCore
                 if (WaterTemperature_C.IsInitialized)
                     result.Add("WTM", WaterTemperature_C.ToString());
 
-                result.Add("RST", SuccessfulRequestStatistics);                
+                if (TotalRequests > 0)
+                    result.Add("RST", SuccessfulRequestStatistics);                
             }
 
             if (visibleItems.HasFlag(RemoteVisibleDataItems.isLocation))
@@ -512,7 +514,9 @@ namespace AzimuthSuite.AzmCore
             };
             azmPort.DeviceInfoValidChanged += (o, e) =>
             {
-                if (azmPort.IsDeviceInfoValid && (azmPort.DeviceType == AZM_DEVICE_TYPE_Enum.DT_BASE))
+                if (azmPort.IsDeviceInfoValid && 
+                   ((azmPort.DeviceType == AZM_DEVICE_TYPE_Enum.DT_USBL_TSV) ||
+                    (azmPort.DeviceType == AZM_DEVICE_TYPE_Enum.DT_LBL_TSV)))
                 {
                     LogEventHandler.Rise(o, new LogEventArgs(LogLineType.INFO, 
                         string.Format(CultureInfo.InvariantCulture, 
@@ -593,6 +597,8 @@ namespace AzimuthSuite.AzmCore
                         double.IsNaN(e.SoundSpeed_mps) ? "Auto" : string.Format(CultureInfo.InvariantCulture, "{0:F01} m/s", e.SoundSpeed_mps),
                         e.MaxDist_m)));
 
+
+                prevRemAckTS = DateTime.Now;
                 polling_started_received = true;
             };
             azmPort.RSTSReceived += (o, e) => ResponderSettingsReceived(o, e);
@@ -943,8 +949,27 @@ namespace AzimuthSuite.AzmCore
 
         private void ProcessRemote(NDTAReceivedEventArgs e)
         {
+            if (AZM.IsErrorCode(e.ResponseCode))
+            {
+                CDS_RESP_CODES_Enum rError = (CDS_RESP_CODES_Enum)Enum.ToObject(typeof(CDS_RESP_CODES_Enum), e.ResponseCode);
+                if (rError == CDS_RESP_CODES_Enum.CDS_RSYS_STRT)
+                {
+                    if (!remotes.ContainsKey(REMOTE_ADDR_Enum.REM_ADDR_UNKNOWN))
+                        remotes.Add(REMOTE_ADDR_Enum.REM_ADDR_UNKNOWN, new Remote(REMOTE_ADDR_Enum.REM_ADDR_UNKNOWN));
+
+                    remotes[REMOTE_ADDR_Enum.REM_ADDR_UNKNOWN].Message.Value = rError.ToString().Replace("CDS", "").Replace('_', ' ');
+                    return;
+                }
+            }
+
+            if (!double.IsNaN(e.PropTime_s))
+            {
+                if (e.PropTime_s < AZM.ABS_MIN_PTIME_S)
+                    return;
+            }
+
             if (!remotes.ContainsKey(e.Address))
-                remotes.Add(e.Address, new Remote(e.Address));
+            remotes.Add(e.Address, new Remote(e.Address));
 
             bool is_a = false;
             bool is_srp = false;
@@ -967,7 +992,7 @@ namespace AzimuthSuite.AzmCore
                 else
                     remotes[e.Address].Message.Value = string.Format("{0} caused {1}", e.RequestCode, rError);
 
-            } 
+            }
             else if (e.RequestCode == CDS_REQ_CODES_Enum.CDS_REQ_VCC)
             {
                 remotes[e.Address].VCC_V.Value = (double)(e.ResponseCode) * (AZM.ABS_MAX_VCC_V - AZM.ABS_MIN_VCC_V) / AZM.CRANGE + AZM.ABS_MIN_VCC_V;
@@ -982,10 +1007,10 @@ namespace AzimuthSuite.AzmCore
                 remotes[e.Address].MSR_dB.Value = e.MSR_dB;
 
             if (!double.IsNaN(e.PropTime_s))
-                remotes[e.Address].PTime_s.Value = e.PropTime_s;                
+                remotes[e.Address].PTime_s.Value = e.PropTime_s;
 
             if (!double.IsNaN(e.SlantRange_m))
-                remotes[e.Address].SlantRange_m.Value = e.SlantRange_m;                
+                remotes[e.Address].SlantRange_m.Value = e.SlantRange_m;
 
             if (!double.IsNaN(e.SlantRangeProjection_m))
             {
@@ -1020,38 +1045,38 @@ namespace AzimuthSuite.AzmCore
                     heading.IsInitializedAndNotObsolete)
                 {
                     PolarCS_ShiftRotate(heading.Value, phi_deg,
-                        remotes[e.Address].Azimuth_deg.Value, 
+                        remotes[e.Address].Azimuth_deg.Value,
                         remotes[e.Address].SlantRangeProjection_m.Value,
-                        x_offset_m, y_offset_m, 
-                        out double a_azm, out double a_rng);                    
+                        x_offset_m, y_offset_m,
+                        out double a_azm, out double a_rng);
 
                     CalcAbsLocation(
-                        Algorithms.Deg2Rad(latitude_deg.Value), 
+                        Algorithms.Deg2Rad(latitude_deg.Value),
                         Algorithms.Deg2Rad(longitude_deg.Value),
                         Algorithms.Deg2Rad(a_azm), a_rng,
-                        out double rlat_rad, 
-                        out double rlon_rad, 
+                        out double rlat_rad,
+                        out double rlon_rad,
                         out double razm_rad);
 
                     DateTime ts = DateTime.Now;
 
                     if (remotes[e.Address].DHFilterState == null)
-                        remotes[e.Address].DHFilterState = new DHFilter(8, 1, 5);
+                        remotes[e.Address].DHFilterState = new DHTrackFilter(8, 1, 5);
 
-                    if (remotes[e.Address].DHFilterState.Process(rlat_rad, rlon_rad, 0, ts, 
+                    if (remotes[e.Address].DHFilterState.Process(rlat_rad, rlon_rad, 0, ts,
                             out rlat_rad, out rlon_rad, out _, out ts))
                     {
-
-                        /// 17 OCT 2024
-
                         if (remotes[e.Address].TFilterState == null)
-                            remotes[e.Address].TFilterState = new TrackFilter(4, 20);
+                            remotes[e.Address].TFilterState = new TrackMovingAverageSmoother(4, 20);
 
-                        var sm_result = remotes[e.Address].TFilterState.Filter(Algorithms.Rad2Deg(rlat_rad), Algorithms.Rad2Deg(rlon_rad));
-                        rlat_rad = Algorithms.Deg2Rad(sm_result.Latitude);
-                        rlon_rad = Algorithms.Deg2Rad(sm_result.Longitude);
-
-                        ///
+                        remotes[e.Address].TFilterState.Process(
+                            rlat_rad,
+                            rlon_rad,
+                            0,
+                            ts,
+                            out rlat_rad,
+                            out rlon_rad,
+                            out _, out _);
 
                         remotes[e.Address].AAzimuth_deg.Value = a_azm;
                         remotes[e.Address].ReverseAzimuth_deg.Value = Algorithms.Wrap360(a_azm + 180);
@@ -1060,12 +1085,12 @@ namespace AzimuthSuite.AzmCore
                         double rlat_deg = Algorithms.Rad2Deg(rlat_rad);
                         double rlon_deg = Algorithms.Rad2Deg(rlon_rad);
                         double rdpt_m = remotes[e.Address].Depth_m.IsInitialized ? remotes[e.Address].Depth_m.Value : 0;
-                        
+
                         RelativeLocationUpdated.Rise(this,
                         new RelativeLocationUpdatedEventArgs(
                             AZM.Addr2Str(e.Address),
-                            a_rng, 
-                            a_azm, 
+                            a_rng,
+                            a_azm,
                             false));
 
                         AbsoluteLocationUpdated.Rise(this,
@@ -1095,7 +1120,7 @@ namespace AzimuthSuite.AzmCore
 
                                 if (IsUDPOutputInitialized)
                                     TryWriteUDPOutput(eStrings);
-                            }                                
+                            }
                         }
                     }
                 }
@@ -1106,11 +1131,11 @@ namespace AzimuthSuite.AzmCore
                     RelativeLocationUpdated.Rise(this,
                         new RelativeLocationUpdatedEventArgs(
                             AZM.Addr2Str(e.Address),
-                            remotes[e.Address].SlantRangeProjection_m.Value, 
-                            remotes[e.Address].Azimuth_deg.Value, 
+                            remotes[e.Address].SlantRangeProjection_m.Value,
+                            remotes[e.Address].Azimuth_deg.Value,
                             false));
                 }
-            }            
+            }
         }
 
         /// <summary>
@@ -1184,8 +1209,7 @@ namespace AzimuthSuite.AzmCore
         public bool QueryResponderAddrGet()
         {
             return azmPort.Query_RSTS(REMOTE_ADDR_Enum.REM_ADDR_INVALID, double.NaN);
-        }
-
+        }        
 
         public bool QueryCREQ(REMOTE_ADDR_Enum addr, CDS_REQ_CODES_Enum dataID)
         {
@@ -1409,7 +1433,7 @@ namespace AzimuthSuite.AzmCore
 
             foreach (var remote in remotes)
             {
-                result.Add(AZM.Addr2Str(remote.Key), remote.Value.ToStringList(dataToShow));
+                result.Add(AZM.Addr2StrTree(remote.Key), remote.Value.ToStringList(dataToShow));
             }
 
             return result;
@@ -1492,14 +1516,9 @@ namespace AzimuthSuite.AzmCore
             {
                 if (disposing)
                 {
-                    if (azmPort != null)
-                        azmPort.Dispose();
-
-                    if (gnssPort != null)
-                        gnssPort.Dispose();
-
-                    if (outPort != null)
-                        outPort.Dispose();
+                    azmPort?.Dispose();
+                    gnssPort?.Dispose();
+                    outPort?.Dispose();
                 }
 
                 disposed = true;

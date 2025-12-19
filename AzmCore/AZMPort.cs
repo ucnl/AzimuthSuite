@@ -59,17 +59,21 @@ namespace AzimuthSuite.AzmCore
 
         public REMOTE_ADDR_Enum Addr { get; private set; }
         public double Sty_PSU { get; private set; }
+        public int BCast_Addr_Delay_ms { get; private set; }
+
 
         public bool IsStyPresent { get => !double.IsNaN(Sty_PSU); }
+        public bool IsBCastAddrDelayPresent { get => (BCast_Addr_Delay_ms >= 0); }
 
         #endregion
 
         #region Constructor
 
-        public RSTSReceivedEventArgs(REMOTE_ADDR_Enum addr, double sty_PSU)
+        public RSTSReceivedEventArgs(REMOTE_ADDR_Enum addr, double sty_PSU, int bcast_addr_delay_ms)
         {
             Addr = addr;
             Sty_PSU = sty_PSU;
+            BCast_Addr_Delay_ms = bcast_addr_delay_ms;
         }
 
         #endregion
@@ -350,7 +354,7 @@ namespace AzimuthSuite.AzmCore
 
         private void Parse_RSTS(object[] parameters)
         {
-            // $PAZM2,[addr],[sty_PSU]
+            // $PAZM2,[addr],[sty_PSU],[bcast_addr_delay]
             try
             {                
                 StopTimer();
@@ -359,7 +363,11 @@ namespace AzimuthSuite.AzmCore
                 REMOTE_ADDR_Enum addr = AZM.O2_REMOTE_ADDR_Enum(parameters[0]);
                 double sty_PSU = AZM.O2D(parameters[1]);
 
-                RSTSReceived.Rise(this, new RSTSReceivedEventArgs(addr, sty_PSU));
+                int bcast_addr_delay_ms = -1;
+                if (parameters.Length > 2)
+                    bcast_addr_delay_ms = AZM.O2S32(parameters[2]);
+
+                RSTSReceived.Rise(this, new RSTSReceivedEventArgs(addr, sty_PSU, bcast_addr_delay_ms));
             }
             catch (Exception ex)
             {
@@ -466,7 +474,7 @@ namespace AzimuthSuite.AzmCore
                 AddressMask = 0;
                 RemoteAddress = REMOTE_ADDR_Enum.REM_ADDR_INVALID;
 
-                if (DeviceType == AZM_DEVICE_TYPE_Enum.DT_BASE)
+                if (DeviceType == AZM_DEVICE_TYPE_Enum.DT_USBL_TSV)
                     AddressMask = AZM.O2U16(parameters[1]);
                 else if (DeviceType == AZM_DEVICE_TYPE_Enum.DT_REMOTE)
                     RemoteAddress = AZM.O2_REMOTE_ADDR_Enum(parameters[1]);
@@ -571,7 +579,8 @@ namespace AzimuthSuite.AzmCore
             var msg = NMEAParser.BuildProprietarySentence(ManufacturerCodes.AZM, "2",
                 new object[] {
                     addr == REMOTE_ADDR_Enum.REM_ADDR_INVALID ? null : (object)(int)addr,
-                    !double.IsNaN(sty_PSU) ? (object)sty_PSU : null });
+                    !double.IsNaN(sty_PSU) ? (object)sty_PSU : null
+                });
 
             return TrySend(msg, ICs.IC_D2D_RSTS);
         }
@@ -642,7 +651,7 @@ namespace AzimuthSuite.AzmCore
 
                 if (pSentence.Manufacturer == ManufacturerCodes.AZM)
                 {
-                    if (!detected)
+                    if ((!detected) && ("0123568!".Contains(pSentence.SentenceIDString)))
                     {
                         detected = true;
                         StopTimer();
