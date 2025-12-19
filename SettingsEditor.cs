@@ -1,5 +1,6 @@
 ﻿using AzimuthSuite.AzmCore;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using UCNLDrivers;
 using UCNLUI;
@@ -194,7 +195,7 @@ namespace AzimuthSuite
 
         private void CheckValidity()
         {
-            okBtn.Enabled = remotesList.CheckedItems.Count > 0;
+            okBtn.Enabled = (remotesList.CheckedItems.Count > 0);
         }
 
         #endregion
@@ -251,11 +252,12 @@ namespace AzimuthSuite
                 (!((remotesList.CheckedItems.Count == 1) && (e.NewValue == CheckState.Unchecked)));
         }
 
-        #endregion
-
         private void isUseMagneticCompassChb_CheckedChanged(object sender, EventArgs e)
         {
             magneticGroup.Enabled = isUseMagneticCompass;
         }
+
+
+        #endregion        
     }
 }

@@ -485,6 +485,7 @@
             // 
             // azmPortStatusLbl
             // 
+            this.azmPortStatusLbl.BackColor = System.Drawing.Color.LightSalmon;
             resources.ApplyResources(this.azmPortStatusLbl, "azmPortStatusLbl");
             this.azmPortStatusLbl.Name = "azmPortStatusLbl";
             // 
@@ -495,6 +496,7 @@
             // 
             // auxPortStatusLbl
             // 
+            this.auxPortStatusLbl.BackColor = System.Drawing.Color.LightSalmon;
             resources.ApplyResources(this.auxPortStatusLbl, "auxPortStatusLbl");
             this.auxPortStatusLbl.Name = "auxPortStatusLbl";
             // 
@@ -505,6 +507,7 @@
             // 
             // magneticCompassPortStatusLbl
             // 
+            this.magneticCompassPortStatusLbl.BackColor = System.Drawing.Color.LightSalmon;
             resources.ApplyResources(this.magneticCompassPortStatusLbl, "magneticCompassPortStatusLbl");
             this.magneticCompassPortStatusLbl.Name = "magneticCompassPortStatusLbl";
             // 

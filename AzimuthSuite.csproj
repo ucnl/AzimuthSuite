@@ -47,11 +47,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AzimuthSuite.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms" />
@@ -84,7 +90,6 @@
     <Compile Include="AzmCore\AZM.cs" />
     <Compile Include="AzmCore\AZMBase.cs" />
     <Compile Include="AzmCore\AZMPort.cs" />
-    <Compile Include="AzmCore\DHFilter.cs" />
     <Compile Include="AzmCore\uMagneticCompassPort.cs" />
     <Compile Include="Dialogs\DeviceInfoView.cs">
       <SubType>Form</SubType>

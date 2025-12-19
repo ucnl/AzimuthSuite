@@ -655,32 +655,7 @@ namespace AzimuthSuite
                 InvokeSwitchOutputPortUIEnabledState(azmBase.GNSSPortDetected);
 
                 if (azmBase.GNSSPortDetected)
-                    usProvider.Data.AUXGNSSCompasPreferredPortName = azmBase.GNSSPortName;
-                    
-                /*
-                if (azmBase.GNSSPortDetected &&
-                    sProvider.Data.IsUseOutputport &&
-                    !azmBase.IsOutPortInitiaziled)
-                {
-                    // TODO: refactor
-
-                    if (InvokeRequired)
-                    {
-                        Invoke((MethodInvoker)delegate
-                        {
-                            outPortsCbxUpdateBtn_Click(null, null);
-                            UIHelpers.TrySetCbxItem(outputPortCbx, usProvider.Data.OutPortName);
-                            outputPortBtn_Click(null, null);
-                        });
-                    }
-                    else
-                    {
-                        outPortsCbxUpdateBtn_Click(null, null);
-                        UIHelpers.TrySetCbxItem(outputPortCbx, usProvider.Data.OutPortName);
-                        outputPortBtn_Click(null, null);
-                    }
-                }
-                */
+                    usProvider.Data.AUXGNSSCompasPreferredPortName = azmBase.GNSSPortName;                                  
             };
 
             azmBase.IsMagneticCompassActiveChanged += (o, e) =>
@@ -716,7 +691,7 @@ namespace AzimuthSuite
                 UIHelpers.InvokeSetEnabledState(mainToolStrip, utilsDeviceBtn, azmBase.IsDeviceInfoValid);
 
                 bool responderItemsEnabled = azmBase.IsDeviceInfoValid && (azmBase.DeviceType == AZM_DEVICE_TYPE_Enum.DT_REMOTE);
-                bool stationItemsEnabled = azmBase.IsDeviceInfoValid && (azmBase.DeviceType == AZM_DEVICE_TYPE_Enum.DT_BASE);
+                bool stationItemsEnabled = azmBase.IsDeviceInfoValid && (azmBase.DeviceType == AZM_DEVICE_TYPE_Enum.DT_USBL_TSV);
 
                 UIHelpers.InvokeSetEnabledState(mainToolStrip, utilsDeviceResponderSettingsBtn, responderItemsEnabled);                
                 UIHelpers.InvokeSetEnabledState(mainToolStrip, userDataReadWriteLocalBtn, responderItemsEnabled);                
@@ -905,7 +880,7 @@ namespace AzimuthSuite
 
         private void InvokeUpdatePortStatusLbl(StatusStrip strip, ToolStripStatusLabel lbl, bool active, bool detected, string text)
         {
-            Color backColor = Color.FromKnownColor(KnownColor.Control);
+            Color backColor = Color.FromKnownColor(KnownColor.LightSalmon);
             Color foreColor = Color.FromKnownColor(KnownColor.ControlText);
 
             if (active)
@@ -1597,7 +1572,6 @@ namespace AzimuthSuite
                 InvokeSwitchOutputPortUIEnabledState(azmBase.LocationOverrideEnabled);
             }            
         }
-
 
         private void userDataReadWriteLocalBtn_Click(object sender, EventArgs e)
         {
