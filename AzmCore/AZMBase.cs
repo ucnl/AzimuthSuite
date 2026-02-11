@@ -437,7 +437,9 @@ namespace AzimuthSuite.AzmCore
 
         public bool LocationOverrideEnabled { get => pTimer.IsRunning; }
 
-        public bool IsMagneticCompassOnly { get; set; }        
+        public bool IsMagneticCompassOnly { get; set; }
+
+        public bool IsACStyleUDPOutput { get; set; } = false;
 
         #endregion
 
@@ -496,7 +498,7 @@ namespace AzimuthSuite.AzmCore
             azmPort = new AZMPort(BaudRate.baudRate9600)
             {
                 IsTryAlways = true,
-                IsLogIncoming = true
+                IsLogIncoming = true,                
             };
 
             azmPort.DetectedChanged += (o, e) =>
@@ -562,16 +564,25 @@ namespace AzimuthSuite.AzmCore
             azmPort.NDTAReceived += (o, e) =>
             {
                 ProcessStationLocalParameters(e);
+                
+                if (IsUDPOutputInitialized && IsACStyleUDPOutput)
+                    TryWriteUDPOutput(AZMLOCBuild());
 
                 if (e.Status == NDTA_Status_Enum.NDTA_REMT) // Remote timeout
                 {
                     SetRemoteTimeoutStatus(e.Address);
                     prevRemAckTS = DateTime.Now;
+
+                    if (IsUDPOutputInitialized && IsACStyleUDPOutput)
+                        TryWriteUDPOutput(AZMREMBuild(remotes[e.Address]));
                 }
                 else if (e.Status == NDTA_Status_Enum.NDTA_REMR) // Remote response
                 {
                     ProcessRemote(e);
                     prevRemAckTS = DateTime.Now;
+
+                    if (IsUDPOutputInitialized && IsACStyleUDPOutput)
+                        TryWriteUDPOutput(AZMREMBuild(remotes[e.Address]));
                 }
 
                 if (azmPort.IsActive &&
@@ -703,6 +714,7 @@ namespace AzimuthSuite.AzmCore
 
         #region Private        
 
+        
         private IEnumerable<string> GetOutputString(double lat_deg, double lon_deg, double rdpt_m, double razm_deg, double wtemp_C)
         {
             List<string> eStrings = new List<string>();
@@ -784,6 +796,150 @@ namespace AzimuthSuite.AzmCore
 
             return eStrings;
         }
+        
+
+        private string AZMLOCBuild()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("@AZMLOC,");
+
+            if (stationPressure_mBar.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01}", stationPressure_mBar.Value);
+            sb.Append(',');
+
+            if (stationDepth_m.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F02}", stationDepth_m.Value);
+            sb.Append(',');
+
+            if (waterTemperature_C.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01}", waterTemperature_C.Value);
+            sb.Append(',');            
+
+            if (stationPitch_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01}", stationPitch_deg.Value);
+            sb.Append(',');
+            
+            if (stationRoll_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01},{1:F01},", stationRoll_deg.Value, stationRoll_deg.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+
+            if (latitude_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F06}", latitude_deg.Value);
+            sb.Append(',');
+
+            if (longitude_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F06}", longitude_deg.Value);
+            sb.Append(',');
+            
+            if (course_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01}", course_deg.Value);
+            sb.Append(',');
+            
+            if (speed.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01},{1:F01},", speed.Value, speed.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+
+            if (heading.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01},{1:F01},", heading.Value, heading.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+
+            sb.Append(",,,,,");
+            sb.AppendLine();
+
+            return sb.ToString();
+        }
+
+        private string AZMREMBuild(Remote remote)
+        {            
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("@AZMREM,");
+
+            sb.Append((int)remote.Address);
+            sb.Append(',');
+
+            if (remote.SlantRange_m.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F02}", remote.SlantRange_m.Value);
+            sb.Append(',');
+
+            if (remote.Azimuth_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01}", remote.Azimuth_deg.Value);
+            sb.Append(',');
+
+            if (remote.PTime_s.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F06}", remote.PTime_s.Value);
+            sb.Append(',');            
+
+            if (remote.MSR_dB.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01},{1:F01},", remote.MSR_dB.Value, remote.MSR_dB.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+
+            if (remote.Depth_m.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01},{1:F01},", remote.Depth_m.Value, remote.Depth_m.Age.TotalSeconds);
+            else
+                sb.Append(",,");            
+
+            if (remote.SlantRangeProjection_m.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F02},{1:F01},", remote.SlantRangeProjection_m.Value, remote.SlantRangeProjection_m.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+
+            if (remote.ADistance_m.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F02},{1:F01},", remote.ADistance_m.Value, remote.ADistance_m.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+
+            if (remote.AAzimuth_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01},{1:F01},", remote.AAzimuth_deg.Value, remote.AAzimuth_deg.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+
+            if (remote.Elevation_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01},{1:F01},", remote.Elevation_deg.Value, remote.Elevation_deg.Age.TotalSeconds);
+            else
+                sb.Append(",,");            
+
+            if (remote.VCC_V.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01},{1:F01},", remote.VCC_V.Value, remote.VCC_V.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+
+            if (remote.WaterTemperature_C.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01},{1:F01},", remote.WaterTemperature_C.Value, remote.WaterTemperature_C.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+            
+            if (remote.Latitude_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F06}", remote.Latitude_deg.Value);
+            sb.Append(',');
+
+            if (remote.Longitude_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F06},{1:F01},", remote.Longitude_deg.Value, remote.Longitude_deg.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+
+            if (remote.ReverseAzimuth_deg.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:F01},{1:F01},", remote.ReverseAzimuth_deg.Value, remote.ReverseAzimuth_deg.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+
+            if (remote.Message.IsInitialized)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0},{1:F01},", remote.Message.Value, remote.Message.Age.TotalSeconds);
+            else
+                sb.Append(",,");
+
+            sb.Append(",,,");
+            sb.Append(remote.IsTimeout);
+            sb.Append(',');
+
+            return sb.ToString();
+        }
+        
 
         private void TryWriteSerialOutput(IEnumerable<string> eStrings)
         {
@@ -804,7 +960,7 @@ namespace AzimuthSuite.AzmCore
                 }
             }
         }
-
+       
         private void TryWriteUDPOutput(IEnumerable<string> eStrings)
         {
             foreach (var item in eStrings)
@@ -823,6 +979,24 @@ namespace AzimuthSuite.AzmCore
                 {
                     LogEventHandler.Rise(this, new LogEventArgs(LogLineType.ERROR, ex));
                 }
+            }
+        }
+
+        private void TryWriteUDPOutput(string line)
+        {
+            try
+            {
+                udpTranslator.Send(line);
+                LogEventHandler.Rise(this,
+                    new LogEventArgs(LogLineType.INFO,
+                    string.Format("{0}:{1} ({2}) << {3}",
+                    udpTranslator.Address,
+                    udpTranslator.Port,
+                    "OUT", line)));
+            }
+            catch (Exception ex)
+            {
+                LogEventHandler.Rise(this, new LogEventArgs(LogLineType.ERROR, ex));
             }
         }
 
@@ -1118,8 +1292,10 @@ namespace AzimuthSuite.AzmCore
                                 if (IsOutPortInitiaziled)
                                     TryWriteSerialOutput(eStrings);
 
-                                if (IsUDPOutputInitialized)
+                                if (IsUDPOutputInitialized && !IsACStyleUDPOutput)
+                                {
                                     TryWriteUDPOutput(eStrings);
+                                }
                             }
                         }
                     }
@@ -1135,7 +1311,7 @@ namespace AzimuthSuite.AzmCore
                             remotes[e.Address].Azimuth_deg.Value,
                             false));
                 }
-            }
+            }            
         }
 
         /// <summary>
