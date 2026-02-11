@@ -59,6 +59,7 @@
             this.magneticGroup = new System.Windows.Forms.GroupBox();
             this.magneticCompassBaudrateCbx = new System.Windows.Forms.ComboBox();
             this.isUseMagneticCompassChb = new System.Windows.Forms.CheckBox();
+            this.IsUseACStyleUDPOutputChb = new System.Windows.Forms.CheckBox();
             this.remotesPanel.SuspendLayout();
             this.remotesListToolStrip.SuspendLayout();
             this.auxGNSSGroup.SuspendLayout();
@@ -322,10 +323,17 @@
             this.isUseMagneticCompassChb.UseVisualStyleBackColor = true;
             this.isUseMagneticCompassChb.CheckedChanged += new System.EventHandler(this.isUseMagneticCompassChb_CheckedChanged);
             // 
+            // IsUseACStyleUDPOutputChb
+            // 
+            resources.ApplyResources(this.IsUseACStyleUDPOutputChb, "IsUseACStyleUDPOutputChb");
+            this.IsUseACStyleUDPOutputChb.Name = "IsUseACStyleUDPOutputChb";
+            this.IsUseACStyleUDPOutputChb.UseVisualStyleBackColor = true;
+            // 
             // SettingsEditor
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.IsUseACStyleUDPOutputChb);
             this.Controls.Add(this.magneticGroup);
             this.Controls.Add(this.isUseMagneticCompassChb);
             this.Controls.Add(this.IsUseMagneticCompassOnlyChb);
@@ -398,5 +406,6 @@
         private System.Windows.Forms.GroupBox magneticGroup;
         private System.Windows.Forms.ComboBox magneticCompassBaudrateCbx;
         private System.Windows.Forms.CheckBox isUseMagneticCompassChb;
+        private System.Windows.Forms.CheckBox IsUseACStyleUDPOutputChb;
     }
 }

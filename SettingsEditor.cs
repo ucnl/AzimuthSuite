@@ -56,6 +56,12 @@ namespace AzimuthSuite
             set => IsUseMagneticCompassOnlyChb.Checked = value;
         }
 
+        bool isACStyleUDPOutput
+        {
+            get => IsUseACStyleUDPOutputChb.Checked;
+            set => IsUseACStyleUDPOutputChb.Checked = value;
+        }
+
         BaudRate AUXGNSSBaudrate
         {
             get => (BaudRate)Enum.Parse(typeof(BaudRate), auxGNSSBaudrateCbx.SelectedItem.ToString());
@@ -130,7 +136,9 @@ namespace AzimuthSuite
                     SpecControlsEnabled = specControlsEnabled,
                     CustomLabel = customLabel,
                     CultureOverride = cultureOverride,
-                    IsExtendedHolidays = isExtendedHolidays
+                    IsExtendedHolidays = isExtendedHolidays,
+                    AzimuthConsoleCompatibleUDPOutput = isACStyleUDPOutput
+                    
                 };
 
                 return result;                    
@@ -153,6 +161,7 @@ namespace AzimuthSuite
                 customLabel = value.CustomLabel;
                 cultureOverride = value.CultureOverride;
                 isExtendedHolidays = value.IsExtendedHolidays;
+                isACStyleUDPOutput = value.AzimuthConsoleCompatibleUDPOutput;
             }
         }
 

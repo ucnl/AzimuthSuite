@@ -620,6 +620,7 @@ namespace AzimuthSuite
             azmBase.MagneticCompassPreferredPortName = usProvider.Data.MagneticCompassPreferredPortName;
 
             azmBase.IsMagneticCompassOnly = sProvider.Data.IsUseMagneticCompassOnly;
+            azmBase.IsACStyleUDPOutput = sProvider.Data.AzimuthConsoleCompatibleUDPOutput;
 
             azmBase.LogEventHandler += (o, e) => logger.Write(string.Format("{0}: {1}", e.EventType, e.LogString));
 

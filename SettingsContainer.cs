@@ -34,6 +34,8 @@ namespace AzimuthSuite
 
         public bool IsExtendedHolidays;
 
+        public bool AzimuthConsoleCompatibleUDPOutput;
+
         #endregion
 
         #region Constructor
@@ -70,7 +72,9 @@ namespace AzimuthSuite
             SpecControlsEnabled = false;
 
             IsExtendedHolidays = false;
-        }
+
+            AzimuthConsoleCompatibleUDPOutput = false;
+    }
 
         #endregion
     }
